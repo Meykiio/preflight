@@ -1,7 +1,7 @@
 import { memo, useState, useEffect, useRef } from "react";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { PlatformLaunchers } from "@/components/shared/PlatformLaunchers";
-import { cn } from "@/lib/utils";
+import { cn, downloadAsFile } from "@/lib/utils";
 
 interface OutputPanelProps {
   content: string | null;
@@ -86,6 +86,15 @@ const OutputPanelComponent = ({
           <div className="flex flex-wrap items-center gap-3">
             {platforms.length > 0 ? <PlatformLaunchers platforms={platforms} /> : null}
             <CopyButton text={resolvedContent} size="sm" />
+            <button
+              type="button"
+              onClick={() => downloadAsFile(resolvedContent, `${title.toLowerCase().replace(/\s+/g, "-")}.md`)}
+              className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high hover:text-on-surface"
+              title="Download as markdown file"
+            >
+              <span className="material-symbols-outlined text-sm">download</span>
+              Download
+            </button>
             {!isExpanded && isLongContent && (
               <button
                 type="button"
