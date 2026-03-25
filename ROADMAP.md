@@ -3,7 +3,7 @@
 **Version:** 0.1.0 → 1.0.0  
 **Created:** March 25, 2026  
 **Last Updated:** March 25, 2026  
-**Status:** 🟢 Week 1 & 2 Tests Complete
+**Status:** 🟢 Week 3 Complete — Error Recovery Done
 
 ---
 
@@ -12,10 +12,10 @@
 | Metric | Current | Target v1.0 | Status |
 |--------|---------|-------------|--------|
 | Test Coverage | ~25% (71 tests) | 70%+ | 🟢 Weeks 1-2 Complete |
-| Bundle Size | 440KB main | <250KB | ❌ Not Started |
+| Bundle Size | 441KB main | <250KB | ❌ Not Started |
 | Onboarding | Basic API setup | Interactive tutorial | ❌ Not Started |
 | Documentation | 40% complete | 95% complete | ❌ Not Started |
-| Error Recovery | Basic | Comprehensive | ❌ Not Started |
+| Error Recovery | ✅ Complete | ✅ Complete | 🟢 Week 3 Complete |
 | Mobile Support | Minimal | Tablet-optimized | ❌ Not Started |
 
 ---
@@ -721,6 +721,23 @@ pnpm add html2pdf.js
 ---
 
 ## 📝 CHANGELOG
+
+### [2026-03-25] — Week 3: Error Recovery Complete ✅
+- Implemented comprehensive error recovery system
+- **Services:**
+  - `retry.ts`: Exponential backoff (1s→16s, max 5 retries) with jitter
+  - `checkpoint.ts`: Save generation progress every 500 tokens
+  - Updated `generateWithAgent()` with retry + checkpoint
+- **Components:**
+  - `OfflineBanner`: Offline detection and user feedback
+  - `ErrorRecoveryModal`: Resume/retry/cancel on failure
+  - `GenerationProgress`: Token count and save status
+- **Features:**
+  - ✓ Auto-retry failed API calls (network, rate limit errors)
+  - ✓ Save progress during long generations
+  - ✓ Resume interrupted generations
+  - ✓ Offline detection and user feedback
+- All existing tests pass (71 tests)
 
 ### [2026-03-25] — Week 2: Store Tests Complete ✅
 - Added 37 new store tests (total: 71 tests)
