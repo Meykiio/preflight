@@ -11,7 +11,7 @@
 [![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2-646cff.svg)](https://vitejs.dev/)
 
-[Docs](DOCS.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
+[Documentation](docs/README.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
 
 </div>
 
@@ -251,7 +251,20 @@ pnpm test        # All tests pass
 pnpm build       # Clean production build
 ```
 
-Update DOCS.md and CHANGELOG.md with your changes.
+Update documentation in `docs/` with your changes.
+
+---
+
+## How This Was Built
+
+**Preflight was built using vibe coding — an AI-assisted, iterative approach to software development.**
+
+I used Cursor and Claude Code to build Preflight following the exact workflow that Preflight generates. After building it, I used Preflight itself to rebuild the same application — and it worked perfectly.
+
+Read the full story in [**Behind the Scenes**](docs/behind-the-scenes/vibe-coding-workflow.md):
+- [How I Used AI to Build Preflight](docs/behind-the-scenes/vibe-coding-workflow.md)
+- [Using Preflight to Rebuild Preflight](docs/behind-the-scenes/self-dogfooding.md)
+- [Lessons Learned](docs/behind-the-scenes/lessons-learned.md)
 
 ---
 
@@ -296,6 +309,6 @@ MIT — see [LICENSE](LICENSE) for details.
 
 If you find Preflight useful, please consider giving it a ⭐️!
 
-[Documentation](DOCS.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
+[Documentation](docs/README.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
 
 </div>

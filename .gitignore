@@ -20,13 +20,16 @@ build/
 # IDE / OS
 .DS_Store
 Thumbs.db
-.vscode/settings.json
+.vscode/
 .idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Qwen Code
+.qwen/
 
 # Testing
 coverage/
