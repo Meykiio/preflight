@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useArtifacts } from "@/hooks/useArtifacts";
 import { useBrief } from "@/hooks/useBrief";
 import { useVaultFiles } from "@/hooks/useVaultFiles";
@@ -25,7 +26,7 @@ export const ContextNodeSelector = ({
 }: ContextNodeSelectorProps): JSX.Element => {
   const { brief } = useBrief(projectId);
   const { artifacts } = useArtifacts(projectId);
-  const { files } = useVaultFiles(projectId);
+  const { files, setAllFilesAsContext } = useVaultFiles(projectId);
 
   const hasBriefContent = Boolean(
     brief?.problem ||
@@ -38,6 +39,21 @@ export const ContextNodeSelector = ({
   const designFiles = files.filter((file) => file.category === "design");
   const activeContextFiles = files.filter((file) => file.isActiveContext);
   const artifactTypes = new Set(artifacts.map((artifact) => artifact.type));
+
+  // Auto-select all active context files when selector opens
+  useEffect(() => {
+    if (isOpen && activeContextFiles.length > 0 && selectedNodes.length === 0) {
+      const activeNodeIds = activeContextFiles.map(f => f.id);
+      onChangeNodes(activeNodeIds);
+    }
+  }, [isOpen]);
+
+  // Auto-select all files as context on first open if none selected
+  useEffect(() => {
+    if (isOpen && files.length > 0 && activeContextFiles.length === 0) {
+      setAllFilesAsContext();
+    }
+  }, [isOpen, files.length]);
 
   const rows: ContextNodeRow[] = [
     { id: "brief", icon: "description", label: "Brief", available: hasBriefContent },

@@ -154,14 +154,14 @@ html.light :focus-visible {
    ============================================ */
 
 .glass-panel {
-  background: rgba(31, 31, 37, 0.6);
+  background: rgba(31, 31, 37, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(197, 192, 255, 0.08);
 }
 
 html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(107, 91, 255, 0.1);
@@ -169,11 +169,11 @@ html.light .glass-panel {
 
 @supports not (backdrop-filter: blur(12px)) {
   .glass-panel {
-    background: rgba(31, 31, 37, 0.96);
+    background: rgba(31, 31, 37, 0.98);
   }
-  
+
   html.light .glass-panel {
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255, 255, 255, 0.98);
   }
 }
 

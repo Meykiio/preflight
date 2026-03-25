@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { useUIStore } from "@/stores/uiStore";
 
 const WORKSPACE_FLOW = ["brief", "research", "design", "prd", "build", "ship", "vault"] as const;
@@ -12,9 +11,8 @@ interface FloatingActionButtonProps {
 export const FloatingActionButton = ({
   onCompleteStage
 }: FloatingActionButtonProps): JSX.Element | null => {
-  const navigate = useNavigate();
-  const { projectId } = useParams();
   const activeTab = useUIStore((state) => state.activeTab);
+  const setActiveTab = useUIStore((state) => state.setActiveTab);
 
   const currentIndex = WORKSPACE_FLOW.indexOf(activeTab as WorkspaceStage);
   const isLastStage = currentIndex === WORKSPACE_FLOW.length - 1;
@@ -24,15 +22,18 @@ export const FloatingActionButton = ({
     // Mark current stage as complete (callback to parent)
     onCompleteStage?.();
 
-    // Navigate to next stage
-    if (nextStage && projectId) {
-      navigate(`/project/${projectId}/${nextStage === "brief" ? "" : nextStage}`);
+    // Navigate to next stage by updating activeTab
+    if (nextStage) {
+      setActiveTab(nextStage);
+      // Scroll to top
+      window.scrollTo(0, 0);
     }
   };
 
   const handleJustContinue = () => {
-    if (nextStage && projectId) {
-      navigate(`/project/${projectId}/${nextStage === "brief" ? "" : nextStage}`);
+    if (nextStage) {
+      setActiveTab(nextStage);
+      window.scrollTo(0, 0);
     }
   };
 
