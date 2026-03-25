@@ -1,0 +1,15 @@
+# Vercel ignore file
+node_modules
+.git
+.github
+.vscode
+.corepack
+docs/
+Design/
+Research/
+screenshots/
+inspiration/
+*.md
+!README.md
+*.test.ts
+*.test.tsx
