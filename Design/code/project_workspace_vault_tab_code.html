@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Vault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-variant": "#35343a",
+                        "surface-tint": "#c5c0ff",
+                        "secondary-fixed": "#8af7cf",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#2fa280",
+                        "on-primary-fixed-variant": "#3e29bd",
+                        "background": "#131318",
+                        "on-surface-variant": "#c8c4d7",
+                        "surface-container-low": "#1b1b20",
+                        "outline": "#928fa0",
+                        "primary-fixed": "#e4dfff",
+                        "primary": "#c5c0ff",
+                        "tertiary-fixed-dim": "#ffb95d",
+                        "secondary-fixed-dim": "#6edab4",
+                        "on-secondary-container": "#003023",
+                        "on-secondary": "#003829",
+                        "tertiary": "#ffb95d",
+                        "surface-container-lowest": "#0e0e13",
+                        "tertiary-fixed": "#ffddb7",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#c98100",
+                        "on-secondary-fixed": "#002117",
+                        "on-primary": "#2600a1",
+                        "surface-container-highest": "#35343a",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "primary-fixed-dim": "#c5c0ff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary-container": "#3d2400",
+                        "error": "#ffb4ab",
+                        "surface": "#131318",
+                        "primary-container": "#8b80ff",
+                        "on-primary-fixed": "#150067",
+                        "on-background": "#e4e1e9",
+                        "surface-container-high": "#2a292f",
+                        "on-surface": "#e4e1e9",
+                        "secondary": "#6edab4",
+                        "inverse-on-surface": "#303036",
+                        "outline-variant": "#474554",
+                        "on-primary-container": "#21008e",
+                        "on-error": "#690005",
+                        "surface-dim": "#131318",
+                        "on-secondary-fixed-variant": "#00513d",
+                        "inverse-surface": "#e4e1e9",
+                        "surface-container": "#1f1f25",
+                        "inverse-primary": "#5647d5",
+                        "on-tertiary": "#462a00",
+                        "surface-bright": "#39383e"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>body {
+    background-color: #131318;
+    color: #e4e1e9;
+    font-family: "Inter", sans-serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.glass-panel {
+    background: rgba(57, 56, 62, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(146, 143, 160, 0.1)
+    }
+.noise-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCv0Lom8OPMtqhVFafYMy1iyPfiagaGk97D0wBJ0yOG-8LAt--5mXFk0ALIv2k8wXew7_t34XkFDnGDLgmoXLARIWkgGp8fCYu3Hrdo6n6WdIVm03SR-8CJVJ90YfXTmqPPcW-BwZ_-m1q6VZ81t4r5xYngcPQ8-cnW2wu58hx1VFS_G6oLru6CqOkFIGtJtnfdDvYdCReo-oh4Pg6mXSFNdd6f3iUbuQmCzbXX1_UyL1ul1UEMlyEiRDXgBcB_Fo18hCNOB5AUHck);
+    opacity: 0.03
+    }</style>
+</head>
+<body class="overflow-hidden">
+<!-- SIDEBAR NAVIGATION -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-[#0e0e13] h-screen w-64 border-r border-[#39383e]/15 bg-gradient-to-b from-[#131318] to-[#0e0e13]">
+<div class="mb-10 px-2">
+<h1 class="text-[#e4e1e9] font-black font-headline tracking-tighter text-xl">Preflight v1.0</h1>
+<p class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-[#e4e1e9]/40 mt-1">Obsidian Cockpit</p>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="px-2 py-3 text-[#e4e1e9]/40 font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Project Workspace</div>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#e4e1e9]/40 hover:text-[#e4e1e9] hover:bg-[#39383e]/30 transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="description">description</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Brief</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#e4e1e9]/40 hover:text-[#e4e1e9] hover:bg-[#39383e]/30 transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Research</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#e4e1e9]/40 hover:text-[#e4e1e9] hover:bg-[#39383e]/30 transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="fluorescent">fluorescent</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Design</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#e4e1e9]/40 hover:text-[#e4e1e9] hover:bg-[#39383e]/30 transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="article">article</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">PRD</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#e4e1e9]/40 hover:text-[#e4e1e9] hover:bg-[#39383e]/30 transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Build</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#c5c0ff] bg-[#c5c0ff]/10 rounded-lg font-bold transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Vault</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="w-full py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline text-xs font-bold uppercase tracking-widest rounded-lg shadow-[0_0_15px_rgba(197,192,255,0.2)] active:scale-95 transition-all">
+                New Generation
+            </button>
+<div class="pt-4 border-t border-[#39383e]/15 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#e4e1e9]/40 hover:text-[#e4e1e9] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#e4e1e9]/40 hover:text-[#e4e1e9] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TOP NAV BAR -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 h-16 ml-64 bg-[#131318]/60 backdrop-blur-xl shadow-[0_0_24px_rgba(124,111,253,0.08)]" style="width: calc(100% - 16rem);">
+<div class="flex items-center bg-surface-container-lowest px-4 py-2 rounded-lg border border-outline-variant/15 w-96">
+<span class="material-symbols-outlined text-outline text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-on-surface placeholder:text-outline/50 w-full font-body" placeholder="Scan the vault..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#e4e1e9]/60 hover:bg-[#39383e]/50 transition-all rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-[#e4e1e9]/60 hover:bg-[#39383e]/50 transition-all rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container-high border border-primary/20 p-0.5">
+<img alt="Profile" class="h-full w-full rounded-full object-cover" data-alt="Close up professional male portrait avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCebjr9vbP7FuWSfYDEcSjeIrIGVRN-vM2IF1vN0sXDNfUZPcW3rv1iGI74-tKd-gMxCkstCmtqLmjW1T_igmRVOMB9BWup7k0jMS1Oz1DL_pxPX8y9qjogbh7OBpG86g80uKDqAQ2OW-YreLi_PGQSbe9_YcQlpf_rjGEZAbwdnRF4rzUTTVOmU31JytR7Jvrw_snZ-E77yDQifc6wgCrQYlrKkY6HGyPzjzQxI1ZQFsCL9gGxu8QoVAw-sfNWhpcDxjd9v6A1Nc4"/>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-64 pt-24 px-8 pb-12 min-h-screen bg-surface-dim overflow-y-auto">
+<div class="max-w-[1280px] mx-auto">
+<!-- HEADER SECTION -->
+<div class="flex items-end justify-between mb-10">
+<div>
+<h2 class="text-4xl font-headline font-bold tracking-tight text-on-surface mb-2">Project Vault</h2>
+<p class="text-on-surface-variant font-body text-sm max-w-xl">Deep-storage for all technical assets, context injections, and architectural blueprints for Preflight v1.0.</p>
+</div>
+<div class="flex bg-surface-container-lowest p-1 rounded-lg border border-outline-variant/10">
+<button class="px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest text-primary bg-primary/10 rounded-md">All</button>
+<button class="px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">Research</button>
+<button class="px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">Designs</button>
+<button class="px-4 py-2 text-xs font-headline font-bold uppercase tracking-widest text-on-surface-variant hover:text-on-surface transition-colors">Exports</button>
+</div>
+</div>
+<!-- ASYMMETRIC HUD LAYOUT -->
+<div class="grid grid-cols-12 gap-8">
+<!-- UPLOAD ZONE (HUD) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-xl opacity-20 group-hover:opacity-40 transition duration-500 blur"></div>
+<div class="relative h-64 bg-surface-container-lowest rounded-xl border border-dashed border-outline-variant/40 flex flex-col items-center justify-center p-8 text-center transition-all">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-4 border border-outline-variant/20 shadow-inner">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h3 class="font-headline text-lg font-bold text-on-surface mb-1">Drop your project brain here</h3>
+<p class="text-xs text-on-surface-variant font-body">Accepting PDF, MD, PNG, and JSON context files</p>
+<button class="mt-6 px-6 py-2 bg-surface-bright text-on-surface font-headline text-[10px] font-bold uppercase tracking-widest rounded border border-outline-variant/30 hover:bg-surface-container-highest transition-all">
+                                Select Assets
+                            </button>
+</div>
+</div>
+<!-- STORAGE HUD METRICS -->
+<div class="mt-8 glass-panel rounded-xl p-6 relative overflow-hidden">
+<div class="noise-texture absolute inset-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-center mb-4">
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Vault Integrity</span>
+<span class="text-xs font-mono text-secondary">92% Ready</span>
+</div>
+<div class="w-full h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[92%] shadow-[0_0_8px_rgba(110,218,180,0.5)]"></div>
+</div>
+<div class="mt-6 space-y-3">
+<div class="flex justify-between text-[11px] font-body">
+<span class="text-on-surface-variant/60">Total Context Weight</span>
+<span class="text-on-surface font-mono">1.2 GB</span>
+</div>
+<div class="flex justify-between text-[11px] font-body">
+<span class="text-on-surface-variant/60">Active Context Tokens</span>
+<span class="text-on-surface font-mono">284k</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FILE GRID -->
+<div class="col-span-12 lg:col-span-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- File Card 1 -->
+<div class="group relative bg-surface-container rounded-xl p-5 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+<div class="flex items-start justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant/15">
+<span class="material-symbols-outlined text-tertiary" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface font-headline group-hover:text-primary transition-colors">market_analysis.pdf</h4>
+<p class="text-[11px] text-on-surface-variant font-mono">4.2 MB • UPDATED 2H AGO</p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Inject Context</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"></div>
+</label>
+</div>
+</div>
+<!-- File Card 2 -->
+<div class="group relative bg-surface-container rounded-xl p-5 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+<div class="flex items-start justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant/15">
+<span class="material-symbols-outlined text-secondary" data-icon="image">image</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface font-headline group-hover:text-primary transition-colors">landing_page_mockup.png</h4>
+<p class="text-[11px] text-on-surface-variant font-mono">12.8 MB • UPDATED 5H AGO</p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Inject Context</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"></div>
+</label>
+</div>
+</div>
+<!-- File Card 3 -->
+<div class="group relative bg-surface-container rounded-xl p-5 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+<div class="flex items-start justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant/15">
+<span class="material-symbols-outlined text-primary" data-icon="markdown">markdown</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface font-headline group-hover:text-primary transition-colors">prd_v1.md</h4>
+<p class="text-[11px] text-on-surface-variant font-mono">24 KB • UPDATED 1D AGO</p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Inject Context</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"></div>
+</label>
+</div>
+</div>
+<!-- File Card 4 -->
+<div class="group relative bg-surface-container rounded-xl p-5 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300">
+<div class="flex items-start justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant/15">
+<span class="material-symbols-outlined text-outline" data-icon="code">code</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface font-headline group-hover:text-primary transition-colors">api_schema.json</h4>
+<p class="text-[11px] text-on-surface-variant font-mono">142 KB • UPDATED 2D AGO</p>
+</div>
+</div>
+<div class="flex gap-1">
+<button class="p-1.5 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-on-surface-variant">Inject Context</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)]"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- EMPTY STATE CARD / ADD MORE -->
+<div class="mt-4 border border-outline-variant/5 bg-surface-container-low/30 rounded-xl h-32 flex items-center justify-center group cursor-pointer hover:bg-surface-container-high/50 transition-all">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-all text-3xl mb-1" data-icon="add_circle">add_circle</span>
+<span class="text-[10px] font-headline font-bold uppercase tracking-widest text-outline-variant group-hover:text-on-surface transition-colors">Link Cloud Drive</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

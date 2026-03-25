@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Developer Cockpit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#1b1b20",
+                        "on-surface": "#e4e1e9",
+                        "surface-bright": "#39383e",
+                        "secondary-container": "#2fa280",
+                        "on-error": "#690005",
+                        "primary-fixed": "#e4dfff",
+                        "on-primary-fixed-variant": "#3e29bd",
+                        "inverse-primary": "#5647d5",
+                        "on-secondary-container": "#003023",
+                        "surface": "#131318",
+                        "tertiary-fixed-dim": "#ffb95d",
+                        "on-tertiary-fixed": "#2a1700",
+                        "tertiary-container": "#c98100",
+                        "surface-container-high": "#2a292f",
+                        "secondary-fixed": "#8af7cf",
+                        "surface-container-lowest": "#0e0e13",
+                        "on-primary-container": "#21008e",
+                        "on-secondary-fixed-variant": "#00513d",
+                        "outline-variant": "#474554",
+                        "primary": "#c5c0ff",
+                        "secondary": "#6edab4",
+                        "on-secondary": "#003829",
+                        "on-error-container": "#ffdad6",
+                        "background": "#131318",
+                        "on-primary": "#2600a1",
+                        "on-tertiary-container": "#3d2400",
+                        "on-tertiary": "#462a00",
+                        "inverse-surface": "#e4e1e9",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffb95d",
+                        "surface-dim": "#131318",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-surface-variant": "#c8c4d7",
+                        "inverse-on-surface": "#303036",
+                        "on-secondary-fixed": "#002117",
+                        "surface-tint": "#c5c0ff",
+                        "on-primary-fixed": "#150067",
+                        "surface-variant": "#35343a",
+                        "primary-fixed-dim": "#c5c0ff",
+                        "primary-container": "#8b80ff",
+                        "tertiary-fixed": "#ffddb7",
+                        "surface-container-highest": "#35343a",
+                        "surface-container": "#1f1f25",
+                        "outline": "#928fa0",
+                        "secondary-fixed-dim": "#6edab4",
+                        "on-background": "#e4e1e9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["Geist Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0A0A0F;
+            background-image: radial-gradient(circle at 50% -20%, #1b1b20 0%, #0A0A0F 100%);
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(42, 41, 47, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(197, 192, 255, 0.3);
+        }
+        .terminal-glow:focus-within {
+            border-bottom-color: #c5c0ff;
+            box-shadow: 0 4px 12px -4px rgba(197, 192, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 w-full z-50 bg-[#1b1b20]/60 backdrop-blur-xl border-b border-[#c5c0ff]/10 shadow-[0_0_40px_rgba(124,111,253,0.05)]">
+<div class="flex justify-between items-center px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="font-space-grotesk font-black tracking-tighter text-[#c5c0ff] text-2xl">Preflight</span>
+<div class="hidden md:flex items-center gap-6">
+<nav class="flex gap-4">
+<a class="font-space-grotesk font-bold tracking-tight text-sm px-2 py-1 text-[#c5c0ff] border-b-2 border-[#c5c0ff]" href="#">Brief</a>
+<a class="font-space-grotesk font-bold tracking-tight text-sm px-2 py-1 text-slate-400 hover:text-white transition-all duration-300" href="#">Research</a>
+<a class="font-space-grotesk font-bold tracking-tight text-sm px-2 py-1 text-slate-400 hover:text-white transition-all duration-300" href="#">Build</a>
+</nav>
+</div>
+</div>
+<div class="flex-1 max-w-md mx-8">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest/50 border-none rounded-xl py-2 pl-10 pr-12 text-sm focus:ring-1 focus:ring-primary/30 transition-all font-body" placeholder="Search projects or files..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-outline-variant bg-surface-container-high rounded border border-outline-variant/30">⌘K</kbd>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-[#2a292f] rounded-full transition-all duration-300 text-slate-400 hover:text-white">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs border border-primary/20">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- Sidebar -->
+<aside class="hidden lg:flex h-[calc(100vh-60px)] w-64 sticky top-[60px] flex-col py-6 bg-[#131318] border-r border-[#c5c0ff]/5">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/40">
+<div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="architecture">architecture</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-sm tracking-tight text-on-surface">Project Alpha</h3>
+<p class="font-body text-[10px] text-secondary uppercase tracking-widest">Build Phase</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#2a292f] text-[#c5c0ff] border-r-2 border-[#c5c0ff] group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Brief</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-[#1b1b20] hover:text-slate-300 transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="analytics">analytics</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Research</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-[#1b1b20] hover:text-slate-300 transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="architecture">architecture</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Design</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-[#1b1b20] hover:text-slate-300 transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="assignment">assignment</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">PRD</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-[#1b1b20] hover:text-slate-300 transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="terminal">terminal</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Build</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-[#1b1b20] hover:text-slate-300 transition-colors group" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="database">database</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Vault</span>
+</a>
+</nav>
+<div class="px-4 mt-auto pt-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-slate-300 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="font-space-grotesk text-xs uppercase tracking-widest">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-6 lg:p-10 max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline font-black text-4xl lg:text-5xl text-on-surface tracking-tighter mb-2">Welcome back, Sifeddine</h1>
+<p class="font-body text-outline max-w-md">You have 4 active projects in the build pipeline. All systems are operational.</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-95 transition-all duration-200 ease-out active:scale-90">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span>New Project</span>
+</button>
+</div>
+</section>
+<!-- Project Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Project Card 1 -->
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-widest bg-secondary-container/20 text-secondary border border-secondary/20">
+                            Active
+                        </div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-slate-500 text-lg hover:text-primary transition-colors cursor-pointer" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<h2 class="font-headline font-bold text-xl mb-2 text-glow group-hover:text-primary transition-colors">Skyline API</h2>
+<p class="font-body text-sm text-outline mb-6 line-clamp-2">Scalable real-time flight telemetry dashboard for commercial logistics providers.</p>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-outline font-mono">Build Progress</span>
+<span class="text-secondary font-mono">72%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[72%] rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/5">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center" title="Lovable">
+<span class="material-symbols-outlined text-primary text-xs" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center" title="Cursor">
+<span class="material-symbols-outlined text-secondary text-xs" data-icon="near_me" style="font-variation-settings: 'FILL' 1;">near_me</span>
+</div>
+</div>
+<span class="text-[10px] font-mono text-outline-variant uppercase">Updated 2h ago</span>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-widest bg-tertiary-container/20 text-tertiary border border-tertiary/20">
+                            Research
+                        </div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-slate-500 text-lg hover:text-primary transition-colors cursor-pointer" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<h2 class="font-headline font-bold text-xl mb-2 text-glow group-hover:text-primary transition-colors">Project Vanguard</h2>
+<p class="font-body text-sm text-outline mb-6 line-clamp-2">Distributed ledger implementation for secure multi-tenant cloud storage systems.</p>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-outline font-mono">Research Progress</span>
+<span class="text-tertiary font-mono">38%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[38%] rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/5">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs" data-icon="code" style="font-variation-settings: 'FILL' 1;">code</span>
+</div>
+</div>
+<span class="text-[10px] font-mono text-outline-variant uppercase">Updated 5h ago</span>
+</div>
+</div>
+<!-- Project Card 3 -->
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-6">
+<div class="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-widest bg-primary-container/20 text-primary border border-primary/20">
+                            Staging
+                        </div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-slate-500 text-lg hover:text-primary transition-colors cursor-pointer" data-icon="more_vert">more_vert</span>
+</div>
+</div>
+<h2 class="font-headline font-bold text-xl mb-2 text-glow group-hover:text-primary transition-colors">Nova UI Kit</h2>
+<p class="font-body text-sm text-outline mb-6 line-clamp-2">Component library built on Tailwind CSS v4 with native glassmorphism support.</p>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-outline font-mono">Release Progress</span>
+<span class="text-primary font-mono">92%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92%] rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/5">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-xs" data-icon="palette" style="font-variation-settings: 'FILL' 1;">palette</span>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs" data-icon="near_me" style="font-variation-settings: 'FILL' 1;">near_me</span>
+</div>
+</div>
+<span class="text-[10px] font-mono text-outline-variant uppercase">Updated 10m ago</span>
+</div>
+</div>
+<!-- Project Card 4 (Asymmetric Card) -->
+<div class="md:col-span-2 glass-panel rounded-xl p-8 border border-outline-variant/10 hover:border-primary/30 transition-all duration-300 flex flex-col md:flex-row gap-8 items-center bg-gradient-to-r from-surface-container-low to-transparent">
+<div class="flex-1">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-mono uppercase tracking-widest mb-4">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                            Priority Internal
+                        </div>
+<h2 class="font-headline font-black text-3xl mb-3 text-glow">Preflight 2.0 Engine</h2>
+<p class="font-body text-outline mb-6 text-base">Rebuilding the core orchestration layer for ultra-low latency deployments across edge networks.</p>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-mono text-on-surface">Schema Logic</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-mono text-on-surface">Auth Middleware</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<span class="text-xs font-mono text-outline">Edge Deployment</span>
+</div>
+</div>
+</div>
+<div class="w-full md:w-64 aspect-square rounded-2xl overflow-hidden border border-outline-variant/20 relative">
+<img alt="Technical visual" class="w-full h-full object-cover" data-alt="high-tech abstract digital visualization of data nodes and neural networks glowing with electric violet and teal light against dark void" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJdSiMyocPFXWVuEYFaFJfR5X1p0hKsDqKidIP_q3OkzUOAylgOiP11MQaWEFiDelcfQ5HkMHszN2VB7yBgxG7GYTookLSKHjTHYhPZRYqZ7UPMjp5VLGjEXII7umfTEhpqx_hGuOXRbfAXFMx8vj_EeKf3kadTb9fAiytyOTfbmZND2EPAfLz05zp06Wy4fkH2GwjbSM43ZmJw99gALTvBfVioENPRqt-o_p162NtmzP95cPu0OBfKGTd-n2dHKdMdLgFuvpZoLA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+<div class="absolute bottom-4 left-4 right-4 bg-surface-container-high/80 backdrop-blur-md rounded-lg p-3 border border-white/5">
+<div class="flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-primary mb-1">
+<span>Network Load</span>
+<span>Optimal</span>
+</div>
+<div class="h-1 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State/New Slot -->
+<div class="glass-panel rounded-xl p-6 border-2 border-dashed border-outline-variant/20 flex flex-col items-center justify-center text-center hover:border-primary/40 transition-all cursor-pointer group min-h-[300px]">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-outline group-hover:text-primary" data-icon="add">add</span>
+</div>
+<h3 class="font-headline font-bold text-outline group-hover:text-primary transition-colors">Start New Project</h3>
+<p class="font-body text-xs text-outline-variant mt-2 max-w-[150px]">Select a blueprint to begin your next deployment cycle.</p>
+</div>
+</section>
+</main>
+</div>
+<!-- Telemetry HUD -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="glass-panel px-6 py-3 rounded-full border border-white/5 shadow-2xl flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#6edab4]"></div>
+<div class="flex flex-col">
+<span class="text-[9px] font-mono text-outline-variant uppercase leading-none mb-1">System Health</span>
+<span class="text-[11px] font-mono text-on-surface leading-none">ALL SYSTEMS NOMINAL</span>
+</div>
+</div>
+<div class="w-px h-6 bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="speed">speed</span>
+<div class="flex flex-col">
+<span class="text-[9px] font-mono text-outline-variant uppercase leading-none mb-1">Latent Sync</span>
+<span class="text-[11px] font-mono text-on-surface leading-none">12ms</span>
+</div>
+</div>
+<div class="w-px h-6 bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="database">database</span>
+<div class="flex flex-col">
+<span class="text-[9px] font-mono text-outline-variant uppercase leading-none mb-1">Storage</span>
+<span class="text-[11px] font-mono text-on-surface leading-none">1.2 TB / 10 TB</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Responsive Bottom Nav (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full glass-panel border-t border-white/5 px-6 py-3 flex justify-between items-center z-[60]">
+<button class="p-2 text-primary border-b-2 border-primary">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-2 text-slate-500">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+</button>
+<button class="p-2 text-slate-500">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="p-2 text-slate-500">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</body></html>

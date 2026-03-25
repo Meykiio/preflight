@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1b1b20",
+              "on-surface": "#e4e1e9",
+              "surface-bright": "#39383e",
+              "secondary-container": "#2fa280",
+              "on-error": "#690005",
+              "primary-fixed": "#e4dfff",
+              "on-primary-fixed-variant": "#3e29bd",
+              "inverse-primary": "#5647d5",
+              "on-secondary-container": "#003023",
+              "surface": "#131318",
+              "tertiary-fixed-dim": "#ffb95d",
+              "on-tertiary-fixed": "#2a1700",
+              "tertiary-container": "#c98100",
+              "surface-container-high": "#2a292f",
+              "secondary-fixed": "#8af7cf",
+              "surface-container-lowest": "#0e0e13",
+              "on-primary-container": "#21008e",
+              "on-secondary-fixed-variant": "#00513d",
+              "outline-variant": "#474554",
+              "primary": "#c5c0ff",
+              "secondary": "#6edab4",
+              "on-secondary": "#003829",
+              "on-error-container": "#ffdad6",
+              "background": "#131318",
+              "on-primary": "#2600a1",
+              "on-tertiary-container": "#3d2400",
+              "on-tertiary": "#462a00",
+              "inverse-surface": "#e4e1e9",
+              "error-container": "#93000a",
+              "tertiary": "#ffb95d",
+              "surface-dim": "#131318",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed-variant": "#653e00",
+              "on-surface-variant": "#c8c4d7",
+              "inverse-on-surface": "#303036",
+              "on-secondary-fixed": "#002117",
+              "surface-tint": "#c5c0ff",
+              "on-primary-fixed": "#150067",
+              "surface-variant": "#35343a",
+              "primary-fixed-dim": "#c5c0ff",
+              "primary-container": "#8b80ff",
+              "tertiary-fixed": "#ffddb7",
+              "surface-container-highest": "#35343a",
+              "surface-container": "#1f1f25",
+              "outline": "#928fa0",
+              "secondary-fixed-dim": "#6edab4",
+              "on-background": "#e4e1e9"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["Geist Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "2xl": "1rem", "full": "9999px"},
+            spacing: {
+                "1": "4px",
+                "2": "8px",
+                "3": "12px",
+                "4": "16px",
+                "5": "20px",
+                "6": "24px",
+                "8": "32px",
+                "10": "40px",
+                "12": "48px",
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(31, 31, 37, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(197, 192, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(146, 143, 160, 0.2);
+            border-radius: 10px;
+        }
+        .nav-item-active {
+            background: linear-gradient(90deg, rgba(139, 128, 255, 0.1) 0%, rgba(139, 128, 255, 0) 100%);
+            border-left: 2px solid #c5c0ff;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/10 bg-surface-container-lowest flex flex-col py-6 z-40">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-lg leading-none">architecture</span>
+</div>
+<span class="text-white font-bold font-headline tracking-tight">Project Alpha</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/10">
+<p class="text-[10px] uppercase tracking-[0.15em] text-slate-500 font-headline mb-1">Active State</p>
+<p class="text-xs text-secondary font-medium flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                    Build Phase
+                </p>
+</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<!-- Active Tab: Brief -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-r-lg transition-all duration-300 nav-item-active text-primary" href="#">
+<span class="material-symbols-outlined text-xl">description</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em] font-medium">Brief</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-slate-500 hover:text-slate-300 hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Research</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-slate-500 hover:text-slate-300 hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined text-xl">architecture</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Design</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-slate-500 hover:text-slate-300 hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined text-xl">assignment</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">PRD</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-slate-500 hover:text-slate-300 hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined text-xl">terminal</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Build</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-slate-500 hover:text-slate-300 hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined text-xl">database</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Vault</span>
+</a>
+</nav>
+<div class="px-4 pt-6 border-t border-outline-variant/10 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl">help</span>
+<span class="font-headline text-xs uppercase tracking-[0.1em]">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-30 bg-[#131318]/80 backdrop-blur-xl border-b border-outline-variant/10 px-8 py-4 flex justify-between items-center">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-xl pl-10 pr-4 py-2 text-sm text-on-surface focus:ring-1 focus:ring-primary/30 transition-all placeholder:text-slate-600" placeholder="Search workspace..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-all text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border border-primary/20 overflow-hidden cursor-pointer hover:border-primary/50 transition-all">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="clean vector avatar profile picture of a young professional with dark hair and glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOYVzWTprUzJBeqOXQr0nX2kDTYPm_4tQ5Jb66-k6NSuy5s4I8C-Lf71SEGsTLmXrBYmbgsLJAHjmwwtQdkKbRkMa3S1r8aGinTTk80Wo1qARFggxyAyXvcXDXc_eFxzyqgIf33eaeoAdGjv66uudX5V9c0sWb2vWy6zVVxCYyPrSaSEJpMq_DnERkthNHU-BMkzXstZFfuMwsAUgvEX7ylqUh1SZYXI-ivAjpKNa8BPJ0b69tVIypQNl0BtCmUJB1iHZqeN81hsg"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 p-8 lg:p-12 max-w-6xl mx-auto w-full pb-32">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-8 text-[10px] uppercase tracking-widest text-slate-500 font-headline">
+<span class="hover:text-primary transition-colors cursor-pointer">Projects</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="hover:text-primary transition-colors cursor-pointer">Alpha Workspace</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-white">Brief</span>
+</nav>
+<!-- Page Title Area -->
+<div class="mb-12">
+<div class="group relative">
+<input class="w-full bg-transparent border-none text-4xl lg:text-5xl font-black font-headline tracking-tighter text-white placeholder:text-slate-700 focus:ring-0 p-0 mb-4 transition-all" placeholder="Enter Project Name" type="text" value="Architecture Visualization Platform"/>
+<div class="h-0.5 w-0 group-focus-within:w-full bg-primary/30 transition-all duration-500 absolute -bottom-1"></div>
+</div>
+<p class="text-slate-400 max-w-2xl leading-relaxed mt-4">Define the core identity and goals of your project. This brief acts as the foundation for the upcoming Research and Design phases.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Main Form Section -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Problem Statement -->
+<section class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-lg">error</span>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-widest text-white/90">The Problem</h3>
+</div>
+<div class="glass-panel rounded-2xl p-1 overflow-hidden transition-all focus-within:ring-1 focus-within:ring-tertiary/30">
+<textarea class="w-full bg-transparent border-none text-on-surface p-6 focus:ring-0 text-sm leading-relaxed resize-none custom-scrollbar min-h-[160px]" placeholder="Describe the pain point you are solving..." rows="4">Current architecture rendering processes are slow, expensive, and require specialized hardware. Clients often struggle to visualize spaces during the conceptual phase, leading to costly revisions late in the build cycle. Existing tools are too technical for non-experts but mobile versions lack professional fidelity.</textarea>
+</div>
+</section>
+<!-- User Persona -->
+<section class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-lg">group</span>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-widest text-white/90">Target Users</h3>
+</div>
+<div class="glass-panel rounded-2xl p-1 overflow-hidden transition-all focus-within:ring-1 focus-within:ring-secondary/30">
+<textarea class="w-full bg-transparent border-none text-on-surface p-6 focus:ring-0 text-sm leading-relaxed resize-none custom-scrollbar min-h-[160px]" placeholder="Who is this for?" rows="4">Primary users are residential architects and interior designers working in mid-sized firms. Secondary users are high-end real estate developers and individual homeowners looking to preview custom build plans before committing to construction.</textarea>
+</div>
+</section>
+<!-- Key Features -->
+<section class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">auto_awesome</span>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-widest text-white/90">Core Features</h3>
+</div>
+<div class="glass-panel rounded-2xl p-1 overflow-hidden transition-all focus-within:ring-1 focus-within:ring-primary/30">
+<textarea class="w-full bg-transparent border-none text-on-surface p-6 focus:ring-0 text-sm font-mono leading-relaxed resize-none custom-scrollbar min-h-[160px]" placeholder="List the MVP features..." rows="4">- Real-time cloud-based raytracing
+- Collaborative 'Live-Walk' mode for client presentations
+- Native BIM file integration (Revit/SketchUp)
+- AI-driven material suggestion engine based on spatial dimensions
+- One-click VR export for Meta Quest headsets</textarea>
+</div>
+</section>
+</div>
+<!-- Sidebar Metadata Section -->
+<div class="space-y-8">
+<!-- Tech Stack Card -->
+<div class="glass-panel rounded-2xl p-6">
+<h4 class="font-headline text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6 flex items-center justify-between">
+                            Tech Stack
+                            <span class="material-symbols-outlined text-sm">terminal</span>
+</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">React 18</span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">Next.js 14</span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">Three.js</span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">WebGPU</span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">Tailwind</span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary text-[10px] font-mono border border-primary/10">PostgreSQL</span>
+<button class="px-3 py-1.5 rounded-lg border border-dashed border-outline-variant text-[10px] font-mono text-slate-500 hover:border-primary/50 hover:text-primary transition-all">
+                                + ADD TECH
+                            </button>
+</div>
+</div>
+<!-- Media Assets -->
+<div class="glass-panel rounded-2xl p-6">
+<h4 class="font-headline text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6">Mood Reference</h4>
+<div class="aspect-video rounded-xl overflow-hidden mb-4 group relative cursor-pointer border border-outline-variant/10">
+<img alt="Architecture Mood" class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 scale-105 group-hover:scale-100" data-alt="ultra-modern minimalist house exterior with glass walls at dusk dramatic lighting reflection on pool water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfsQC7xw-CnKtdII9TvhTCyQdW0jyNAO880Vwy7MqBGgf8RvsjYg4Yyk-PpnYAQV13X-iYPG5RmpN88JUEjyKqbnscQBqNtaOQJGBiYm_iwdpL96sqmTzz2HsodTujQ01YY1vYv6P-oVlYrVSdnzoICi2xaMBJmIeSNrvYnYHHwdoSPLfquMyUInb4KyYXABfsBlBRaoIr9olwmMAboDpsL_3Htz0Dbxtqb6bwc_SkUjZPbJQjXAb_9qW0ZbZSmCmleRfq8s4By2g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent"></div>
+<div class="absolute bottom-3 left-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-white text-sm">image</span>
+<span class="text-[10px] font-mono text-white/80">Ref_01.jpg</span>
+</div>
+</div>
+<button class="w-full py-3 rounded-xl border border-outline-variant/20 bg-surface-container-low text-[10px] font-headline uppercase tracking-widest text-slate-400 hover:bg-surface-container-high hover:text-white transition-all">
+                            Browse Files
+                        </button>
+</div>
+<!-- Metrics -->
+<div class="glass-panel rounded-2xl p-6">
+<h4 class="font-headline text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-6">Project Metadata</h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-[11px] text-slate-400">Confidence</span>
+<span class="text-[11px] text-secondary font-mono">88%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary shadow-[0_0_8px_rgba(110,218,180,0.5)]" style="width: 88%"></div>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="text-[11px] text-slate-400">Readiness</span>
+<span class="text-[10px] text-tertiary font-mono bg-tertiary/10 px-2 py-0.5 rounded-full border border-tertiary/20">NEEDS RESEARCH</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Action Bar (Floating HUD) -->
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-50">
+<div class="glass-panel rounded-full p-2 flex items-center gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border-primary/20 bg-[#1b1b20]/90 backdrop-blur-2xl">
+<button class="flex-1 h-14 rounded-full bg-primary-container text-on-primary-container font-headline font-bold text-sm tracking-tight flex items-center justify-center gap-3 hover:brightness-110 hover:shadow-[0_0_30px_rgba(139,128,255,0.3)] transition-all relative overflow-hidden group">
+<span class="material-symbols-outlined text-xl animate-pulse">auto_awesome</span>
+<span class="relative z-10">GENERATE RESEARCH PROMPT</span>
+<div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+</button>
+<div class="flex items-center gap-1 px-1">
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all" title="Save">
+<span class="material-symbols-outlined">save</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all" title="Share">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Visual Grain Overlay -->
+<div class="fixed inset-0 pointer-events-none z-50 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+</body></html>

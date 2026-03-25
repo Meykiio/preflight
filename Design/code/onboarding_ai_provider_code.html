@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Connect your AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#00513d",
+                        "on-primary": "#2600a1",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#ffb95d",
+                        "secondary-fixed": "#8af7cf",
+                        "primary": "#c5c0ff",
+                        "on-tertiary-container": "#3d2400",
+                        "secondary-container": "#2fa280",
+                        "on-surface-variant": "#c8c4d7",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface": "#131318",
+                        "inverse-surface": "#e4e1e9",
+                        "primary-fixed": "#e4dfff",
+                        "tertiary": "#ffb95d",
+                        "surface-dim": "#131318",
+                        "on-background": "#e4e1e9",
+                        "surface-bright": "#39383e",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#303036",
+                        "surface-container-low": "#1b1b20",
+                        "secondary-fixed-dim": "#6edab4",
+                        "tertiary-fixed": "#ffddb7",
+                        "surface-container-lowest": "#0e0e13",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-container": "#21008e",
+                        "on-secondary-fixed": "#002117",
+                        "surface-container-high": "#2a292f",
+                        "on-tertiary": "#462a00",
+                        "secondary": "#6edab4",
+                        "primary-fixed-dim": "#c5c0ff",
+                        "surface-variant": "#35343a",
+                        "surface-container-highest": "#35343a",
+                        "tertiary-container": "#c98100",
+                        "inverse-primary": "#5647d5",
+                        "outline-variant": "#474554",
+                        "on-secondary-container": "#003023",
+                        "on-primary-fixed-variant": "#3e29bd",
+                        "background": "#131318",
+                        "on-secondary": "#003829",
+                        "surface-container": "#1f1f25",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#150067",
+                        "surface-tint": "#c5c0ff",
+                        "primary-container": "#8b80ff",
+                        "outline": "#928fa0",
+                        "on-surface": "#e4e1e9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(19, 19, 24, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 20px rgba(197, 192, 255, 0.2);
+        }
+        .noise-texture {
+            position: relative;
+        }
+        .noise-texture::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 overflow-hidden">
+<!-- Blurred Background Context (Project Hub) -->
+<div class="fixed inset-0 z-0 flex flex-col blur-xl grayscale-[0.5] opacity-40">
+<!-- Mock TopAppBar -->
+<header class="bg-[#131318]/60 backdrop-blur-xl flex justify-between items-center w-full px-6 py-3 sticky top-0 z-50">
+<div class="text-xl font-bold tracking-tighter text-[#e4e1e9] font-headline">Preflight</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="text-[#c5c0ff] font-bold border-b-2 border-[#c5c0ff] pb-1 font-headline">Brief</span>
+<span class="text-[#938f99] font-headline">Research</span>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-[#c5c0ff]">notifications</span>
+<span class="material-symbols-outlined text-[#c5c0ff]">settings</span>
+</div>
+</div>
+</header>
+<!-- Mock Hero Content -->
+<main class="flex-1 p-12 max-w-7xl mx-auto w-full">
+<div class="h-64 rounded-xl bg-surface-container-high mb-8"></div>
+<div class="grid grid-cols-3 gap-8">
+<div class="h-48 rounded-xl bg-surface-container-low"></div>
+<div class="h-48 rounded-xl bg-surface-container-low"></div>
+<div class="h-48 rounded-xl bg-surface-container-low"></div>
+</div>
+</main>
+</div>
+<!-- Onboarding Overlay -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-surface-dim/80 backdrop-blur-sm">
+<!-- Step 2 Modal -->
+<div class="relative w-full max-w-2xl bg-surface-container glass-panel rounded-xl overflow-hidden noise-texture shadow-2xl border border-outline-variant/15">
+<!-- Progress Indicator -->
+<div class="absolute top-0 left-0 right-0 flex h-1.5 bg-surface-container-lowest">
+<div class="w-1/3 h-full bg-primary/20"></div>
+<div class="w-1/3 h-full bg-primary"></div>
+<div class="w-1/3 h-full bg-surface-container-lowest"></div>
+</div>
+<div class="p-10">
+<!-- Header -->
+<div class="mb-10 text-center">
+<h1 class="text-4xl font-headline font-bold tracking-tight text-on-surface mb-3">Connect your AI</h1>
+<p class="text-on-surface-variant font-body">Preflight uses AI to generate prompts. Bring your own key — free forever.</p>
+</div>
+<!-- Provider Selector -->
+<div class="mb-12">
+<label class="block text-xs font-headline font-semibold uppercase tracking-widest text-primary mb-4">Select Provider</label>
+<div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+<!-- Provider Card: Anthropic -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border-2 border-primary hover:bg-surface-container-high transition-all group">
+<img class="w-8 h-8 mb-2 rounded-sm grayscale group-hover:grayscale-0 transition-all" data-alt="Anthropic AI Provider Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWjQNfHNnYhr5FQdea2iBfxiEsVaMANoXrckTXE9SdgXOws2Enh-A8bA8Oytn6Qjt_NyzsgUyAzRcCut9FPbW8_peNa93DadBQFCIA9xIpDGmrqW2_JTb2QHFS0LBzoDDrt7B9dpRGButn6351NAhz7JRtqihQ-IIiCiqL9Folzqn76ePPCEeTAxRBmK6xw_QqMRoOIZRGsfa99_HF4NIMAgdIItFf6J0Q_D3e-kTwpHpcGul9H0-KdUuWUdPKjEKF30SAdNgTs-0"/>
+<span class="text-[10px] font-headline font-medium text-on-surface">Anthropic</span>
+</button>
+<!-- Provider Card: OpenAI -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<img class="w-8 h-8 mb-2 rounded-sm grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="OpenAI AI Provider Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr2hoCPzK4-4rQzqH41WyI82cxhAMfW5XNAJpfd2tkG3MKlUPq57eTC32F-7kC862mq1RHuM9-ar0dTbVc3hnXCwzaVuA0nppVbGzfEUddNj17n7KuRxWkxc5KbjkHS07IYlZNEJQmDheew_dcbn06Ww6Pg85iYsk1HRYW5hSZg8ZfSNBAKj0uuVCdkTYcWM6oyGJP7BMyTmwmYKymE_PtuYLIZK4uw9q90-ETCq6gl5quGO4sAEGPY9zIQjB5QkuGdYe9VkxFUTo"/>
+<span class="text-[10px] font-headline font-medium text-on-surface-variant">OpenAI</span>
+</button>
+<!-- Provider Card: Google -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<img class="w-8 h-8 mb-2 rounded-sm grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="Google Gemini AI Provider Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb1hN9rJvePnc2OjVULOPHAHggAqsCxVWfgJp24VENNriTjN0Qrtb6dxlnxCIYjO3G55T93mAOji99jIx0ruEpzYwP0g4tOa5n2Rk5-nbSSAPN06-NCLq27sJgqW26gTwybvr2MSFkzZsp6L3sc9K9RLc7zVB9LWFMyxdv0OnO85-LTbFcwhtNYskWvgPx20qS5whgZZNgi-3MmOEpAb_0geMG0jbfVuOXa_wXI_JxYoxLiLK4HhmwDe7L3jHjqhkpwrv1p4a7YzY"/>
+<span class="text-[10px] font-headline font-medium text-on-surface-variant">Gemini</span>
+</button>
+<!-- Provider Card: DeepSeek -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<img class="w-8 h-8 mb-2 rounded-sm grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="DeepSeek AI Provider Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL-jTpTxbHhpOP6AFHkx5alPW9RnPXc9LQMrAI-9GMxMeGdVpneDo4YbMKMgf8I6gZwEiCBEDNnG3kMpq2Q7FoLoWtDJTqDOeaBX_YrTDlctEJalb_yi8jM2RTQKAaG4drACpxPYDVtdFm9Ro7Vfoy-BzUVfpcCFwBhCDYusMiCY_tL_2BXiwq6_F_o1V2ltzw8m0vfOVvsL8oLmx4dWAkyyRcJovHE9ByZSC9v-czVqA03ffbyoWL2qE4n2IhScbromscpXpeZ1c"/>
+<span class="text-[10px] font-headline font-medium text-on-surface-variant">DeepSeek</span>
+</button>
+<!-- Provider Card: Groq -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<img class="w-8 h-8 mb-2 rounded-sm grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all" data-alt="Groq AI Provider Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1QrJ3BJcLRgO_sDhlf3QblBaY5FmNAu8KxvNOtyqMWoqc3_Q4c338Autudy9-klfpdB02dLblIu2QSpTByeHLXQGvvk7vZg7qXpdXUyqckDtp8oUGkyX6wUnZ40uffJZWmm4WOKKAuQ-f8FoEZR7xRlud0ec0MlnHBOJPSnY42BT_ALs8kmYXIu1r0oDrAyzDaQ39y3yyYwlMdxGjUfp3YTsVxpLkuw_r47CSq5MNSgtdluQiMX5nEBrSe2AVN4BJ0we69SuPKMQ"/>
+<span class="text-[10px] font-headline font-medium text-on-surface-variant">Groq</span>
+</button>
+<!-- Provider Card: Custom -->
+<button class="flex flex-col items-center justify-center p-4 rounded-lg bg-surface-container-lowest border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-all mb-2">api</span>
+<span class="text-[10px] font-headline font-medium text-on-surface-variant">Custom</span>
+</button>
+</div>
+</div>
+<!-- Input Section -->
+<div class="space-y-6">
+<div class="group">
+<div class="flex justify-between items-center mb-2">
+<label class="text-xs font-headline font-semibold uppercase tracking-widest text-on-surface-variant">Claude API Key</label>
+<a class="text-[11px] font-body text-primary hover:underline flex items-center gap-1" href="#">
+                                How to get your API key
+                                <span class="material-symbols-outlined text-[14px]">north_east</span>
+</a>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary/40 rounded-lg py-4 px-5 text-on-surface font-mono text-sm placeholder:text-outline-variant/50 transition-all" type="password" value="sk-ant-api03-P92j923..."/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- CTA -->
+<div class="pt-4 flex flex-col items-center gap-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary-container font-headline font-bold py-4 rounded-lg flex items-center justify-center gap-3 glow-button transition-all active:scale-[0.98]">
+<!-- Spinner State Simulated -->
+<svg class="animate-spin h-5 w-5 text-on-primary-container" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+                            Verify &amp; Continue
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-[10px] font-label text-outline-variant uppercase tracking-[0.2em]">Step 2 of 3: AI Orchestration</p>
+</div>
+</div>
+</div>
+<!-- Footer Details -->
+<div class="bg-surface-container-lowest/50 p-4 border-t border-outline-variant/10 flex justify-between items-center">
+<div class="flex items-center gap-2 opacity-60">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="text-[10px] font-label">Encrypted on-device</span>
+</div>
+<div class="flex gap-4 opacity-60">
+<span class="text-[10px] font-label">Privacy Policy</span>
+<span class="text-[10px] font-label">Terms</span>
+</div>
+</div>
+</div>
+<!-- Hud-style Metadata Decoration -->
+<div class="absolute bottom-8 left-8 flex flex-col gap-1 text-[10px] font-mono text-primary/40 uppercase tracking-widest pointer-events-none hidden md:flex">
+<span>Latency: 24ms</span>
+<span>Region: US-EAST-1</span>
+<span>Uptime: 99.98%</span>
+</div>
+<div class="absolute top-8 right-8 flex flex-col gap-1 text-right text-[10px] font-mono text-primary/40 uppercase tracking-widest pointer-events-none hidden md:flex">
+<span>Preflight v1.0.4</span>
+<span>Alpha Access Only</span>
+</div>
+</div>
+</body></html>

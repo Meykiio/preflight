@@ -1,0 +1,334 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN SYSTEM: The Developer Cockpit
+   ============================================ */
+
+:root {
+  /* Dark Theme (Default) */
+  color-scheme: dark;
+  font-family: "Inter", sans-serif;
+  
+  /* Backgrounds - Deep Space */
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #0e0e13;
+  --surface-dimmest: #0e0e13;
+  --surface-darker: #131318;
+  --surface: #131318;
+  --surface-bright: #39383e;
+  --surface-container-lowest: #0e0e13;
+  --surface-container-low: #1b1b20;
+  --surface-container: #1f1f25;
+  --surface-container-high: #2a292f;
+  --surface-container-highest: #35343a;
+  
+  /* Text - High Contrast */
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8c0;
+  --text-tertiary: #787880;
+  --on-surface: #e4e1e9;
+  --on-surface-variant: #c8c4d7;
+  
+  /* Accents */
+  --primary: #c5c0ff;
+  --primary-container: #8b80ff;
+  --secondary: #6edab4;
+  --secondary-container: #2fa280;
+  --tertiary: #ffb95d;
+  --tertiary-container: #c98100;
+  
+  /* Status */
+  --success: #6edab4;
+  --warning: #ffb95d;
+  --error: #ffb4ab;
+  
+  /* Utility */
+  --outline: #928fa0;
+  --outline-variant: #474554;
+}
+
+/* Light theme removed - Dark theme only */
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  background-color: var(--bg-primary);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(circle at 50% -20%, var(--surface-container-low) 0%, var(--bg-primary) 100%);
+  color: var(--on-surface);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+.font-headline {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-body {
+  font-family: "Inter", sans-serif;
+}
+
+.font-mono {
+  font-family: "Geist Mono", "JetBrains Mono", monospace;
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(197, 192, 255, 0.5),
+    0 0 0 4px rgba(10, 10, 15, 0.96);
+}
+
+html.light :focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(107, 91, 255, 0.5),
+    0 0 0 4px rgba(255, 255, 255, 0.96);
+}
+
+/* ============================================
+   MATERIAL ICONS
+   ============================================ */
+
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.material-symbols-outlined[filled="true"] {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+/* ============================================
+   NOISE TEXTURE
+   ============================================ */
+
+.noise-texture {
+  position: relative;
+}
+
+.noise-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   GLASS PANEL
+   ============================================ */
+
+.glass-panel {
+  background: rgba(31, 31, 37, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 192, 255, 0.08);
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(107, 91, 255, 0.1);
+}
+
+@supports not (backdrop-filter: blur(12px)) {
+  .glass-panel {
+    background: rgba(31, 31, 37, 0.96);
+  }
+  
+  html.light .glass-panel {
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
+/* ============================================
+   GRADIENTS
+   ============================================ */
+
+.gradient-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-container) 100%);
+}
+
+.gradient-tertiary {
+  background: linear-gradient(135deg, var(--tertiary) 0%, var(--tertiary-container) 100%);
+}
+
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
+
+.glow-primary {
+  box-shadow: 0 0 20px rgba(197, 192, 255, 0.2);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 20px rgba(110, 218, 180, 0.2);
+}
+
+.glow-tertiary {
+  box-shadow: 0 0 20px rgba(255, 185, 93, 0.2);
+}
+
+/* ============================================
+   SCROLLBARS
+   ============================================ */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-container-high) var(--surface-darker);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--surface-darker);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--surface-container-high);
+  border-radius: 9999px;
+  border: 2px solid var(--surface-darker);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--outline);
+}
+
+html.light * {
+  scrollbar-color: var(--surface-container-high) var(--surface-container-lowest);
+}
+
+html.light *::-webkit-scrollbar-track {
+  background: var(--surface-container-lowest);
+}
+
+html.light *::-webkit-scrollbar-thumb {
+  background: var(--surface-container-high);
+  border: 2px solid var(--surface-container-lowest);
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+
+::selection {
+  background-color: rgba(197, 192, 255, 0.3);
+  color: var(--text-primary);
+}
+
+html.light ::selection {
+  background-color: rgba(107, 91, 255, 0.2);
+}
+
+/* ============================================
+   TEXT GLOW (For Headlines)
+   ============================================ */
+
+.text-glow {
+  text-shadow: 0 0 15px rgba(197, 192, 255, 0.3);
+}
+
+html.light .text-glow {
+  text-shadow: 0 0 15px rgba(107, 91, 255, 0.2);
+}
+
+/* ============================================
+   TERMINAL INPUT GLOW
+   ============================================ */
+
+.terminal-glow:focus-within {
+  border-bottom-color: var(--primary);
+  box-shadow: 0 4px 12px -4px rgba(197, 192, 255, 0.2);
+}
+
+html.light .terminal-glow:focus-within {
+  border-bottom-color: var(--primary);
+  box-shadow: 0 4px 12px -4px rgba(107, 91, 255, 0.15);
+}
+
+/* ============================================
+   PROGRESS BAR STYLES
+   ============================================ */
+
+.progress-teal {
+  background-color: var(--secondary);
+  box-shadow: 0 0 10px rgba(110, 218, 180, 0.4);
+}
+
+.progress-amber {
+  background-color: var(--tertiary);
+  box-shadow: 0 0 10px rgba(255, 185, 93, 0.4);
+}
+
+.progress-primary {
+  background-color: var(--primary);
+  box-shadow: 0 0 10px rgba(197, 192, 255, 0.4);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

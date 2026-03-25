@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Design Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=Geist+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed": "#2a1700",
+              "tertiary-fixed-dim": "#ffb95d",
+              "primary": "#c5c0ff",
+              "tertiary-container": "#c98100",
+              "on-primary-fixed-variant": "#3e29bd",
+              "inverse-primary": "#5647d5",
+              "primary-fixed-dim": "#c5c0ff",
+              "on-tertiary-fixed-variant": "#653e00",
+              "on-secondary": "#003829",
+              "secondary-fixed-dim": "#6edab4",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed": "#002117",
+              "outline-variant": "#474554",
+              "secondary": "#6edab4",
+              "primary-container": "#8b80ff",
+              "surface-container-highest": "#35343a",
+              "on-background": "#e4e1e9",
+              "tertiary-fixed": "#ffddb7",
+              "surface-variant": "#35343a",
+              "on-tertiary-container": "#3d2400",
+              "on-primary-fixed": "#150067",
+              "outline": "#928fa0",
+              "on-surface-variant": "#c8c4d7",
+              "on-secondary-fixed-variant": "#00513d",
+              "on-primary": "#2600a1",
+              "surface-container": "#1f1f25",
+              "on-tertiary": "#462a00",
+              "on-surface": "#e4e1e9",
+              "on-secondary-container": "#003023",
+              "surface-dim": "#131318",
+              "background": "#131318",
+              "surface-container-low": "#1b1b20",
+              "secondary-container": "#2fa280",
+              "primary-fixed": "#e4dfff",
+              "surface-bright": "#39383e",
+              "surface-container-high": "#2a292f",
+              "surface": "#131318",
+              "inverse-on-surface": "#303036",
+              "on-error": "#690005",
+              "error-container": "#93000a",
+              "tertiary": "#ffb95d",
+              "error": "#ffb4ab",
+              "surface-container-lowest": "#0e0e13",
+              "surface-tint": "#c5c0ff",
+              "secondary-fixed": "#8af7cf",
+              "inverse-surface": "#e4e1e9",
+              "on-primary-container": "#21008e"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["Geist Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(19, 19, 24, 0.6);
+        backdrop-filter: blur(12px);
+      }
+      .gradient-primary {
+        background: linear-gradient(135deg, #c5c0ff 0%, #8b80ff 100%);
+      }
+      .asymmetric-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 2rem;
+      }
+    </style>
+</head>
+<body class="bg-surface-dim text-on-surface font-body selection:bg-primary/30 min-h-screen">
+<!-- SideNavBar (The Anchor) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 bg-surface-container-lowest w-64 border-r border-outline-variant/15 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-xl">architecture</span>
+</div>
+<div>
+<h2 class="text-on-background font-semibold font-headline tracking-tight">Project Alpha</h2>
+<p class="text-[10px] text-outline uppercase tracking-widest">In Development</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">description</span>
+<span class="font-headline text-sm tracking-tight">Brief</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">analytics</span>
+<span class="font-headline text-sm tracking-tight">Research</span>
+</a>
+<!-- ACTIVE TAB: Design -->
+<a class="flex items-center gap-3 bg-primary/10 text-primary rounded-lg px-4 py-3 border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">architecture</span>
+<span class="font-headline text-sm tracking-tight font-bold">Design</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">assignment</span>
+<span class="font-headline text-sm tracking-tight">PRD</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">terminal</span>
+<span class="font-headline text-sm tracking-tight">Build</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">inventory_2</span>
+<span class="font-headline text-sm tracking-tight">Vault</span>
+</a>
+</nav>
+<div class="px-6 mt-auto space-y-4">
+<button class="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-outline-variant/30 hover:bg-surface-container-high transition-all group">
+<span class="material-symbols-outlined text-sm text-primary">add</span>
+<span class="text-xs font-bold uppercase tracking-wider">New Command</span>
+</button>
+<div class="pt-6 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 text-outline px-4 py-2 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="text-xs">Docs</span>
+</a>
+<a class="flex items-center gap-3 text-outline px-4 py-2 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span class="text-xs">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar (The Header) -->
+<header class="sticky top-0 z-40 dark:bg-[#131318]/60 backdrop-blur-xl border-b border-outline-variant/5">
+<div class="flex justify-between items-center w-full px-8 py-4">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-bold tracking-tighter text-on-background font-headline">Preflight</h1>
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg">search</span>
+<input class="bg-surface-container-lowest border-none rounded-full py-2 pl-10 pr-4 text-xs w-64 focus:ring-1 focus:ring-primary/50 transition-all" placeholder="Search project assets..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Close up profile picture of a professional designer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWdfRebCOtSAZr7Xa4ONYa3iKgcu_1KSj1Gncb5kSvkav4NgsVjqwudcsQcIZVX4cMp1C6hww0SeyRoXVKV88nW1ohngY1gFqtY9TpBOMC_QqsTqidIFUAdCR4o1LlV-VEPyYlVMs89oenMtvfKJaY8UQzuzmy53A67h2b67fXck9R0fEmw6MP7HKQEMI0kfDBCLVDR-v0Yp2wA94ZmDdHbvEr-b6o4WLFKUxy7kDJ8NwrfLgpdpPczaxC5SHhmK2zy4D4QFijwsI"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Top Section: Platform & Context Selectors -->
+<div class="asymmetric-grid items-start">
+<div class="space-y-6">
+<div>
+<span class="text-[10px] text-outline uppercase tracking-widest font-bold mb-3 block">Target Platform</span>
+<div class="flex gap-1 p-1 bg-surface-container-lowest rounded-xl w-fit">
+<button class="px-6 py-2 rounded-lg text-xs font-semibold bg-primary text-on-primary transition-all">Stitch</button>
+<button class="px-6 py-2 rounded-lg text-xs font-semibold text-outline hover:text-on-surface hover:bg-surface-container-high transition-all">v0</button>
+<button class="px-6 py-2 rounded-lg text-xs font-semibold text-outline hover:text-on-surface hover:bg-surface-container-high transition-all">Figma AI</button>
+</div>
+</div>
+<div>
+<span class="text-[10px] text-outline uppercase tracking-widest font-bold mb-3 block">Context Nodes</span>
+<div class="flex flex-wrap gap-3">
+<div class="flex items-center gap-2 bg-surface-container border border-primary/20 rounded-full px-4 py-2 hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-primary text-sm">description</span>
+<span class="text-sm font-medium">Brief</span>
+<span class="material-symbols-outlined text-outline text-xs group-hover:text-primary">check_circle</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container border border-primary/20 rounded-full px-4 py-2 hover:border-primary/50 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-primary text-sm">analytics</span>
+<span class="text-sm font-medium">Research</span>
+<span class="material-symbols-outlined text-outline text-xs group-hover:text-primary">check_circle</span>
+</div>
+<button class="flex items-center gap-2 border border-outline-variant/20 rounded-full px-4 py-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-outline text-sm">add</span>
+<span class="text-sm text-outline">Add context</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-end h-full">
+<button class="gradient-primary text-on-primary font-headline font-bold py-6 px-8 rounded-xl flex items-center justify-between group active:scale-95 transition-all">
+<div class="text-left">
+<span class="block text-[10px] uppercase tracking-tighter opacity-70">Action Center</span>
+<span class="text-lg">Generate Design Prompt</span>
+</div>
+<span class="material-symbols-outlined text-3xl group-hover:translate-x-1 transition-transform">bolt</span>
+</button>
+</div>
+</div>
+<!-- Output Panel: Monospace Prompt & Toolbar -->
+<section class="glass-panel border border-outline-variant/10 rounded-2xl overflow-hidden shadow-2xl shadow-primary/5">
+<div class="bg-surface-container-high/50 px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-error-container/30"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary-container/30"></div>
+<div class="w-3 h-3 rounded-full bg-secondary-container/30"></div>
+</div>
+<span class="text-[10px] text-outline font-mono ml-4 uppercase tracking-widest">prompt_v1.2.txt</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="bg-surface-container-lowest text-primary text-[10px] font-bold uppercase tracking-wider px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+                            Open Stitch
+                        </button>
+<button class="bg-surface-container-lowest text-primary text-[10px] font-bold uppercase tracking-wider px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                            Open v0
+                        </button>
+</div>
+</div>
+<div class="p-8 font-mono text-sm leading-relaxed text-on-surface-variant/90 max-h-[400px] overflow-y-auto custom-scrollbar bg-surface-container-lowest/40">
+<p class="mb-4"><span class="text-primary">ACT</span> as a high-end UI systems architect.</p>
+<p class="mb-4"><span class="text-primary">INPUT_NODES:</span> {Brief_V2}, {Research_Analytics_2024}</p>
+<p class="mb-4"><span class="text-primary">DESIGN_PARAMETERS:</span></p>
+<ul class="list-none space-y-2 pl-4 border-l border-outline-variant/20 ml-2">
+<li>- <span class="text-secondary">Core Theme:</span> "The Obsidian Cockpit" (Low light, instrument-heavy)</li>
+<li>- <span class="text-secondary">Radius:</span> 0.5rem base, 1.2rem containers</li>
+<li>- <span class="text-secondary">Color:</span> #131318 base, #c5c0ff interaction engine</li>
+<li>- <span class="text-secondary">Typography:</span> Space Grotesk (Headlines), Inter (Functional)</li>
+</ul>
+<p class="mt-6">Generate a comprehensive Bento Grid dashboard layout for a fintech monitoring suite. Use asymmetric weighting for the real-time transaction feed. Prioritize <span class="text-tertiary">Glassmorphism</span> surfaces for hovering notification HUDs. Ensure zero 1px borders; use surface tonal shifts to define boundaries...</p>
+<div class="mt-8 pt-4 border-t border-outline-variant/10 flex items-center gap-2 text-[10px] text-outline italic">
+<span class="material-symbols-outlined text-xs">info</span>
+                        Optimized for Stitch Visual Engine 4.0
+                    </div>
+</div>
+</section>
+<!-- Bottom Section: Uploads Grid -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-lg font-bold font-headline text-on-background">Output History</h3>
+<p class="text-xs text-outline">Manage and view previously generated dashboard wireframes</p>
+</div>
+<button class="bg-surface-container-high hover:bg-surface-bright px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-sm">cloud_upload</span>
+                        Upload Design Output
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Thumbnail Card 1 -->
+<div class="group relative aspect-video rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/10 hover:border-primary/40 transition-all cursor-pointer">
+<img alt="Dashboard Wireframe" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Dark UI dashboard with data visualizations and charts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3c_zTlosXAZbZKUJZUgAt9vUuREuLBfnCol9v2LBlqyGKmbdQQC2jUdEpUUpWsQczZYrnFES4eYqEluWkoEEv6NdfrmYma5yYNHrWWM0aC_BmvCGLTgIhv1GsWncCHQa9iUdv3HfLIKss8JdRYyWvy1L6QA-BPWEpETJlsAeQhAcecmLxLdCWr-SkVq-1sBpTJ6NfjyXypNWrthPKU_R5OkSFd5WDfYDK75d79djGIvUbvjO64t-xm_F__0mjd1JwxNgllxPvgrQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 to-transparent flex flex-col justify-end p-4">
+<span class="text-[10px] font-bold text-primary uppercase mb-1">Stitch v4</span>
+<span class="text-xs font-semibold">Analytics Dashboard Alpha</span>
+</div>
+</div>
+<!-- Thumbnail Card 2 -->
+<div class="group relative aspect-video rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/10 hover:border-primary/40 transition-all cursor-pointer">
+<img alt="Wireframe Prototype" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Abstract wireframe layout of a web application" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA87Y6mJGSjtOAICMTlCE1oFEBrWynUpd6XDZyYEQokL1qAHOP8gdnYrDDCwRAZ5ZC0Sv5sBmXMYOTi5uLxtI986lOQOXNPNGhlWPulnnqX7keThDWI9rqX1CjGoRg8p1xPps0LPdtL2bdWG9K1LrbvpsEfvwgFvrFQLvwIhORRqFEkkbpvFxPm5yaiEfCG_1JX-O1nEtkvB-EZTLU8g4JmnPv1aQhEipWYepE-J7B6TF3uZNV_pYppzSMpUK7JbnKdDLy8LILSiDk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 to-transparent flex flex-col justify-end p-4">
+<span class="text-[10px] font-bold text-secondary uppercase mb-1">v0 Render</span>
+<span class="text-xs font-semibold">User Profile Interface</span>
+</div>
+</div>
+<!-- Thumbnail Card 3 -->
+<div class="group relative aspect-video rounded-xl overflow-hidden bg-surface-container-lowest border border-outline-variant/10 hover:border-primary/40 transition-all cursor-pointer">
+<img alt="Complex UI Data" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="Complex data interface with multiple cards and widgets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeYM-V7hlPicgPKflCtjUo5F3_e3ZAw3yNEckCNUpXQ2JlIW58LcBhUQ6aJIEkzlG-_24ViCp2w-3fjd_5tJgn2v023aNNg3VtYVJyxtV2KEktqDzQjzFRKfKzb63nsx6r6BBqwcyzpSTj-3FPU27zUSzXDOohrfVMpxiQUcyhqV2QyUgxmRwTD7QS481zIpriS-asVlnTEBT_p0Z6ggciHDQ_GsA_oAEQNm341eEvHiOECtGCeNrwpK1gWafRicLiHhJfjJ6dD9g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim/90 to-transparent flex flex-col justify-end p-4">
+<span class="text-[10px] font-bold text-primary uppercase mb-1">Stitch v4</span>
+<span class="text-xs font-semibold">Project Vault Mockup</span>
+</div>
+</div>
+<!-- Empty State / Add -->
+<div class="group aspect-video rounded-xl border-2 border-dashed border-outline-variant/20 hover:border-primary/30 flex flex-col items-center justify-center gap-3 transition-all cursor-pointer hover:bg-surface-container/30">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add_photo_alternate</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-outline">Add Concept</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FAB Suppression: On Detail Pages, prioritize content. Here we show it because it's a primary workspace. -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-full gradient-primary shadow-xl shadow-primary/20 flex items-center justify-center text-on-primary active:scale-90 transition-all">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Solstice AI Brief</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#2a1700",
+                        "tertiary-fixed-dim": "#ffb95d",
+                        "primary": "#c5c0ff",
+                        "tertiary-container": "#c98100",
+                        "on-primary-fixed-variant": "#3e29bd",
+                        "inverse-primary": "#5647d5",
+                        "primary-fixed-dim": "#c5c0ff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary": "#003829",
+                        "secondary-fixed-dim": "#6edab4",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#002117",
+                        "outline-variant": "#474554",
+                        "secondary": "#6edab4",
+                        "primary-container": "#8b80ff",
+                        "surface-container-highest": "#35343a",
+                        "on-background": "#e4e1e9",
+                        "tertiary-fixed": "#ffddb7",
+                        "surface-variant": "#35343a",
+                        "on-tertiary-container": "#3d2400",
+                        "on-primary-fixed": "#150067",
+                        "outline": "#928fa0",
+                        "on-surface-variant": "#c8c4d7",
+                        "on-secondary-fixed-variant": "#00513d",
+                        "on-primary": "#2600a1",
+                        "surface-container": "#1f1f25",
+                        "on-tertiary": "#462a00",
+                        "on-surface": "#e4e1e9",
+                        "on-secondary-container": "#003023",
+                        "surface-dim": "#131318",
+                        "background": "#131318",
+                        "surface-container-low": "#1b1b20",
+                        "secondary-container": "#2fa280",
+                        "primary-fixed": "#e4dfff",
+                        "surface-bright": "#39383e",
+                        "surface-container-high": "#2a292f",
+                        "surface": "#131318",
+                        "inverse-on-surface": "#303036",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "tertiary": "#ffb95d",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0e0e13",
+                        "surface-tint": "#c5c0ff",
+                        "secondary-fixed": "#8af7cf",
+                        "inverse-surface": "#e4e1e9",
+                        "on-primary-container": "#21008e"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(53, 52, 58, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary/30">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 dark:bg-[#0e0e13] h-screen w-64 border-r dark:border-[#39383e]/15 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-gradient-to-br from-primary to-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed text-lg" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<div>
+<h1 class="dark:text-[#e4e1e9] font-semibold text-sm tracking-tight">Project Alpha</h1>
+<p class="text-[10px] uppercase tracking-widest text-outline">In Development</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<!-- Active Tab: Brief -->
+<a class="flex items-center gap-3 dark:bg-[#c5c0ff]/10 dark:text-[#c5c0ff] rounded-lg px-4 py-3 border-r-2 border-[#c5c0ff] transition-all duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-headline text-sm font-medium">Brief</span>
+</a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-3 dark:hover:bg-[#131318] dark:hover:text-[#e4e1e9] transition-colors group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-headline text-sm">Research</span>
+</a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-3 dark:hover:bg-[#131318] dark:hover:text-[#e4e1e9] transition-colors group" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-headline text-sm">Design</span>
+</a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-3 dark:hover:bg-[#131318] dark:hover:text-[#e4e1e9] transition-colors group" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-headline text-sm">PRD</span>
+</a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-3 dark:hover:bg-[#131318] dark:hover:text-[#e4e1e9] transition-colors group" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-headline text-sm">Build</span>
+</a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-3 dark:hover:bg-[#131318] dark:hover:text-[#e4e1e9] transition-colors group" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-headline text-sm">Vault</span>
+</a>
+</nav>
+<div class="px-6 mb-6">
+<button class="w-full py-2.5 rounded-lg bg-surface-container-high border border-outline-variant/20 flex items-center justify-center gap-2 text-xs font-semibold hover:bg-surface-bright transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Command
+            </button>
+</div>
+<div class="px-4 pt-4 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-2 text-xs dark:hover:text-[#e4e1e9] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+                Docs
+            </a>
+<a class="flex items-center gap-3 dark:text-[#938f99] px-4 py-2 text-xs dark:hover:text-[#e4e1e9] transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">contact_support</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen bg-surface-dim relative overflow-hidden">
+<div class="grain absolute inset-0 pointer-events-none"></div>
+<!-- Sticky Header Overlay -->
+<header class="sticky top-0 z-40 dark:bg-[#131318]/60 backdrop-blur-xl flex justify-between items-center w-full px-12 py-6">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold tracking-tighter dark:text-[#e4e1e9] font-headline">Project Workspace</h2>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(110,218,180,0.5)]"></span>
+<span class="text-[10px] text-outline uppercase tracking-widest font-medium">Session Active • Solstice AI</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full dark:hover:bg-[#39383e]/50 transition-all duration-200">
+<span class="material-symbols-outlined text-outline">notifications</span>
+</button>
+<button class="p-2 rounded-full dark:hover:bg-[#39383e]/50 transition-all duration-200">
+<span class="material-symbols-outlined text-outline">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-outline-variant/30 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Abstract minimalist user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPSRKMu4oZz5pTQo0Glaj5no3NPEEfn0uhKKoQe1EXeYRdzBWd00FwzvFaiMu7Tn0CVkRgTbDpYyP0uzQbcJ9J02k6MwTlfXCmdq9_DLWAwRcaUtdnzlajJ5Cq-NiN35n_vwG-Y4e19_NriDOweDPPV6yvE-7maOUKE7SEtvxpPpDAMZxsSZ_RgY_QVDhTgxzvG7e9kTB3Zm1rwiOfjlu_TyGGhQ8ZCHufGY4raY1mzR2uIrgb8XlBUe2H-9FJA29i_KUTGEqHOz0"/>
+</div>
+</div>
+</header>
+<!-- Centered Brief Layout -->
+<div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+<section class="space-y-12">
+<!-- App Identity Section -->
+<div class="space-y-4">
+<label class="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">Project Identity</label>
+<input class="w-full bg-transparent border-none text-6xl font-headline font-bold tracking-tighter text-on-surface focus:ring-0 p-0 placeholder:text-surface-container-highest" placeholder="Enter App Name..." type="text" value="Solstice AI"/>
+<p class="text-outline text-sm max-w-xl">Define the core mission and identifying markers for your new computational engine.</p>
+</div>
+<!-- Bento Grid Layout for Brief Sections -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Problem Statement (Glass Card) -->
+<div class="col-span-12 md:col-span-7 glass-panel rounded-xl p-8 border border-outline-variant/10 relative overflow-hidden group">
+<div class="relative z-10 space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<h3 class="font-headline font-semibold text-lg">The Problem</h3>
+</div>
+<textarea class="w-full bg-surface-container-lowest/50 rounded-lg border-none focus:ring-1 focus:ring-primary/50 text-on-surface/80 text-sm leading-relaxed p-4 font-body" placeholder="Describe the pain point..." rows="4">Residential solar efficiency is currently static, failing to adapt to real-time micro-climate shifts and local grid volatility, leading to a 15-20% loss in potential energy harvesting.</textarea>
+</div>
+</div>
+<!-- Target User (Glass Card) -->
+<div class="col-span-12 md:col-span-5 glass-panel rounded-xl p-8 border border-outline-variant/10 flex flex-col justify-between">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">group</span>
+<h3 class="font-headline font-semibold text-lg">Target User</h3>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg border border-outline-variant/5">
+<span class="material-symbols-outlined text-primary text-sm">home</span>
+<span class="text-xs font-medium">Smart Home Owners</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg border border-outline-variant/5">
+<span class="material-symbols-outlined text-primary text-sm">ev_station</span>
+<span class="text-xs font-medium">EV Fleet Managers</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-high/40 rounded-lg border border-outline-variant/5">
+<span class="material-symbols-outlined text-primary text-sm">eco</span>
+<span class="text-xs font-medium">Off-grid Enthusiasts</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Core Features (Interactive List) -->
+<div class="col-span-12 glass-panel rounded-xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h3 class="font-headline font-semibold text-lg">Core Features</h3>
+</div>
+<button class="flex items-center gap-1 text-[10px] uppercase font-bold text-primary tracking-widest hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-xs">add_circle</span>
+                                Add Requirement
+                            </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="group flex items-center justify-between p-4 bg-surface-container-lowest/40 rounded-lg border border-outline-variant/10 hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<span class="w-8 h-8 flex items-center justify-center rounded bg-primary/10 text-primary font-mono text-xs">01</span>
+<span class="text-sm">Predictive solar tracking via ML</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="group flex items-center justify-between p-4 bg-surface-container-lowest/40 rounded-lg border border-outline-variant/10 hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<span class="w-8 h-8 flex items-center justify-center rounded bg-primary/10 text-primary font-mono text-xs">02</span>
+<span class="text-sm">Local grid pricing arbitrage</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="group flex items-center justify-between p-4 bg-surface-container-lowest/40 rounded-lg border border-outline-variant/10 hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<span class="w-8 h-8 flex items-center justify-center rounded bg-primary/10 text-primary font-mono text-xs">03</span>
+<span class="text-sm">Real-time weather API integration</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="group flex items-center justify-between p-4 bg-surface-container-lowest/40 rounded-lg border border-outline-variant/10 hover:border-primary/30 transition-all">
+<div class="flex items-center gap-4">
+<span class="w-8 h-8 flex items-center justify-center rounded bg-primary/10 text-primary font-mono text-xs">04</span>
+<span class="text-sm">Automated battery cycle optimization</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tech Stack & Platforms (Small Bento Pieces) -->
+<div class="col-span-12 md:col-span-6 glass-panel rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-6">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">layers</span>
+<h3 class="font-headline font-semibold text-lg">Tech Stack Hint</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded bg-surface-container-lowest border border-outline-variant/20 text-[11px] font-mono text-primary uppercase">React Native</span>
+<span class="px-3 py-1 rounded bg-surface-container-lowest border border-outline-variant/20 text-[11px] font-mono text-primary uppercase">Python (FastAPI)</span>
+<span class="px-3 py-1 rounded bg-surface-container-lowest border border-outline-variant/20 text-[11px] font-mono text-primary uppercase">TensorFlow</span>
+<span class="px-3 py-1 rounded bg-surface-container-lowest border border-outline-variant/20 text-[11px] font-mono text-primary uppercase">PostgreSQL</span>
+<span class="px-3 py-1 rounded bg-surface-container-lowest border border-outline-variant/20 text-[11px] font-mono text-primary uppercase">Redis</span>
+</div>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 glass-panel rounded-xl p-8 border border-outline-variant/10 flex flex-col gap-6">
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">devices</span>
+<h3 class="font-headline font-semibold text-lg">Target Platforms</h3>
+</div>
+<div class="flex gap-4">
+<div class="flex-1 flex flex-col items-center justify-center gap-3 p-4 bg-primary/5 rounded-lg border border-primary/20 cursor-pointer hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">smartphone</span>
+<span class="text-[10px] uppercase font-bold tracking-widest">iOS / Android</span>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center gap-3 p-4 bg-surface-container-lowest/40 rounded-lg border border-outline-variant/10 cursor-pointer hover:border-primary/20 transition-all opacity-50 grayscale hover:grayscale-0 hover:opacity-100">
+<span class="material-symbols-outlined">laptop</span>
+<span class="text-[10px] uppercase font-bold tracking-widest">Desktop</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="pt-8 flex flex-col items-center gap-6">
+<div class="flex items-center gap-4 text-outline/50">
+<div class="h-px w-24 bg-gradient-to-r from-transparent to-outline-variant/40"></div>
+<span class="text-[10px] font-mono uppercase tracking-[0.3em]">End of Brief Configuration</span>
+<div class="h-px w-24 bg-gradient-to-l from-transparent to-outline-variant/40"></div>
+</div>
+<button class="group relative px-12 py-5 bg-gradient-to-br from-primary to-primary-container rounded-full text-on-primary-fixed font-headline font-bold text-lg tracking-tight hover:shadow-[0_0_30px_rgba(197,192,255,0.4)] transition-all active:scale-[0.97] flex items-center gap-4">
+                        Brief looks complete -&gt; Generate Research Prompt
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+<div class="absolute -inset-1 rounded-full bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<p class="text-[11px] text-outline text-center max-w-xs leading-relaxed">
+                        This will initialize the <span class="text-secondary">Analysis Engine</span> to find market gaps and technical feasibility for Solstice AI.
+                    </p>
+</div>
+</section>
+</div>
+<!-- Ambient Glow Effects -->
+<div class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none opacity-40"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-secondary/5 blur-[100px] rounded-full pointer-events-none opacity-30"></div>
+</main>
+</body></html>

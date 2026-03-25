@@ -1,0 +1,173 @@
+# .cursorrules — Preflight Project OS
+# Stack: React 18 + Vite + TypeScript (strict) + Tailwind CSS + shadcn/ui + Dexie.js + Zustand + Supabase (optional)
+# Purpose: Open-source Project OS for vibe coders. Local-first, BYOK AI, premium dark UI.
+
+---
+
+## PROJECT CONTEXT
+
+This is Preflight — a web application that generates AI prompts, PRDs, system instructions, rules files, and sequential build workflows for vibe coders. It is local-first (IndexedDB via Dexie.js) with optional Supabase cloud sync.
+
+Read DOCS.md before every session. Update DOCS.md after every meaningful change.
+
+---
+
+## ARCHITECTURE
+```
+src/
+  components/       # Reusable UI components (shadcn/ui + custom)
+    ui/             # shadcn/ui primitives (do not modify)
+    shared/         # Custom shared components (CopyButton, OutputPanel, etc.)
+    layout/         # AppLayout, Sidebar, Header
+  pages/            # Route-level page components
+    hub/            # Project Hub
+    workspace/      # Project Workspace (Brief, Research, Design, PRD, Build, Vault)
+    settings/       # Settings page
+  stores/           # Zustand stores
+  hooks/            # Custom React hooks
+  lib/              # Utilities, config, Dexie schema, Supabase client
+  services/         # AI provider adapters, generation logic
+  types/            # TypeScript interfaces and enums
+  assets/           # Static assets
+```
+
+---
+
+## CODE STYLE
+
+- TypeScript strict mode. No `any` types. Ever.
+- Functional components only. No class components.
+- Use early returns to reduce nesting.
+- Descriptive variable names with auxiliary verbs: `isLoading`, `hasError`, `canGenerate`
+- Max file size: 250 LOC. Split into smaller files if exceeded.
+- Import order: React → third-party → internal (use absolute imports via tsconfig paths)
+- Use `const` for everything except loop variables
+- No inline styles unless the value is dynamic (e.g., width from JS calculation)
+- Tailwind utility classes only. No custom CSS files except for global reset in index.css.
+
+---
+
+## DESIGN SYSTEM (NON-NEGOTIABLE)
+
+Colors (use Tailwind config tokens only):
+- Background: `surface` (#131318), `surface-container-lowest` (#0e0e13), `surface-container` (#1f1f25)
+- Primary accent: `primary` (#c5c0ff), `primary-container` (#8b80ff)
+- Secondary accent: `secondary` (#6edab4)
+- Tertiary: `tertiary` (#ffb95d)
+- Text: `on-surface` (#e4e1e9), `on-surface-variant` (#c8c4d7), `outline` (#928fa0)
+
+Typography:
+- Headlines: `font-headline` (Space Grotesk), weight 700, tracking-tighter
+- Body: `font-body` (Inter), weight 400
+- Code/mono: `font-mono` (JetBrains Mono)
+
+Rules:
+- NO explicit 1px solid borders for structural separation — use surface tonal shifts only
+- Ghost borders only when accessibility requires: `border border-outline-variant/15`
+- Glassmorphism on floating elements only: `bg-surface-container/60 backdrop-blur-xl`
+- Gradient CTAs: `bg-gradient-to-br from-primary to-primary-container`
+- Hover glow on primary buttons: `hover:shadow-[0_0_20px_rgba(197,192,255,0.2)]`
+- Noise texture on cards (3% opacity SVG filter)
+
+---
+
+## DEXIE.JS DATABASE
+
+- All database logic in `/src/lib/db.ts`
+- Single Dexie instance, exported as `db`
+- Schema versioned — always increment version on schema changes, never break existing data
+- All queries wrapped in try/catch — never let DB errors reach the UI silently
+- Use Dexie's liveQuery for reactive data in hooks
+- Never query the DB directly in components — always use hooks from `/src/hooks/`
+
+---
+
+## SUPABASE (CLOUD-OPTIONAL)
+
+- Supabase client in `/src/lib/supabase.ts`
+- RLS enabled on ALL tables — no exceptions
+- Never use `service_role` key on the client
+- Auth state managed via Zustand store (subscribe to `onAuthStateChange`)
+- All Supabase calls in service layer (`/src/services/`) — never in components
+- Types generated from Supabase schema, stored in `/src/types/database.ts`
+
+---
+
+## AI PROVIDER INTEGRATION (BYOK)
+
+- Provider interface in `/src/services/ai/types.ts`
+- One adapter file per provider in `/src/services/ai/providers/`
+- API keys stored ONLY in Dexie.js (local) or Supabase vault (cloud) — never in localStorage, never in sessionStorage
+- Never log or expose API keys
+- All AI calls go through `/src/services/ai/index.ts` (single entry point)
+- Graceful degradation: if no API key is set, show the onboarding CTA to add one
+- Support streaming responses for all providers that support it
+
+---
+
+## STATE MANAGEMENT (ZUSTAND)
+
+- One store file per domain in `/src/stores/`
+- Stores: `projectStore`, `uiStore`, `aiStore`, `settingsStore`
+- Never mutate state directly — always use store actions
+- Persist state to Dexie.js on every meaningful write (use Zustand middleware)
+- Use `useShallow` for slice subscriptions to prevent unnecessary re-renders
+
+---
+
+## DOCUMENTATION (MANDATORY)
+
+Every session must:
+1. Read DOCS.md at the start
+2. Update DOCS.md at the end with any new files, features, or changes
+3. Add JSDoc to every new exported function and interface
+
+DOCS.md structure:
+- Project Overview
+- Tech Stack
+- Folder Structure
+- Data Model
+- Key Features (with implementation notes)
+- API Integration
+- Known Issues
+- Last Updated: [date]
+
+---
+
+## TESTING
+
+- Test framework: Vitest + React Testing Library
+- Unit tests for all utility functions in `/src/lib/`
+- Unit tests for all Zustand store actions
+- Integration tests for AI provider adapters (mock API calls)
+- Smoke tests for all page components (renders without crashing)
+- Test-first for new features: write failing test → implement → confirm passing
+- Run `npm run test` before marking any stage complete
+
+---
+
+## PROHIBITED BEHAVIORS
+
+- Do NOT use `any` type
+- Do NOT write files over 250 LOC
+- Do NOT add npm packages without explicit user approval
+- Do NOT hardcode API keys, URLs, or environment-specific values
+- Do NOT use `console.log` in production code (use a logger utility)
+- Do NOT break existing functionality when adding new features
+- Do NOT skip documentation updates
+- Do NOT implement multiple features in one prompt response
+- Do NOT use standard box shadows (use tonal surface layering per DESIGN.md)
+- Do NOT use 1px solid borders for structural layout (use surface color shifts)
+
+---
+
+## WORKFLOW (EVERY PROMPT)
+
+1. ANALYZE: Read DOCS.md and relevant type files. Identify what exists.
+2. PLAN: State what you will do in numbered steps before writing code.
+3. IMPLEMENT: Execute the plan. One thing at a time.
+4. TEST: Run tests. Fix failures before proceeding.
+5. DOCUMENT: Update DOCS.md. Add JSDoc to new exports.
+6. SUMMARIZE: List what was built/changed in 3-5 bullet points.
+
+Never skip any step. Never implement without planning first.

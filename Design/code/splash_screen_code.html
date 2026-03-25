@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Launching</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#00513d",
+                        "on-primary": "#2600a1",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#ffb95d",
+                        "secondary-fixed": "#8af7cf",
+                        "primary": "#c5c0ff",
+                        "on-tertiary-container": "#3d2400",
+                        "secondary-container": "#2fa280",
+                        "on-surface-variant": "#c8c4d7",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface": "#131318",
+                        "inverse-surface": "#e4e1e9",
+                        "primary-fixed": "#e4dfff",
+                        "tertiary": "#ffb95d",
+                        "surface-dim": "#131318",
+                        "on-background": "#e4e1e9",
+                        "surface-bright": "#39383e",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#303036",
+                        "surface-container-low": "#1b1b20",
+                        "secondary-fixed-dim": "#6edab4",
+                        "tertiary-fixed": "#ffddb7",
+                        "surface-container-lowest": "#0e0e13",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-container": "#21008e",
+                        "on-secondary-fixed": "#002117",
+                        "surface-container-high": "#2a292f",
+                        "on-tertiary": "#462a00",
+                        "secondary": "#6edab4",
+                        "primary-fixed-dim": "#c5c0ff",
+                        "surface-variant": "#35343a",
+                        "surface-container-highest": "#35343a",
+                        "tertiary-container": "#c98100",
+                        "inverse-primary": "#5647d5",
+                        "outline-variant": "#474554",
+                        "on-secondary-container": "#003023",
+                        "on-primary-fixed-variant": "#3e29bd",
+                        "background": "#131318",
+                        "on-secondary": "#003829",
+                        "surface-container": "#1f1f25",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#150067",
+                        "surface-tint": "#c5c0ff",
+                        "primary-container": "#8b80ff",
+                        "outline": "#928fa0",
+                        "on-surface": "#e4e1e9"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.glass-glow {
+    background: radial-gradient(circle at center, rgba(197, 192, 255, 0.08) 0%, transparent 70%)
+    }
+.noise-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCBfKdgODLrwUWpVRuRuI2Ww-DCo5X1kTIHA-cvRrm0-uQAj0SzHYtW5riigyQeEoTMFokeWPbRJbcX96DiZuTImbfPF45S-pApYtyUxYpHndqkjfVVXJTBHCSqNAfU55HpSoxRKzTtH4eqby5ODxIZAJ4VXCCL4-sW33EWrfLysEEdpiDXJUpiM6ocXu5VLFwXY8a7yIZNrf1BzdiIBgHqUDp8xqv2SOr4Qq2Ye5M077uhujjZAkkUIGFQf5s7AVtL_n2bkVObG4w);
+    opacity: 0.03
+    }
+.loading-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(197, 192, 255, 0.2), transparent);
+    background-size: 200% 100%
+    }</style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary selection:text-on-primary h-screen overflow-hidden flex items-center justify-center relative">
+<!-- Subtle Background Noise -->
+<div class="absolute inset-0 noise-overlay pointer-events-none"></div>
+<!-- Radial Background Glow (The "Obsidian Cockpit" Aura) -->
+<div class="absolute inset-0 glass-glow pointer-events-none"></div>
+<!-- Main Content Container -->
+<div class="flex flex-col items-center justify-center z-10 max-w-sm w-full">
+<!-- Logo Section -->
+<div class="flex flex-col items-center gap-6 mb-12">
+<!-- Icon with Gradient Fill -->
+<div class="relative group">
+<!-- Ambient Glow behind Icon -->
+<div class="absolute inset-0 bg-primary opacity-20 blur-3xl scale-125"></div>
+<div class="relative w-20 h-20 bg-surface-container-highest rounded-xl flex items-center justify-center border border-outline-variant/15 backdrop-blur-xl">
+<span class="material-symbols-outlined text-5xl text-primary" data-icon="pentagon" style="font-variation-settings: 'FILL' 1;">
+                        pentagon
+                    </span>
+<!-- Inner Hexagon Detail -->
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-on-primary-fixed-variant" data-icon="rocket_launch">
+                            rocket_launch
+                        </span>
+</div>
+</div>
+</div>
+<!-- Wordmark -->
+<div class="flex flex-col items-center gap-1">
+<h1 class="font-headline text-3xl font-bold tracking-tighter text-on-surface flex items-center gap-2">
+                    Preflight
+                </h1>
+<p class="text-sm font-label text-outline tracking-wide opacity-80 uppercase tracking-[0.2em]">
+                    Your launchpad. Every build.
+                </p>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="w-full px-8 flex flex-col items-center gap-4">
+<!-- Loading Track -->
+<div class="w-full h-[3px] bg-surface-variant rounded-full overflow-hidden relative">
+<!-- Progress Fill -->
+<div class="absolute top-0 left-0 h-full w-[65%] bg-gradient-to-r from-primary to-secondary rounded-full shadow-[0_0_12px_rgba(197,192,255,0.4)]"></div>
+<!-- Shimmer Effect -->
+<div class="absolute inset-0 loading-shimmer opacity-40"></div>
+</div>
+<!-- Technical Status Chips -->
+<div class="flex gap-4 mt-2">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_6px_rgba(110,218,180,0.5)]"></div>
+<span class="text-[10px] font-mono text-outline uppercase tracking-widest">Systems Nominal</span>
+</div>
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
+<span class="text-[10px] font-mono text-outline uppercase tracking-widest">Syncing Vault</span>
+</div>
+</div>
+</div>
+</div>
+<!-- HUD Style Metadata Corner -->
+<div class="absolute bottom-8 right-8 flex flex-col items-end gap-1 select-none pointer-events-none">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono text-outline/40 uppercase tracking-widest">Build Hash</span>
+<span class="text-[10px] font-mono text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded">0x7C6FFD</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono text-outline/40 uppercase tracking-widest">Environment</span>
+<span class="text-[10px] font-mono text-secondary bg-secondary/10 px-1.5 py-0.5 rounded">Production</span>
+</div>
+<div class="mt-2 text-[11px] font-headline font-bold text-outline uppercase tracking-[0.25em]">
+            v0.1.0
+        </div>
+</div>
+<!-- Bottom HUD Line Decal (Decorative) -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
+<div class="absolute bottom-4 left-8">
+<div class="h-[1px] w-24 bg-outline-variant/20 mb-2"></div>
+<div class="text-[9px] font-mono text-outline/30 uppercase tracking-[0.3em]">Ready for ignition</div>
+</div>
+</body></html>

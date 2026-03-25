@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Initializing...</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1b1b20",
+              "on-surface": "#e4e1e9",
+              "surface-bright": "#39383e",
+              "secondary-container": "#2fa280",
+              "on-error": "#690005",
+              "primary-fixed": "#e4dfff",
+              "on-primary-fixed-variant": "#3e29bd",
+              "inverse-primary": "#5647d5",
+              "on-secondary-container": "#003023",
+              "surface": "#131318",
+              "tertiary-fixed-dim": "#ffb95d",
+              "on-tertiary-fixed": "#2a1700",
+              "tertiary-container": "#c98100",
+              "surface-container-high": "#2a292f",
+              "secondary-fixed": "#8af7cf",
+              "surface-container-lowest": "#0e0e13",
+              "on-primary-container": "#21008e",
+              "on-secondary-fixed-variant": "#00513d",
+              "outline-variant": "#474554",
+              "primary": "#c5c0ff",
+              "secondary": "#6edab4",
+              "on-secondary": "#003829",
+              "on-error-container": "#ffdad6",
+              "background": "#131318",
+              "on-primary": "#2600a1",
+              "on-tertiary-container": "#3d2400",
+              "on-tertiary": "#462a00",
+              "inverse-surface": "#e4e1e9",
+              "error-container": "#93000a",
+              "tertiary": "#ffb95d",
+              "surface-dim": "#131318",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed-variant": "#653e00",
+              "on-surface-variant": "#c8c4d7",
+              "inverse-on-surface": "#303036",
+              "on-secondary-fixed": "#002117",
+              "surface-tint": "#c5c0ff",
+              "on-primary-fixed": "#150067",
+              "surface-variant": "#35343a",
+              "primary-fixed-dim": "#c5c0ff",
+              "primary-container": "#8b80ff",
+              "tertiary-fixed": "#ffddb7",
+              "surface-container-highest": "#35343a",
+              "surface-container": "#1f1f25",
+              "outline": "#928fa0",
+              "secondary-fixed-dim": "#6edab4",
+              "on-background": "#e4e1e9"
+            },
+            fontFamily: {
+              "headline": ["Inter", "Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["Geist Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+            display: inline-block;
+            line-height: 1
+        }
+        /* Refined Grain Texture */
+        .grain-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none
+        }
+        /* Loading Bar Simulation */
+        @keyframes loading {
+            0% { width: 0%; } 
+            20% { width: 30%; } 
+            50% { width: 45%; } 
+            80% { width: 85%; } 
+            100% { width: 100%; }
+        }
+        .animate-load {
+            animation: loading 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards
+        }
+        .hex-clip {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col items-center justify-center overflow-hidden">
+<!-- Deep Space Background Layers -->
+<div class="fixed inset-0 z-0">
+<!-- Deep Radial Glow behind the Logo -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(197,192,255,0.12)_0%,_rgba(19,19,24,1)_60%)]"></div>
+<!-- Grain Overlay for Tactile Feel -->
+<div class="absolute inset-0 grain-overlay"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex flex-col items-center justify-center space-y-10">
+<!-- Logo Section -->
+<div class="flex flex-col items-center space-y-4">
+<!-- Hexagonal Icon Wrapper -->
+<div class="relative group">
+<!-- Subtle Violet Outer Glow -->
+<div class="absolute inset-0 bg-primary/40 blur-[30px] rounded-full scale-110"></div>
+<!-- The Hexagon Frame -->
+<div class="relative w-24 h-24 bg-gradient-to-br from-primary via-primary/50 to-primary-container p-[1.5px] hex-clip shadow-[0_0_30px_rgba(197,192,255,0.15)]">
+<div class="w-full h-full bg-surface-container-lowest hex-clip flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="rocket_launch" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+</div>
+</div>
+<!-- Brand Name & Identity -->
+<div class="text-center">
+<h1 class="font-headline font-bold text-6xl tracking-tighter text-on-surface">
+                    Preflight
+                </h1>
+<p class="font-headline text-on-surface-variant/80 text-xs tracking-[0.3em] mt-3 uppercase font-medium">
+                    Your launchpad. Every build.
+                </p>
+</div>
+</div>
+<!-- Cockpit Loading Instrumentation -->
+<div class="w-64 space-y-4">
+<!-- Loading Indicator Metadata -->
+<div class="flex justify-between items-end px-1">
+<div class="flex flex-col">
+<span class="font-mono text-[9px] text-primary/50 uppercase tracking-widest mb-0.5">System Status</span>
+<span class="font-mono text-[10px] text-secondary/90 tracking-tight">INITIALIZING_MODULES</span>
+</div>
+<div class="text-right">
+<span class="font-mono text-[10px] text-on-surface-variant/60">0.1.0-RC</span>
+</div>
+</div>
+<!-- The Refined Gradient Progress Bar -->
+<div class="h-[4px] w-full bg-surface-container-high/40 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-secondary animate-load rounded-full relative">
+<!-- Subtle Glow on the bar itself -->
+<div class="absolute inset-0 shadow-[0_0_8px_rgba(197,192,255,0.3)]"></div>
+<!-- Scanning Light Effect -->
+<div class="absolute inset-y-0 right-0 w-12 bg-white/10 blur-md"></div>
+</div>
+</div>
+<!-- Telemetry Footnote -->
+<div class="flex items-center justify-center space-x-6 pt-1">
+<div class="flex items-center space-x-2">
+<div class="w-1 h-1 rounded-full bg-secondary animate-pulse shadow-[0_0_4px_rgba(110,218,180,0.5)]"></div>
+<span class="font-mono text-[9px] text-on-surface-variant/70 uppercase tracking-wider">Core Secure</span>
+</div>
+<div class="flex items-center space-x-2 opacity-50">
+<div class="w-1 h-1 rounded-full bg-outline"></div>
+<span class="font-mono text-[9px] text-on-surface-variant/70 uppercase tracking-wider">Nodes Linked</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Version Stamp - Bottom Right -->
+<div class="fixed bottom-10 right-10 z-20">
+<div class="flex flex-col items-end opacity-60 hover:opacity-100 transition-opacity duration-500">
+<span class="font-mono text-[9px] text-outline-variant uppercase tracking-[0.4em] mb-1.5">Build Manifest</span>
+<div class="bg-surface-container-low/50 px-3 py-1.5 border border-outline-variant/10 rounded backdrop-blur-sm">
+<p class="font-mono text-[11px] text-primary/80 font-medium">v0.1.0</p>
+</div>
+</div>
+</div>
+<!-- Status HUD Decorative Elements -->
+<div class="fixed top-10 left-10 w-8 h-8 border-t border-l border-primary/20 pointer-events-none"></div>
+<div class="fixed top-10 right-10 w-8 h-8 border-t border-r border-primary/20 pointer-events-none"></div>
+<div class="fixed bottom-10 left-10 w-8 h-8 border-b border-l border-primary/20 pointer-events-none"></div>
+<!-- Background Technical Image (Even subtler) -->
+<div class="fixed inset-0 -z-10 opacity-[0.02] overflow-hidden">
+<img alt="Close-up of high-tech circuit board with intricate copper traces" class="w-full h-full object-cover scale-110 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbTmfvSeLMVs3dOJRGIUW9Rrre1AgNpKiIEI1dkkvfFGbqS2rc_LKiZVWjz6HCNjoGiyzEaqCipbvZIEK2Ku9G33q9eIwkSKblgTAWQ2WZ9wb5eYibtnv6V6gMSapMkTRpl4zP0DaoYpy06SYUWbq9NCwCgg_8oFGS7Ym2yZeG3rGl8eLTmodHEhZGfByhk-HZjI-foBWDPlM6cdaA3ctNeigk0TbTd9EjxjEXS5dsmPU8fwop7KM_1S8P3eBDNtBpTTrRcMHM9U"/>
+</div>
+</body></html>

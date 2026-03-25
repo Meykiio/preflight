@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Preflight | Project Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#00513d",
+              "on-primary": "#2600a1",
+              "on-error": "#690005",
+              "tertiary-fixed-dim": "#ffb95d",
+              "secondary-fixed": "#8af7cf",
+              "primary": "#c5c0ff",
+              "on-tertiary-container": "#3d2400",
+              "secondary-container": "#2fa280",
+              "on-surface-variant": "#c8c4d7",
+              "on-tertiary-fixed": "#2a1700",
+              "surface": "#131318",
+              "inverse-surface": "#e4e1e9",
+              "primary-fixed": "#e4dfff",
+              "tertiary": "#ffb95d",
+              "surface-dim": "#131318",
+              "on-background": "#e4e1e9",
+              "surface-bright": "#39383e",
+              "on-error-container": "#ffdad6",
+              "inverse-on-surface": "#303036",
+              "surface-container-low": "#1b1b20",
+              "secondary-fixed-dim": "#6edab4",
+              "tertiary-fixed": "#ffddb7",
+              "surface-container-lowest": "#0e0e13",
+              "on-tertiary-fixed-variant": "#653e00",
+              "on-primary-container": "#21008e",
+              "on-secondary-fixed": "#002117",
+              "surface-container-high": "#2a292f",
+              "on-tertiary": "#462a00",
+              "secondary": "#6edab4",
+              "primary-fixed-dim": "#c5c0ff",
+              "surface-variant": "#35343a",
+              "surface-container-highest": "#35343a",
+              "tertiary-container": "#c98100",
+              "inverse-primary": "#5647d5",
+              "outline-variant": "#474554",
+              "on-secondary-container": "#003023",
+              "on-primary-fixed-variant": "#3e29bd",
+              "background": "#131318",
+              "on-secondary": "#003829",
+              "surface-container": "#1f1f25",
+              "error": "#ffb4ab",
+              "error-container": "#93000a",
+              "on-primary-fixed": "#150067",
+              "surface-tint": "#c5c0ff",
+              "primary-container": "#8b80ff",
+              "outline": "#928fa0",
+              "on-surface": "#e4e1e9"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(19, 19, 24, 0.6);
+            backdrop-filter: blur(12px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .noise-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #c5c0ff 0%, #8b80ff 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 bg-[#0e0e13] h-screen w-64 docked left-0 border-r border-[#39383e]/15 z-40">
+<div class="px-6 mb-10">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<h2 class="text-[#e4e1e9] font-semibold font-headline tracking-tight">Project Alpha</h2>
+<p class="text-xs text-outline font-label">In Development</p>
+</div>
+</div>
+<button class="w-full primary-gradient text-on-primary-fixed py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-95 shadow-[0_0_20px_rgba(197,192,255,0.2)]">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Command
+            </button>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 bg-[#c5c0ff]/10 text-[#c5c0ff] rounded-lg px-4 py-3 border-r-2 border-[#c5c0ff]" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-headline text-sm font-medium">Brief</span>
+</a>
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-headline text-sm font-medium">Research</span>
+</a>
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-headline text-sm font-medium">Design</span>
+</a>
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-headline text-sm font-medium">Build</span>
+</a>
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-headline text-sm font-medium">Vault</span>
+</a>
+</nav>
+<div class="px-3 pt-6 border-t border-outline-variant/20 space-y-1">
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-headline text-sm font-medium">Docs</span>
+</a>
+<a class="flex items-center gap-3 text-[#938f99] px-4 py-3 hover:bg-[#131318] hover:text-[#e4e1e9] transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-headline text-sm font-medium">Support</span>
+</a>
+</div>
+</aside>
+<header class="fixed top-0 right-0 left-64 bg-[#131318]/60 backdrop-blur-xl z-30 flex justify-between items-center w-auto px-8 py-3">
+<div class="flex items-center gap-6">
+<span class="text-xl font-bold tracking-tighter text-[#e4e1e9] font-headline">Preflight</span>
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm" data-icon="search">search</span>
+<input class="bg-surface-container-lowest border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary transition-all" placeholder="Jump to section..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#938f99] hover:text-[#e4e1e9] hover:bg-[#39383e]/50 rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-[#938f99] hover:text-[#e4e1e9] hover:bg-[#39383e]/50 rounded-full transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="Close up portrait of a young professional male" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsmbE0rUTB5MWjRTocfOsNCEhxsVtdS-n90Io0jYd4gGGUHG1uGNTOaZ6PTpO1E6BxeEXkYKenl36DwQYuZvcZjxA-iO0UaN4Ll8snczKDsD4CBY-dYpBaTR5njLmj55LrhTJWOLppiBqkXcPm9aCp1a1-Ntosoqrttq1bl2kosNLojD3OJTty_qFNaRf0D8WaWH--bncAQMg_HFGe67E1od_LDMm9SLj_82Sij_rc1Xr3HwoPl1Bow6KZLYrUCey4dBzCvQeatyY"/>
+</div>
+</header>
+<main class="ml-64 pt-16 min-h-screen relative overflow-hidden">
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute -top-[20%] -right-[10%] w-[60%] h-[60%] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[10%] -left-[5%] w-[40%] h-[40%] bg-secondary/5 blur-[100px] rounded-full"></div>
+<div class="noise-texture absolute inset-0"></div>
+</div>
+<div class="max-w-7xl mx-auto px-8 py-12 relative z-10">
+<section class="mb-16">
+<div class="bg-surface-container-low p-10 rounded-xl relative overflow-hidden border border-outline-variant/10">
+<div class="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" data-icon="hub">hub</span>
+</div>
+<div class="relative z-10 max-w-2xl">
+<h1 class="text-4xl lg:text-5xl font-bold font-headline tracking-tighter text-on-surface mb-4">Command Center</h1>
+<p class="text-lg text-outline leading-relaxed">
+                            Welcome to your workspace. Monitor project progress, review research vaults, and orchestrate builds from one unified instrument.
+                        </p>
+<div class="flex gap-4 mt-8">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-[0.2em] font-bold text-primary mb-1">Status</span>
+<div class="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20">
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+<span class="text-xs font-semibold text-primary">System Ready</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col items-center justify-center py-20 px-6">
+<div class="relative mb-12">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-150"></div>
+<div class="relative w-48 h-48 bg-surface-container-high rounded-full flex items-center justify-center border border-outline-variant/20 shadow-2xl">
+<div class="absolute inset-4 border border-dashed border-outline-variant/40 rounded-full"></div>
+<span class="material-symbols-outlined text-primary text-6xl" data-icon="deployed_code" style="font-variation-settings: 'FILL' 1;">deployed_code</span>
+<div class="absolute -bottom-4 -right-4 bg-surface-bright p-3 rounded-xl border border-outline-variant/30 shadow-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="hexagon" style="font-variation-settings: 'FILL' 1;">hexagon</span>
+</div>
+</div>
+</div>
+<div class="text-center max-w-md">
+<h2 class="text-3xl font-bold font-headline tracking-tight text-[#e4e1e9] mb-4">No projects yet.</h2>
+<p class="text-[#938f99] text-lg mb-10 leading-relaxed">
+                        Start with an idea. Preflight handles the rest, from initial brief to production-ready builds.
+                    </p>
+<button class="inline-flex items-center gap-3 primary-gradient text-on-primary-fixed px-8 py-4 rounded-xl font-bold hover:shadow-[0_0_30px_rgba(197,192,255,0.3)] hover:-translate-y-0.5 transition-all active:scale-95 group">
+<span class="material-symbols-outlined text-xl group-hover:rotate-90 transition-transform" data-icon="add">add</span>
+                        Create your first project
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 w-full max-w-4xl">
+<div class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 text-center flex flex-col items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h4 class="font-headline font-semibold text-on-surface mb-2">Guided Setup</h4>
+<p class="text-xs text-outline">Step-by-step project scaffolding</p>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 text-center flex flex-col items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary text-xl" data-icon="folder_zip">folder_zip</span>
+</div>
+<h4 class="font-headline font-semibold text-on-surface mb-2">Templates</h4>
+<p class="text-xs text-outline">Kickstart with industry presets</p>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-xl border border-outline-variant/10 text-center flex flex-col items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-tertiary text-xl" data-icon="menu_book">menu_book</span>
+</div>
+<h4 class="font-headline font-semibold text-on-surface mb-2">Vault Training</h4>
+<p class="text-xs text-outline">Learn the preflight workflow</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 primary-gradient rounded-full flex items-center justify-center text-on-primary shadow-2xl hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl" data-icon="terminal">terminal</span>
+</button>
+</div>
+</body></html>
