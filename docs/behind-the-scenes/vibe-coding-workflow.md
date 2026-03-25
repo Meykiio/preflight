@@ -1,200 +1,270 @@
-# How Preflight Was Built: A Vibe Coding Journey
+# How Preflight Was Actually Built: 3 Days with Qwen Code
 
-**Published:** March 25, 2026 | **Read Time:** 5 minutes
-
----
-
-## The Origin Story
-
-Preflight wasn't built like traditional software. There was no detailed upfront design, no weeks of architecture planning, no comprehensive spec documents. Instead, it was built using what the community now calls **"vibe coding"** — an AI-assisted, iterative, flow-state approach to software development.
-
-### What is Vibe Coding?
-
-**Vibe coding** is a development methodology where:
-- You describe what you want in natural language
-- AI coding assistants (Cursor, Claude Code, Bolt, etc.) generate the code
-- You review, tweak, and iterate in real-time
-- The codebase evolves organically through conversation
-
-It's called "vibe" coding because you're riding the flow — following your intuition about what the product should be, while AI handles the implementation details.
+**Published:** March 25, 2026 | **Read Time:** 6 minutes
 
 ---
 
-## The Problem I Was Trying to Solve
+## The Real Story
 
-Like many developers in the AI era, I experienced the **vibe coding paradox**:
+Preflight wasn't built with Cursor. It wasn't built with Bolt. It wasn't built over weeks or months.
 
-**The High:** You can build faster than ever. Ideas become prototypes in hours, not weeks.
+**Preflight was built in 3 days using Qwen Code — a free, open-source AI pair programmer.**
 
-**The Low:** Projects spiral into chaos. Without structure, you end up with:
-- Fragmented context across dozens of chat sessions
-- No clear requirements or acceptance criteria
-- Code that works but nobody (including you) fully understands
-- Abandoned projects because the path forward is unclear
+I toggled between **Plan mode** (for structured thinking) and **YOLO mode** (for rapid execution). When I got stuck or needed explanations, I used **Claude Desktop**. When Qwen finished implementing, I tested everything, reported bugs, proposed features, requested redesigns, and iterated until the app was complete.
 
-I needed a system. A way to capture the structure that experienced developers hold in their heads — the **pre-flight checklist** before writing code.
+This is the authentic story of how Preflight came to be.
 
 ---
 
-## Building Preflight with AI Tools
+## The Tools I Actually Used
 
-### The Tools I Used
+| Tool | Role | How I Used It |
+|------|------|---------------|
+| **Qwen Code** | Primary builder | Plan mode for architecture, YOLO mode for rapid implementation |
+| **Claude Desktop** | Explainer & debugger | Understanding complex issues, troubleshooting when stuck |
+| **My Workflow** | The secret sauce | Structured prompts from months of iteration (yuno-docs) |
 
-| Tool | Primary Use |
-|------|-------------|
-| **Cursor** | Main IDE for vibe coding with AI pair programming |
-| **Claude Code** | Complex refactoring and architecture decisions |
-| **v0** | Rapid UI prototyping and component generation |
-| **Perplexity** | Research on best practices and design patterns |
-| **Gemini** | Deep research on user experience patterns |
-
-### The Process
-
-I followed the exact workflow that Preflight now generates:
-
-#### 1. The Brief (2 hours)
-Instead of jumping straight into code, I wrote a structured brief:
-- **Problem:** Vibe coding leads to abandoned projects without structure
-- **Users:** Solo developers, indie hackers, AI-curious builders
-- **Features:** Brief capture, research prompts, design prompts, PRD generation, build prompts
-- **Stack:** React, Vite, TypeScript, Tailwind, Dexie.js, Zustand
-
-#### 2. Research (1 hour)
-I used Perplexity and Gemini to research:
-- What makes project management tools actually get used?
-- What information do AI coding assistants need to be effective?
-- What are the best practices for prompt engineering?
-
-#### 3. Design (30 minutes)
-I used v0 to rapidly prototype the UI:
-- Dark theme (for long coding sessions)
-- Clean, minimal interface (reduce cognitive load)
-- Sequential workflow visualization (show progress)
-
-#### 4. The PRD (20 minutes)
-I generated a complete PRD that defined:
-- Data models (Project, Brief, Artifact, BuildStage, etc.)
-- User flows (create project → fill brief → generate prompts → build)
-- Success metrics (did users complete their build?)
-
-#### 5. System Instructions (10 minutes)
-I generated system instructions for my AI coding tool:
-- "Always read DOCS.md before making changes"
-- "Keep files under 300 lines"
-- "TypeScript strict mode only"
-- "Test before marking complete"
-
-#### 6. Sequential Build (8 hours over 3 days)
-I built Preflight in stages:
-- **Stage 1 — Foundation:** Project structure, config, types, schema
-- **Stage 2 — Database:** Dexie setup, Zustand stores, hooks
-- **Stage 3 — Features:** One module at a time (Brief, Research, Design, PRD, Build, Vault)
-- **Stage 4 — Audit:** Code review, refactoring, documentation
-- **Stage 5 — Polish:** UI improvements, error handling, accessibility
+That's it. No Cursor. No Bolt credits. No expensive subscriptions. **Completely free.**
 
 ---
 
-## The Meta Experiment: Dogfooding Preflight
+## The 3-Day Build Sprint
 
-After building Preflight, I asked myself the ultimate question:
+### Day 1: Foundation (12 hours)
 
-> **"Can Preflight build itself?"**
+**Goal:** Turn the workflow into an actual application
 
-If Preflight is truly a complete system for generating AI-ready build prompts, then I should be able to use it to rebuild the exact same application.
+**Process:**
+1. Opened Qwen Code
+2. Enabled **Plan mode** for initial architecture
+3. Described what I wanted: "A Project OS for vibe coders that structures the pre-build workflow"
+4. Qwen generated the project structure, types, and initial components
+5. Switched to **YOLO mode** for rapid implementation
+6. Tested each feature as it was built
+7. Reported bugs immediately
+8. Iterated until stable
 
-### The Test
+**What got built:**
+- Project structure (React + Vite + TypeScript + Tailwind)
+- Type definitions (Project, Brief, Artifact, BuildStage, etc.)
+- Dexie.js database schema
+- Zustand stores
+- Basic routing and layout shell
 
-1. I created a new project in Preflight called "Preflight Rebuild"
-2. I filled out the brief describing Preflight itself
-3. I went through each module:
-   - Generated research prompts
-   - Generated design prompts
-   - Generated the PRD
-   - Generated system instructions
-   - Generated the full sequential build workflow
-
-### The Result
-
-**It worked.**
-
-The prompts that Preflight generated were able to rebuild Preflight. The AI coding tools understood what to build because the prompts were specific, structured, and complete.
-
-### What This Proves
-
-This isn't just a parlor trick. It validates the core premise of Preflight:
-
-> **Structure + Context + Clear Prompts = Reproducible AI Coding**
-
-When you give AI coding assistants the right context and clear instructions, they can build complex, production-ready applications — not just toy projects.
+**Key moment:** When Qwen finished the foundation, I didn't just accept it. I tested it. Found bugs. Reported them. Qwen fixed them. We repeated until it was solid.
 
 ---
 
-## Lessons Learned
+### Day 2: Core Features (14 hours)
 
-### 1. AI Is a Force Multiplier, Not a Replacement
+**Goal:** Build all 6 modules (Brief, Research, Design, PRD, Build, Vault)
 
-AI didn't replace my judgment — it amplified it. I still needed to:
-- Define the problem clearly
-- Make architectural decisions
-- Review code for quality
-- Test the user experience
+**Process:**
+1. Used the build prompts I had refined over months
+2. Qwen implemented one module at a time
+3. After each module: **test → bug report → fix → redesign → iterate**
+4. Switched between Plan mode (for complex logic) and YOLO mode (for UI components)
+5. Used Claude Desktop when I needed to understand why something wasn't working
 
-But AI handled the tedious parts: boilerplate, repetitive code, documentation, tests.
+**What got built:**
+- **Brief Module:** Structured form with autosave, feature list, platform tags
+- **Research Module:** Context node selector, AI generation with streaming
+- **Design Module:** Platform variants, design history tracking
+- **PRD Module:** Markdown generation, system instructions, rules files
+- **Build Module:** Sequential workflow, stage cards, export functionality
+- **Vault Module:** File upload, category filters, context injection
 
-### 2. Structure Is Everything
-
-The difference between a successful AI build and a failed one isn't the AI — it's the **structure of your instructions**.
-
-Vague: *"Build a project management app"*
-
-Structured: *"Build a React app with these 6 data models, these 12 components, these 8 hooks, following these patterns..."*
-
-Preflight exists to provide that structure.
-
-### 3. The Prompts Are the Product
-
-The real value of Preflight isn't the UI or the database — it's the **prompts it generates**. Those prompts encode:
-- Best practices for AI coding
-- Sequential dependency (don't build features before foundation)
-- Context preservation (each prompt builds on previous work)
-- Quality gates (build must pass before moving on)
-
-### 4. Documentation Is Part of the Code
-
-With AI-generated code, documentation becomes even more critical. Why?
-
-- You didn't write every line, so you need to understand what exists
-- AI makes mistakes that you need to catch on review
-- Future-you (or contributors) need to understand the decisions
-
-Preflight enforces documentation at every step.
+**Key moment:** The Build Module wasn't right on the first try. I requested a redesign: "Make it more visual, show progress clearly, add collapsible stages." Qwen implemented it. I tested again. Requested another tweak. Final result: the sequential build workflow you see today.
 
 ---
 
-## The Future of Vibe Coding
+### Day 3: Polish & Testing (10 hours)
 
-I believe we're in the early days of a fundamental shift in how software is built. Just as compilers abstracted away assembly language, and frameworks abstracted away manual DOM manipulation, **AI coding assistants are abstracting away boilerplate implementation**.
+**Goal:** Make it production-ready
 
-But abstraction without structure leads to chaos.
+**Process:**
+1. Comprehensive testing of every feature
+2. Bug hunting (edge cases, error states, loading states)
+3. Accessibility pass (ARIA labels, focus indicators, keyboard navigation)
+4. Performance optimization (React.memo, query optimization)
+5. Documentation (DOCS.md, README.md, code comments)
+6. Final redesign requests (better spacing, improved colors, cleaner UI)
 
-**Preflight is the structure layer for AI-assisted development.**
+**What got done:**
+- Error boundaries on all routes
+- Toast notifications for user feedback
+- Loading skeletons and empty states
+- Keyboard navigation throughout
+- Dark theme polish (contrast, spacing, visual hierarchy)
+- Complete documentation
+
+**Key moment:** I asked Qwen to "audit the entire codebase for quality issues." It found files that were too long, functions that needed refactoring, and missing error handling. We fixed everything before shipping.
 
 ---
 
-## Try It Yourself
+## The Workflow Behind the 3-Day Build
 
-Want to experience vibe coding with structure?
+Here's what made the 3-day sprint possible: **months of prompt refinement before I wrote a single line of code.**
 
-1. **Clone Preflight:** `git clone https://github.com/Meykiio/preflight.git`
-2. **Run it:** `pnpm install && pnpm dev`
-3. **Create a project:** Describe your idea in the brief
-4. **Generate prompts:** Let Preflight structure your AI workflow
-5. **Build:** Paste the prompts into Cursor, Claude Code, or Bolt
+### The yuno-docs Origin
 
-You'll experience what I experienced: the flow of vibe coding, with the confidence of structure.
+Months ago, I was like every other vibe coder:
+- Messy desktop with scattered files
+- Lost context across chat sessions
+- Projects that stalled halfway
+- Credit limits on platforms
+
+I started creating **structured prompts** to solve my own problems:
+- A brief template to capture ideas properly
+- Research prompts that actually gathered useful info
+- Design prompts that produced consistent results
+- Build prompts that followed a logical sequence
+
+I open-sourced this workflow during the **Bolt hackathon** as [yuno-docs](https://github.com/sifeddinemeb/yuno-docs).
+
+### From Workflow to Platform
+
+Using yuno-docs, I built multiple apps. Each time:
+1. Follow the prompts
+2. Note what worked and what didn't
+3. Refine the prompts
+4. Build again
+
+After months of this, the workflow was solid. But I realized:
+
+> **The workflow itself should be the product.**
+
+Not just prompts in a GitHub repo — but an actual platform that:
+- Stores projects properly
+- Keeps context organized
+- Generates prompts dynamically
+- Tracks progress through the workflow
+
+That's when I decided to build Preflight.
 
 ---
 
-**Next:** Read about [Self-Dogfooding: Using Preflight to Build Preflight](self-dogfooding.md)
+## The Real Build Process: Test → Report → Iterate
 
-**Previous:** [Documentation Index](../README.md)
+Here's the actual loop I followed for 3 days:
+
+```
+1. Qwen implements a feature (Plan mode → YOLO mode)
+2. I test it thoroughly
+3. I find bugs → report them with specific steps to reproduce
+4. I propose features → "This would be better if..."
+5. I request redesigns → "Make this cleaner, use better spacing"
+6. Qwen implements fixes and improvements
+7. I test again
+8. Repeat until it's right
+```
+
+This wasn't passive AI coding. This was **active collaboration**:
+- I was the product manager (what to build)
+- I was the QA engineer (testing, bug reports)
+- I was the designer (redesign requests)
+- Qwen was the builder (implementation)
+
+---
+
+## Why Qwen Code?
+
+I chose Qwen Code because:
+- **Free and open-source** — No subscription, no credit limits
+- **Plan mode** — Structured thinking for complex decisions
+- **YOLO mode** — Rapid execution when you know what you want
+- **Understands context** — Can follow multi-step workflows
+- **Good at React** — Knows modern patterns and best practices
+
+Claude Desktop complemented Qwen:
+- **Better explanations** — When I needed to understand why something broke
+- **Debugging help** — Complex issues that needed deep analysis
+- **Second opinion** — Validating architectural decisions
+
+But Qwen did the actual building.
+
+---
+
+## The Results
+
+**3 days.** That's it.
+
+From "I should build this" to "This is production-ready" in 72 hours of actual work.
+
+**What shipped:**
+- 6 complete modules
+- 10 agent prompt templates
+- Sequential build workflow
+- Local-first database
+- Complete documentation
+- Production deployment configs
+
+**Code quality:**
+- TypeScript strict mode
+- Component memoization
+- Error boundaries
+- Accessibility compliance
+- Test coverage
+
+All built with free tools, following a workflow I refined over months.
+
+---
+
+## What This Proves
+
+### 1. Free Tools Are Enough
+
+You don't need:
+- Paid Cursor subscriptions
+- Bolt credits
+- Expensive AI tools
+
+You need:
+- A clear workflow
+- Structured prompts
+- Free AI tools (Qwen Code)
+- Iterative testing
+
+### 2. The Workflow Is the Product
+
+The code is secondary. The real value is:
+- The prompts that guide the AI
+- The testing process that catches bugs
+- The iteration that refines the result
+- The structure that prevents chaos
+
+### 3. AI Doesn't Replace You — It Amplifies You
+
+I didn't just watch Qwen code. I:
+- Defined what to build
+- Tested every feature
+- Reported bugs precisely
+- Requested redesigns
+- Proposed new features
+- Iterated until it was right
+
+AI amplified my output. But **I** was still the architect, the tester, the product manager.
+
+---
+
+## Try the Same Approach
+
+Want to build something similar?
+
+1. **Get Qwen Code** — It's free and open-source
+2. **Learn the modes** — Plan mode for thinking, YOLO mode for doing
+3. **Create your workflow** — Structured prompts for your use case
+4. **Test everything** — Don't trust AI output blindly
+5. **Report bugs** — Be specific about what's wrong
+6. **Request redesigns** — Ask for improvements
+7. **Iterate** — Repeat until it's right
+
+That's how Preflight was built. That's how you can build too.
+
+---
+
+**Next:** [Self-Dogfooding: Using Preflight to Build Preflight](self-dogfooding.md)
+
+**Previous:** [Origin Story: From yuno-docs to Preflight](origin-story.md)
+
+**Back to:** [Documentation Index](../README.md)

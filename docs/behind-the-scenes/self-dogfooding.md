@@ -1,12 +1,12 @@
 # Self-Dogfooding: Using Preflight to Build Preflight
 
-**Published:** March 25, 2026 | **Read Time:** 4 minutes
+**Published:** March 25, 2026 | **Read Time:** 5 minutes
 
 ---
 
 ## The Ultimate Test
 
-After building Preflight, I faced the question that would validate (or invalidate) the entire concept:
+After building Preflight with Qwen Code in 3 days, I faced the question that would validate (or invalidate) the entire concept:
 
 > **Can Preflight successfully generate the prompts to rebuild itself?**
 
@@ -21,9 +21,9 @@ This isn't just a philosophical question. It's the ultimate dogfooding test. If 
 I opened Preflight and created a new project:
 
 - **Name:** Preflight Rebuild
-- **Description:** A project operating system for vibe coders — captures structured briefs, generates research/design/PRD prompts, and produces sequential build workflows
+- **Description:** A project operating system for vibe coders
 - **Status:** Ideation
-- **Platforms:** Lovable, Bolt, Cursor, Claude Code
+- **Platforms:** Lovable, Bolt, Cursor, Claude Code, Qwen Code
 - **Tech Stack:** React, Vite, TypeScript, Tailwind CSS, Dexie.js, Zustand, React Router
 
 ### Step 2: Fill the Brief
@@ -31,7 +31,7 @@ I opened Preflight and created a new project:
 I described Preflight itself in the Brief module:
 
 **Problem:**
-> Developers using AI coding tools (Lovable, Bolt, Cursor, etc.) struggle with chaotic workflows. They jump between research, design, and coding without structure. Context gets lost across chat sessions. Projects stall or get abandoned.
+> Developers using AI coding tools struggle with chaotic workflows. They jump between research, design, and coding without structure. Context gets lost across chat sessions. Projects stall or get abandoned.
 
 **Target Users:**
 > Solo developers, indie hackers, and builders who use AI coding assistants. Technical but overwhelmed by infinite possibility. Want to ship complete projects, not just prototypes.
@@ -49,145 +49,127 @@ I described Preflight itself in the Brief module:
 **Tech Stack:**
 > React 18, Vite 6, TypeScript 5.8, Tailwind CSS 3.4, Dexie.js 4, Zustand 5, React Router 6
 
-### Step 3: Generate Research Prompts
+### Step 3: Generate All Prompts
 
-I clicked "Generate Research Prompt" in the Research module. Preflight generated a prompt that included:
+I clicked through each module:
 
-- Context about what Preflight is
-- Specific research questions about:
-  - What makes developer tools actually get used daily?
-  - Best practices for prompt engineering with AI coding assistants
-  - Design patterns for workflow visualization
-  - Technical architecture for local-first applications
+1. **Research** → Generated research prompt about developer tool adoption
+2. **Design** → Generated design prompt for dark-themed project OS
+3. **PRD** → Generated complete PRD with TypeScript data models
+4. **System** → Generated system instructions for Qwen Code
+5. **Build** → Generated full sequential build workflow
 
-I pasted this into Perplexity Deep Research. The results informed the design decisions.
+### Step 4: Give Prompts to Qwen Code
 
-### Step 4: Generate Design Prompts
-
-I selected "v0" as the target platform and clicked "Generate Design Prompt". Preflight generated a detailed prompt describing:
-
-- **Design Language:** Dark theme, Space Grotesk headlines, Inter body, JetBrains Mono code
-- **Color System:** Primary (#c5c0ff), Secondary (#6edab4), Tertiary (#ffb95d)
-- **Layout:** Sidebar navigation, header with breadcrumbs, main content area
-- **Components:** Project cards, brief editor, prompt generators, build stage cards
-- **Interactions:** Hover states, focus rings, loading skeletons, empty states
-
-I pasted this into v0. It generated the exact UI components I had built.
-
-### Step 5: Generate the PRD
-
-I clicked "Generate PRD". Preflight produced a 2,500-word PRD with:
-
-- Product overview and value proposition
-- Target user archetypes with detailed profiles
-- Feature specifications with acceptance criteria
-- Complete TypeScript data models
-- Database schema for Dexie.js
-- Success metrics (did users complete their build workflow?)
-
-### Step 6: Generate System Instructions
-
-I selected "Cursor" as the target platform and clicked "Generate System Instructions". Preflight generated:
+I took the generated build prompts and gave them to Qwen Code:
 
 ```
-You are a senior React engineer building Preflight — a Project OS for vibe coders.
-
-WORKFLOW:
-1. Read DOCS.md and types/index.ts before any changes
-2. State your plan before coding
-3. Implement one file at a time (max 4 files per session)
-4. Run `npm run build` after each change
-5. Update DOCS.md when features are complete
-
-CODE QUALITY:
-- TypeScript strict mode only
-- No `any` types — use proper types or `unknown` with guards
-- Files under 300 lines — split larger files
-- Functions under 40 lines — extract helpers
-- Use Tailwind utilities only — no custom CSS
-- Functional components only — no class components
-- Custom hooks for data fetching — no direct API calls in components
-
-TESTING:
-- Run `npm run test` after implementing features
-- Add tests for all lib/ utilities
-- Add tests for Zustand store actions
-- Test user flows manually before marking complete
-
-DOCUMENTATION:
-- JSDoc on all exported functions
-- Update DOCS.md with new features
-- Comment complex business logic
+This is Stage 1 of 5 — the Foundation Stage.
+Your ONLY job is to establish the complete technical foundation...
+[Prompt continues for 2000+ words with exact specifications]
 ```
 
-### Step 7: Generate the Build Workflow
-
-I clicked "Generate Full Build Workflow". Preflight generated 5 sequential prompts:
-
-1. **Foundation:** Project structure, Tailwind config, TypeScript setup, type definitions, Dexie schema, layout shell
-2. **Database:** Complete Dexie implementation, Zustand stores, custom hooks
-3. **Features:** One prompt per module (Brief, Research, Design, PRD, Build, Vault)
-4. **Audit:** Code review, refactoring, documentation
-5. **Deployment:** Vercel/Netlify configuration, CI/CD setup
+Qwen read the prompt. Started coding. And built... Preflight. Again.
 
 ---
 
 ## The Results
 
-### What Worked
+### What Worked ✅
 
-✅ **The prompts were complete.** Each prompt contained enough detail that an AI coding assistant could execute without asking clarifying questions.
+**The prompts were complete.** Each prompt contained enough detail that Qwen could execute without asking clarifying questions.
 
-✅ **The sequence was correct.** The foundation prompts established patterns that the feature prompts built upon. Nothing was out of order.
+**The sequence was correct.** Foundation → Database → Features → Audit → Deploy. Nothing was out of order.
 
-✅ **The context was preserved.** Each prompt referenced previous work (e.g., "use the types defined in types/index.ts").
+**The context was preserved.** Each prompt referenced previous work ("use the types defined in types/index.ts").
 
-✅ **The output matched the original.** The AI-generated code from Preflight's prompts closely resembled the code I had originally written.
+**The output matched the original.** The AI-generated code closely resembled the code I had originally built.
 
-### What Surprised Me
+### What Surprised Me 🎯
 
-🎯 **The PRD was better than my original.** Preflight's generated PRD included edge cases and acceptance criteria I hadn't explicitly defined.
+**The PRD was better than my original.** Preflight's generated PRD included edge cases and acceptance criteria I hadn't explicitly defined.
 
-🎯 **The system instructions were more comprehensive.** The generated Cursor instructions included testing and documentation requirements I had only implicitly followed.
+**The system instructions were more comprehensive.** The generated Qwen Code instructions included testing and documentation requirements I had only implicitly followed.
 
-🎯 **The build prompts caught architectural decisions.** The prompts explicitly documented patterns (like "all database calls through services layer") that I had implemented but never written down.
+**The build prompts caught architectural decisions.** The prompts explicitly documented patterns (like "all database calls through services layer") that I had implemented but never written down.
+
+---
+
+## The Testing Process: My Role as QA
+
+After Qwen finished each stage, I didn't just accept it. I tested:
+
+### My Testing Checklist
+
+1. **Does it build?** → `npm run build` must pass
+2. **Does it type-check?** → `npm run typecheck` must pass
+3. **Do tests pass?** → `npm run test` must pass
+4. **Does it work?** → Manual testing in browser
+5. **Is it accessible?** → Keyboard navigation, ARIA labels
+6. **Is it documented?** → DOCS.md updated
+
+### Bug Reports I Filed
+
+When I found issues, I reported them precisely:
+
+```
+BUG: Brief autosave not working
+Steps to reproduce:
+1. Open project
+2. Navigate to Brief tab
+3. Type in problem field
+4. Refresh page
+Expected: Content persists
+Actual: Content lost
+
+Fix: Add debounced save with 800ms delay
+```
+
+```
+REDESIGN: Build stage cards too cramped
+Issue: Hard to read prompt content
+Request: Make cards collapsible, add better spacing
+Priority: Medium
+```
+
+```
+FEATURE: Add context node selector
+Use case: Users should choose which files to include in generations
+Implementation: Checkbox list in Research/Design/PRD modules
+Priority: High
+```
+
+Qwen would fix each issue. I'd test again. Request tweaks. Iterate until right.
 
 ---
 
 ## What This Proves
 
-### 1. Structure Is Transferable
+### 1. The Workflow Is Reproducible
 
-The workflow I used intuitively to build Preflight was successfully encoded into Preflight itself. The structure exists, it's real, and it can be captured.
+The same workflow that built Preflight the first time could build it again. The prompts aren't magic — they're **structured descriptions** that any AI coding tool can follow.
 
-### 2. AI Can Understand Complex Projects
+### 2. Testing Is Non-Negotiable
 
-When given structured, detailed prompts, AI coding assistants can build sophisticated applications — not just todo lists and weather apps.
+AI-generated code needs human testing. I didn't trust Qwen blindly. I tested everything, reported bugs, requested fixes. That's how the app became production-ready.
 
-### 3. The Prompts Are the Product
+### 3. Iteration Makes It Better
+
+The first build wasn't perfect. The second build (via Preflight prompts) wasn't perfect either. But through testing → bug reports → redesigns → iteration, it became great.
+
+### 4. The Prompts Are the Product
 
 The real value of Preflight isn't the React components or the database schema. It's the **prompts** — the encoded knowledge of how to structure an AI-assisted build.
 
-### 4. Dogfooding Works
-
-Building a tool, then using that tool to rebuild itself, is an incredibly effective way to find gaps and improve the product.
-
 ---
 
-## The Implications
+## The Meta Insight
 
-If Preflight can successfully generate the prompts to rebuild itself, what else can it do?
+Building Preflight twice — once manually, once via its own prompts — taught me something profound:
 
-**Answer:** Any application that follows similar patterns.
+> **The workflow doesn't just build apps. The workflow builds the builder.**
 
-The prompts Preflight generates aren't magic — they're structured descriptions of:
-- What to build (the brief)
-- Why it matters (the research)
-- How it should look (the design)
-- What it needs to do (the PRD)
-- How to build it (the sequential workflow)
-
-Any developer can use this same structure. The only difference is the content of the brief.
+Preflight exists because I needed structure for vibe coding. But Preflight also perpetuates that structure — it teaches users how to think about building, not just what to build.
 
 ---
 
@@ -199,8 +181,9 @@ Want to replicate this experiment?
 2. **Create a project** describing any application you want to build
 3. **Fill out the brief** with as much detail as possible
 4. **Generate all prompts** in sequence
-5. **Paste the build prompts** into Cursor, Claude Code, or Bolt
-6. **Watch your app get built**
+5. **Paste the build prompts** into Qwen Code, Cursor, Claude Code, or Bolt
+6. **Test the result** — be the QA, report bugs, request features
+7. **Iterate** until it's right
 
 You'll experience what I experienced: the confidence that comes from structure.
 
@@ -208,4 +191,4 @@ You'll experience what I experienced: the confidence that comes from structure.
 
 **Next:** [Lessons Learned from Building Preflight](lessons-learned.md)
 
-**Previous:** [Vibe Coding Workflow](vibe-coding-workflow.md)
+**Previous:** [How Preflight Was Built: 3 Days with Qwen Code](vibe-coding-workflow.md)

@@ -1,219 +1,213 @@
-# Lessons Learned Building Preflight
+# Lessons Learned: Building Preflight in 3 Days with Qwen Code
 
-**Published:** March 25, 2026 | **Read Time:** 6 minutes
-
----
-
-## 10 Insights from Building an AI-Assisted Development Tool
-
-After building Preflight — and then using Preflight to rebuild itself — I learned more about AI-assisted development than I expected. Here are the key insights.
+**Published:** March 25, 2026 | **Read Time:** 7 minutes
 
 ---
 
-## 1. The Prompts Are the Code
+## 10 Insights from Building an App with Free AI Tools
 
-**Traditional development:** The code is the product.
-
-**AI-assisted development:** The prompts are the product.
-
-This was the biggest mindset shift. When AI writes the code, your value as a developer shifts from:
-- Writing implementation → Describing requirements
-- Debugging syntax → Reviewing logic
-- Memorizing APIs → Structuring context
-
-**Lesson:** Invest time in writing better prompts. A well-structured prompt saves hours of back-and-forth with the AI.
+After building Preflight in 3 days using Qwen Code (Plan mode + YOLO mode) and Claude Desktop, I learned more about AI-assisted development than I expected. Here are the key insights — the real lessons, not the polished marketing version.
 
 ---
 
-## 2. Context Is King
+## 1. Free Tools Are Enough
 
-AI coding assistants are incredibly capable — but only when they have the right context.
+**Myth:** You need expensive AI tools to build serious software.
 
-**Bad prompt:**
-> "Add a project management feature"
+**Reality:** I built Preflight with:
+- **Qwen Code** — Free, open-source
+- **Claude Desktop** — Free tier
+- **My workflow** — Months of prompt refinement (open-source in yuno-docs)
 
-**Good prompt:**
-> "Add a project status field to the Project interface in types/index.ts. Valid values are: 'ideation', 'researching', 'designing', 'building', 'shipped'. Update the ProjectCard component to display the status as a badge. Use the StatusBadge component from components/shared. Add a dropdown in the project menu to change status. Update the database schema in lib/db.ts to include the status field."
+**Total cost:** $0
 
-The second prompt works because it:
-- References specific files
-- Defines exact values
-- Describes the UI pattern
-- Mentions related components
-
-**Lesson:** Never assume the AI knows your codebase. Reference specific files, components, and patterns.
+**Lesson:** Don't blame your tools. Blame your workflow. A clear workflow with free tools beats a vague workflow with expensive tools.
 
 ---
 
-## 3. Sequential Builds Beat One-Shot Prompts
+## 2. Plan Mode + YOLO Mode Is the Perfect Combo
 
-Early in building Preflight, I tried to generate the entire app in one massive prompt. Result: chaos.
+Qwen Code has two modes:
+- **Plan mode** — Thinks before coding, structures the approach
+- **YOLO mode** — Executes rapidly without overthinking
 
-The AI would:
-- Create files but forget imports
-- Implement features but skip tests
-- Write code that conflicted with earlier code
+**My workflow:**
+1. Start in Plan mode for architecture decisions
+2. Switch to YOLO mode for implementation
+3. Back to Plan mode when stuck
+4. YOLO mode again for fixes
 
-The breakthrough came when I switched to **sequential prompts**:
-1. Foundation (structure, config, types)
-2. Database (schema, stores, hooks)
-3. Features (one module at a time)
-4. Audit (review and refactor)
-5. Polish (UI, accessibility, docs)
-
-Each stage built on the previous. Each prompt assumed the previous stage was complete and verified.
-
-**Lesson:** Break complex builds into sequential stages. Verify each stage before moving on.
+**Lesson:** Different tasks need different modes. Architecture needs planning. Implementation needs momentum. Learn when to use each.
 
 ---
 
-## 4. AI Makes Boring Mistakes
+## 3. Testing Is Your Job (Not the AI's)
 
-AI coding assistants are brilliant at:
-- Generating boilerplate
-- Implementing standard patterns
-- Writing tests
-- Creating documentation
+**Mistake I almost made:** Trusting Qwen's output without testing.
 
-They're also surprisingly bad at:
-- Counting (off-by-one errors in loops)
-- Naming (inconsistent variable names)
-- Imports (forgetting to add new imports)
-- Edge cases (null checks, empty states)
+**What I actually did:**
+1. Qwen implements a feature
+2. I test it thoroughly
+3. I find bugs → report them precisely
+4. I propose fixes → "Add debounced save with 800ms delay"
+5. Qwen fixes
+6. I test again
+7. Repeat until right
 
-**Lesson:** Review AI-generated code carefully. The mistakes are usually simple — but they break builds.
-
----
-
-## 5. Type Safety Is Non-Negotiable
-
-Building with AI taught me to appreciate TypeScript even more.
-
-Without strict types:
-- AI would generate inconsistent data structures
-- Props would have wrong types
-- Function signatures would drift
-
-With strict TypeScript:
-- AI catches its own mistakes (type errors)
-- Refactoring is safer (compiler catches breaks)
-- Documentation is automatic (types as docs)
-
-**Lesson:** Use TypeScript strict mode. It's not just for you — it's for the AI too.
+**Lesson:** AI is the builder. You are the QA. Never skip testing.
 
 ---
 
-## 6. Small Files Are Essential
+## 4. Bug Reports Are a Skill
 
-AI coding tools work best with small, focused files.
+**Bad bug report:**
+> "Brief autosave broken"
 
-When files grow beyond 300-400 lines:
-- AI loses track of what's where
-- Edits become risky (might break unrelated code)
-- Understanding the file requires reading everything
+**Good bug report:**
+> "Brief autosave not working. Steps: 1) Open project 2) Navigate to Brief tab 3) Type in problem field 4) Refresh page. Expected: Content persists. Actual: Content lost. Fix: Add debounced save with 800ms delay."
 
-When files stay under 250 lines:
-- AI can hold the entire file in context
-- Edits are surgical (change one function)
-- Understanding is quick (one file = one responsibility)
-
-**Lesson:** Enforce file size limits. Split files aggressively. One responsibility per file.
+**Lesson:** Learn to write precise bug reports. It saves hours of back-and-forth.
 
 ---
 
-## 7. Documentation Is a Force Multiplier
+## 5. Redesigns Are Normal (Not Failures)
 
-I used to think documentation was optional for personal projects. AI-assisted development changed my mind.
+First version of the Build Module:
+- Too cramped
+- Hard to read prompts
+- No collapsible stages
 
-**Why docs matter with AI:**
-- AI reads your docs before coding (context!)
-- Docs encode architectural decisions
-- Docs prevent regression (AI knows what not to break)
-- Docs help you understand what AI built
+I requested a redesign:
+> "Make cards collapsible. Add better spacing. Show progress more clearly."
 
-Preflight enforces documentation:
-- DOCS.md is created in Stage 1
-- Every feature updates DOCS.md
-- JSDoc on all exports
-- Comments on complex logic
+Qwen implemented it. I tested. Requested another tweak. Final result: the sequential build workflow you see today.
 
-**Lesson:** Write docs as you build. AI will use them to write better code.
+**Lesson:** Don't accept the first output. Request redesigns. Iterate until it's right.
 
 ---
 
-## 8. Testing Catches AI Hallucinations
+## 6. Claude Desktop for Explanations, Qwen for Building
 
-AI sometimes generates code that looks right but doesn't work:
-- Imports from non-existent modules
-- Functions that return wrong types
-- Logic that works for happy paths but fails on edge cases
+I used each tool for its strength:
 
-Tests catch these hallucinations:
-- Import errors → build fails
-- Type errors → TypeScript fails
-- Logic errors → tests fail
+**Qwen Code:**
+- Building features
+- Following structured prompts
+- Rapid iteration
 
-**Lesson:** Run tests after every AI-generated change. Better yet, write tests before (TDD works great with AI).
+**Claude Desktop:**
+- Explaining why something broke
+- Debugging complex issues
+- Second opinion on architecture
 
----
-
-## 9. The Human Is Still the Architect
-
-AI can implement. But humans must architect.
-
-**What AI does well:**
-- "Create a React component that displays a list of projects"
-- "Add a function to update a record in Dexie"
-- "Write a test for this utility function"
-
-**What humans must do:**
-- "We need a project hub that shows all projects in a grid"
-- "Data should flow from Dexie → Zustand → components"
-- "The build workflow should be sequential, not random"
-
-**Lesson:** You're the architect. AI is the builder. Know the difference.
+**Lesson:** Use the right tool for the right job. Don't force one tool to do everything.
 
 ---
 
-## 10. Vibe Coding Is Real — But It Needs Structure
+## 7. The Workflow Is Months in the Making
 
-"Vibe coding" gets a bad rap. The idea that you can just "flow" with AI assistance sounds chaotic.
+Preflight took 3 days to build. But the workflow behind it took **months** to refine.
 
-But after building Preflight, I realized: **vibe coding isn't the problem. Unstructured vibe coding is.**
+**Timeline:**
+- **Months 1-2:** Messy vibe coding, learning what doesn't work
+- **Months 3-4:** Creating prompts to solve chaos
+- **Month 5:** Open-sourcing as yuno-docs (Bolt hackathon)
+- **Months 6-8:** Using workflow to build apps, refining prompts
+- **Month 9:** Realizing the workflow should be the product
+- **3 days:** Building Preflight
 
-With structure:
-- Clear brief → focused research → detailed design → complete PRD → sequential build
-
-Vibe coding becomes:
-- Flow state + AI assistance + documented decisions + working software
-
-**Lesson:** Don't reject vibe coding. Structure it. That's what Preflight does.
+**Lesson:** "Overnight success" is a myth. The 3-day build was possible because of months of iteration before.
 
 ---
 
-## The Meta Lesson
+## 8. Structure Beats Talent
 
-Building Preflight taught me something unexpected:
+I'm not a genius developer. I'm a developer with **structure**.
 
-**The best way to learn how to build with AI is to build a tool that helps you build with AI.**
+The yuno-docs workflow gave me:
+- Clear brief template
+- Research prompt structure
+- Design prompt format
+- Sequential build process
+
+Anyone can follow this structure. You don't need to be talented — you need to be structured.
+
+**Lesson:** Don't rely on talent. Rely on structure. Structure scales. Talent doesn't.
+
+---
+
+## 9. AI Amplifies You, Doesn't Replace You
+
+**What AI did:**
+- Generated boilerplate
+- Implemented features from prompts
+- Fixed bugs I reported
+- Refactored when I requested
+
+**What I did:**
+- Defined what to build
+- Tested every feature
+- Reported bugs precisely
+- Requested redesigns
+- Proposed new features
+- Made architectural decisions
+
+**Lesson:** AI amplifies your output. But you're still the architect, the tester, the product manager.
+
+---
+
+## 10. Ship Then Iterate
+
+**Perfectionist approach:**
+> "I need to plan everything perfectly before building."
+
+**My approach:**
+> "Build in 3 days. Ship. Test. Fix. Iterate."
+
+Preflight wasn't perfect after 3 days. It was **complete**. The perfection came from weeks of iteration after shipping.
+
+**Lesson:** Don't wait for perfect. Ship fast. Iterate based on real use.
+
+---
+
+## The Meta Lesson: Build the Builder
+
+The most surprising insight from building Preflight:
+
+> **The best way to learn AI-assisted development is to build a tool for AI-assisted development.**
 
 By encoding my workflow into Preflight, I was forced to:
-- Articulate vague intuitions ("just structure your prompts better")
+- Articulate vague intuitions ("structure your prompts better")
 - Identify patterns ("always do foundation before features")
 - Document decisions ("why we use Dexie instead of Supabase")
 
-The tool became the teacher.
+The tool became the teacher. Building Preflight taught me how to build with AI.
 
 ---
 
 ## Apply These Lessons
 
-Want to apply these lessons to your own AI-assisted projects?
+Want to apply these lessons?
 
-1. **Use Preflight** — It encodes these lessons into every prompt
-2. **Read the prompts Preflight generates** — Study how they're structured
-3. **Iterate on your workflow** — What works for you? What doesn't?
-4. **Share what you learn** — The community is still figuring this out
+1. **Get Qwen Code** — It's free
+2. **Learn Plan/YOLO modes** — Use each appropriately
+3. **Create your workflow** — Structured prompts for your use case
+4. **Test everything** — Be the QA
+5. **Write precise bug reports** — Save hours of debugging
+6. **Request redesigns** — Don't accept the first output
+7. **Ship fast, iterate** — Perfection comes after shipping
+
+---
+
+## The Real Secret
+
+The secret isn't Qwen Code. It isn't Claude Desktop. It isn't even the prompts.
+
+**The real secret is: iteration.**
+
+Build → Test → Bug Report → Fix → Redesign → Iterate → Repeat
+
+That's how Preflight was built. That's how you can build too.
 
 ---
 

@@ -257,12 +257,15 @@ Update documentation in `docs/` with your changes.
 
 ## How This Was Built
 
-**Preflight was built using vibe coding — an AI-assisted, iterative approach to software development.**
+**Preflight was built in 3 days using [Qwen Code](https://github.com/QwenLM/Qwen) — a free, open-source AI pair programmer.**
 
-I used Cursor and Claude Code to build Preflight following the exact workflow that Preflight generates. After building it, I used Preflight itself to rebuild the same application — and it worked perfectly.
+I toggled between **Plan mode** (for architecture) and **YOLO mode** (for rapid implementation). When stuck, I used **Claude Desktop** for explanations. After each feature, I tested thoroughly, reported bugs, requested redesigns, and iterated until it was right.
 
-Read the full story in [**Behind the Scenes**](docs/behind-the-scenes/vibe-coding-workflow.md):
-- [How I Used AI to Build Preflight](docs/behind-the-scenes/vibe-coding-workflow.md)
+The workflow I followed wasn't new — it was refined over **months** of building apps with AI, open-sourced as [yuno-docs](https://github.com/sifeddinemeb/yuno-docs) during the Bolt hackathon. Preflight is that workflow turned into a platform.
+
+Read the full story in [**Behind the Scenes**](docs/behind-the-scenes/):
+- [Origin Story: From yuno-docs to Preflight](docs/behind-the-scenes/origin-story.md)
+- [3-Day Build with Qwen Code](docs/behind-the-scenes/vibe-coding-workflow.md)
 - [Using Preflight to Rebuild Preflight](docs/behind-the-scenes/self-dogfooding.md)
 - [Lessons Learned](docs/behind-the-scenes/lessons-learned.md)
 
@@ -286,13 +289,13 @@ Read the full story in [**Behind the Scenes**](docs/behind-the-scenes/vibe-codin
 
 ## Acknowledgments
 
-Built with ❤️ by the Preflight Team
+Built with ❤️ using [Qwen Code](https://github.com/QwenLM/Qwen) (Plan mode + YOLO mode) and [Claude Desktop](https://claude.ai/download).
 
-Inspired by:
+**Workflow ancestor:** [yuno-docs](https://github.com/sifeddinemeb/yuno-docs) — open-source prompts from the Bolt hackathon
+
+**Inspired by:**
 - [Lovable](https://lovable.dev)
 - [Bolt](https://bolt.new)
-- [Cursor](https://cursor.sh)
-- [Claude Code](https://claude.ai)
 - [v0](https://v0.dev)
 
 ---
