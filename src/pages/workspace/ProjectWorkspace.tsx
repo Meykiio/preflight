@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContextNodeSelector } from "@/components/workspace/ContextNodeSelector";
+import { FloatingActionButton } from "@/components/shared/FloatingActionButton";
 import { useProject } from "@/hooks/useProject";
 import { cn } from "@/lib/utils";
 import { BriefPage } from "@/pages/workspace/BriefPage";
@@ -195,6 +196,9 @@ export const ProjectWorkspace = (): JSX.Element => {
           />
         ) : null}
       </div>
+
+      {/* Floating Action Button for navigation */}
+      <FloatingActionButton />
     </section>
   );
 };
