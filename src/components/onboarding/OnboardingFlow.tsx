@@ -3,6 +3,7 @@ import { OnboardingCompleteStep } from "@/components/onboarding/OnboardingComple
 import { OnboardingNameStep } from "@/components/onboarding/OnboardingNameStep";
 import { OnboardingProgress } from "@/components/onboarding/OnboardingProgress";
 import { OnboardingProviderStep } from "@/components/onboarding/OnboardingProviderStep";
+import { OnboardingTutorialStep } from "@/components/onboarding/OnboardingTutorialStep";
 import { useAIProviders } from "@/hooks/useAIProviders";
 import { useDialogAccessibility } from "@/hooks/useDialogAccessibility";
 import { useSettings } from "@/hooks/useSettings";
@@ -16,7 +17,7 @@ interface OnboardingFlowProps {
   onComplete: () => Promise<void>;
 }
 
-type OnboardingStep = 1 | 2 | 3;
+type OnboardingStep = 1 | 2 | 3 | 4;
 
 export const OnboardingFlow = ({
   onComplete
@@ -115,6 +116,10 @@ export const OnboardingFlow = ({
         ) : null}
 
         {step === 3 ? (
+          <OnboardingTutorialStep onComplete={() => setStep(4)} />
+        ) : null}
+
+        {step === 4 ? (
           <OnboardingCompleteStep onComplete={() => void onComplete()} />
         ) : null}
       </div>

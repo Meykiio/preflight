@@ -4,5 +4,6 @@
       "Bash(npm run *)",
       "Bash(move *)"
     ]
-  }
+  },
+  "$version": 3
 }

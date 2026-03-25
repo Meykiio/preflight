@@ -1,5 +1,5 @@
 interface OnboardingProgressProps {
-  step: 1 | 2 | 3;
+  step: 1 | 2 | 3 | 4;
 }
 
 export const OnboardingProgress = ({
@@ -7,7 +7,7 @@ export const OnboardingProgress = ({
 }: OnboardingProgressProps): JSX.Element => {
   return (
     <div className="absolute left-0 top-0 flex h-1.5 w-full overflow-hidden rounded-t-xl bg-surface-container-lowest">
-      {[1, 2, 3].map((index) => (
+      {[1, 2, 3, 4].map((index) => (
         <div
           key={index}
           className={`flex-1 ${
