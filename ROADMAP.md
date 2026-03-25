@@ -3,7 +3,7 @@
 **Version:** 0.1.0 → 1.0.0  
 **Created:** March 25, 2026  
 **Last Updated:** March 25, 2026  
-**Status:** 🟡 In Progress — Week 1 Tests Complete
+**Status:** 🟢 Week 1 & 2 Tests Complete
 
 ---
 
@@ -11,7 +11,7 @@
 
 | Metric | Current | Target v1.0 | Status |
 |--------|---------|-------------|--------|
-| Test Coverage | ~15% (34 tests) | 70%+ | 🟡 Week 1 Complete |
+| Test Coverage | ~25% (71 tests) | 70%+ | 🟢 Weeks 1-2 Complete |
 | Bundle Size | 440KB main | <250KB | ❌ Not Started |
 | Onboarding | Basic API setup | Interactive tutorial | ❌ Not Started |
 | Documentation | 40% complete | 95% complete | ❌ Not Started |
@@ -52,13 +52,13 @@
 
 **Week 1: Foundation Tests (Unit)**
 
-- [x] `src/lib/utils.test.ts` ✅ EXISTING (3 tests)
+- [x] `src/lib/utils.test.ts` ✅ COMPLETE (3 tests)
 - [x] `src/lib/briefUtils.test.ts` ✅ COMPLETE (13 tests)
 - [x] `src/lib/fileUpload.test.ts` ✅ COMPLETE (13 tests)
 - [x] `src/lib/generationErrors.test.ts` ✅ COMPLETE (5 tests)
-- [ ] `src/stores/projectStore.test.ts` 🆕 ADD (4 tests)
-- [ ] `src/stores/settingsStore.test.ts` 🆕 ADD (3 tests)
-- [ ] `src/stores/uiStore.test.ts` 🆕 ADD (2 tests)
+- [x] `src/stores/projectStore.test.ts` ✅ COMPLETE (12 tests)
+- [x] `src/stores/settingsStore.test.ts` ✅ COMPLETE (13 tests)
+- [x] `src/stores/uiStore.test.ts` ✅ COMPLETE (12 tests)
 
 **Week 2: Component Tests**
 
@@ -721,6 +721,14 @@ pnpm add html2pdf.js
 ---
 
 ## 📝 CHANGELOG
+
+### [2026-03-25] — Week 2: Store Tests Complete ✅
+- Added 37 new store tests (total: 71 tests)
+- `uiStore.test.ts`: 12 tests for UI state management
+- `projectStore.test.ts`: 12 tests for project CRUD operations
+- `settingsStore.test.ts`: 13 tests for settings and agent prompts
+- All tests passing ✓
+- Test coverage increased from ~15% to ~25%
 
 ### [2026-03-25] — Week 1: Unit Tests Complete ✅
 - Added 31 new unit tests (total: 34 tests)
