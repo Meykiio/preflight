@@ -1,17 +1,33 @@
-import { useMemo, useState } from "react";
+import { Suspense, lazy, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContextNodeSelector } from "@/components/workspace/ContextNodeSelector";
 import { FloatingActionButton } from "@/components/shared/FloatingActionButton";
 import { useProject } from "@/hooks/useProject";
 import { cn } from "@/lib/utils";
-import { BriefPage } from "@/pages/workspace/BriefPage";
-import { BuildPage } from "@/pages/workspace/BuildPage";
-import { PRDPage } from "@/pages/workspace/PRDPage";
-import { DesignPage } from "@/pages/workspace/DesignPage";
-import { ResearchPage } from "@/pages/workspace/ResearchPage";
-import { ShipPage } from "@/pages/workspace/ShipPage";
-import { VaultPage } from "@/pages/workspace/VaultPage";
 import { useUIStore } from "@/stores/uiStore";
+
+// Lazy load workspace pages for code splitting (named exports)
+const BriefPage = lazy(() => import("@/pages/workspace/BriefPage").then(module => ({ default: module.BriefPage })));
+const BuildPage = lazy(() => import("@/pages/workspace/BuildPage").then(module => ({ default: module.BuildPage })));
+const PRDPage = lazy(() => import("@/pages/workspace/PRDPage").then(module => ({ default: module.PRDPage })));
+const DesignPage = lazy(() => import("@/pages/workspace/DesignPage").then(module => ({ default: module.DesignPage })));
+const ResearchPage = lazy(() => import("@/pages/workspace/ResearchPage").then(module => ({ default: module.ResearchPage })));
+const ShipPage = lazy(() => import("@/pages/workspace/ShipPage").then(module => ({ default: module.ShipPage })));
+const VaultPage = lazy(() => import("@/pages/workspace/VaultPage").then(module => ({ default: module.VaultPage })));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="flex h-full items-center justify-center">
+    <div className="rounded-2xl border border-outline-variant/10 bg-surface-container px-6 py-5">
+      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+        Loading Page
+      </p>
+      <div className="mt-3 h-2 w-48 overflow-hidden rounded-full bg-surface-container-high">
+        <div className="h-full w-1/2 animate-pulse rounded-full bg-primary" />
+      </div>
+    </div>
+  </div>
+);
 
 const WORKSPACE_STAGES = [
   { id: "brief", label: "Brief" },
@@ -88,48 +104,38 @@ export const ProjectWorkspace = (): JSX.Element => {
     WORKSPACE_STAGES.find((stage) => stage.id === activeTab)?.label ?? "Brief";
 
   const renderActiveContent = (): JSX.Element => {
-    if (activeTab === "brief") {
-      return <BriefPage />;
-    }
-
-    if (activeTab === "research") {
-      return <ResearchPage />;
-    }
-
-    if (activeTab === "design") {
-      return <DesignPage onOpenContextSelector={() => setIsSelectorOpen(true)} />;
-    }
-
-    if (activeTab === "prd" && projectId) {
-      return <PRDPage projectId={projectId} />;
-    }
-
-    if (activeTab === "build" && projectId) {
-      return <BuildPage projectId={projectId} />;
-    }
-
-    if (activeTab === "vault") {
-      return <VaultPage />;
-    }
-
-    if (activeTab === "ship" && projectId) {
-      return <ShipPage projectId={projectId} />;
-    }
-
     return (
-      <div className="flex h-full items-center justify-center px-8">
-        <div className="rounded-2xl border border-outline-variant/10 bg-surface-container p-10 text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-primary">
-            Workspace Placeholder
-          </p>
-          <h1 className="mt-4 font-headline text-4xl font-bold tracking-tight text-on-surface">
-            {activeLabel}
-          </h1>
-          <p className="mt-3 text-on-surface-variant">
-            Coming in Stage {stageNumber}.
-          </p>
-        </div>
-      </div>
+      <Suspense fallback={<PageLoader />}>
+        {activeTab === "brief" ? (
+          <BriefPage />
+        ) : activeTab === "research" ? (
+          <ResearchPage />
+        ) : activeTab === "design" ? (
+          <DesignPage onOpenContextSelector={() => setIsSelectorOpen(true)} />
+        ) : activeTab === "prd" && projectId ? (
+          <PRDPage projectId={projectId} />
+        ) : activeTab === "build" && projectId ? (
+          <BuildPage projectId={projectId} />
+        ) : activeTab === "vault" ? (
+          <VaultPage />
+        ) : activeTab === "ship" && projectId ? (
+          <ShipPage projectId={projectId} />
+        ) : (
+          <div className="flex h-full items-center justify-center px-8">
+            <div className="rounded-2xl border border-outline-variant/10 bg-surface-container p-10 text-center">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-primary">
+                Workspace Placeholder
+              </p>
+              <h1 className="mt-4 font-headline text-4xl font-bold tracking-tight text-on-surface">
+                {activeLabel}
+              </h1>
+              <p className="mt-3 text-on-surface-variant">
+                Coming in Stage {stageNumber}.
+              </p>
+            </div>
+          </div>
+        )}
+      </Suspense>
     );
   };
 
