@@ -27,7 +27,8 @@ export const useVaultFiles = (projectId: string | undefined) => {
   const isLoading = filesQuery === undefined;
 
   const addFile = async (
-    input: AddVaultFileInput
+    input: AddVaultFileInput,
+    options?: { isActiveContext?: boolean }
   ): Promise<VaultFile | null> => {
     if (!projectId) {
       return null;
@@ -41,7 +42,8 @@ export const useVaultFiles = (projectId: string | undefined) => {
         size: input.size,
         mimeType: input.mimeType,
         category: input.category,
-        isActiveContext: input.isActiveContext ?? false,
+        // Auto-select as context by default for better UX
+        isActiveContext: options?.isActiveContext ?? true,
         data: input.data,
         uploadedAt: Date.now()
       };
@@ -51,6 +53,20 @@ export const useVaultFiles = (projectId: string | undefined) => {
     } catch (error) {
       console.error("Failed to add vault file.", error);
       return null;
+    }
+  };
+
+  const setAllFilesAsContext = async (): Promise<void> => {
+    if (!projectId) return;
+    
+    try {
+      const allFiles = await db.vaultFiles.where("projectId").equals(projectId).toArray();
+      const updates = allFiles
+        .filter(file => !file.isActiveContext)
+        .map(file => db.vaultFiles.update(file.id, { isActiveContext: true }));
+      await Promise.all(updates);
+    } catch (error) {
+      console.error("Failed to set all files as context.", error);
     }
   };
 
@@ -83,6 +99,7 @@ export const useVaultFiles = (projectId: string | undefined) => {
     isLoading,
     addFile,
     removeFile,
-    toggleContext
+    toggleContext,
+    setAllFilesAsContext
   };
 };
