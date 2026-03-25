@@ -1,5 +1,12 @@
 import db from "@/lib/db";
 import { AIServiceError } from "@/services/ai/errors";
+import { executeWithRetry, sleep } from "@/services/ai/retry";
+import {
+  saveCheckpoint,
+  clearCheckpoint,
+  estimateTokenCount,
+  shouldSaveCheckpoint
+} from "@/services/ai/checkpoint";
 import type { AICompleteParams, AIProvider } from "@/services/ai/types";
 import type { AgentType, AIProviderConfig } from "@/types";
 
@@ -76,14 +83,15 @@ export const getProvider = async (): Promise<AIProvider> =>
 export const generateWithAgent = async (
   agentType: AgentType,
   userContent: string,
-  onChunk?: (chunk: string) => void
+  onChunk?: (chunk: string) => void,
+  projectId?: string
 ): Promise<string> => {
   const [providerConfig, systemPrompt, settings] = await Promise.all([
     getDefaultProviderConfig(),
     getSystemPrompt(agentType),
     db.appSettings.get("app-settings")
   ]);
-  
+
   const provider = await createProviderFromConfig(providerConfig);
 
   const params: AICompleteParams = {
@@ -94,19 +102,70 @@ export const generateWithAgent = async (
     maxTokens: 4096
   };
 
-  if (onChunk && settings?.streamingEnabled !== false) {
-    try {
+  // Track generation progress for checkpointing
+  let accumulatedContent = "";
+  let lastCheckpointTokens = 0;
+  const checkpointEnabled = projectId !== undefined;
+
+  const saveProgress = (content: string) => {
+    if (!checkpointEnabled) return;
+    
+    const currentTokens = estimateTokenCount(content);
+    if (shouldSaveCheckpoint(currentTokens, lastCheckpointTokens)) {
+      saveCheckpoint({
+        projectId,
+        agentType,
+        content,
+        tokenCount: currentTokens,
+        timestamp: Date.now(),
+        status: "in-progress"
+      });
+      lastCheckpointTokens = currentTokens;
+    }
+  };
+
+  // Retry wrapper for generation
+  const generateWithRetry = async (): Promise<string> => {
+    if (onChunk && settings?.streamingEnabled !== false) {
       let result = "";
       await provider.streamComplete(params, (chunk) => {
         result += chunk;
         onChunk(chunk);
+        saveProgress(result);
       });
       return result.trim();
-    } catch (error) {
-      // Fallback to non-streaming completion
-      return provider.complete(params);
     }
-  }
 
-  return provider.complete(params);
+    return provider.complete(params);
+  };
+
+  try {
+    const result = await executeWithRetry(
+      generateWithRetry,
+      undefined,
+      (attempt, error, delay) => {
+        console.warn(`Generation retry ${attempt}/5 after ${Math.round(delay)}ms:`, error);
+      }
+    );
+
+    // Clear checkpoint on success
+    if (checkpointEnabled) {
+      clearCheckpoint();
+    }
+
+    return result;
+  } catch (error) {
+    // Save failed state for recovery
+    if (checkpointEnabled && accumulatedContent) {
+      saveCheckpoint({
+        projectId,
+        agentType,
+        content: accumulatedContent,
+        tokenCount: estimateTokenCount(accumulatedContent),
+        timestamp: Date.now(),
+        status: "failed"
+      });
+    }
+    throw error;
+  }
 };
