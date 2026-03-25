@@ -70,12 +70,18 @@
 - [ ] Auto-save to Vault after generation
 - [ ] Further bundle optimization (analyze large dependencies)
 - [ ] Mobile/tablet optimization
+- [x] Build prompt optimization — Phase 2 complete, ready for v1.1 integration
+
+### v1.1 Planned Features
+- **Optimized Build Prompts** — 4-10 stages based on complexity (62% reduction for simple apps)
+- **Complexity Detection** — Auto-detect app complexity and suggest tier
+- **Cloud Sync** — Supabase integration for multi-device sync
+- **Template Marketplace** — Pre-built project templates
 
 ### Future Enhancements
-- [ ] Cloud sync with Supabase
-- [ ] Template marketplace
-- [ ] Collaboration features
 - [ ] Export to multiple formats (PDF, Markdown)
+- [ ] Collaboration features
+- [ ] Advanced analytics dashboard
 
 ---
 
