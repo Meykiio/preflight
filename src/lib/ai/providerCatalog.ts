@@ -16,6 +16,7 @@ export const PROVIDER_ORDER: AIProvider[] = [
   "google",
   "deepseek",
   "groq",
+  "qwen",
   "custom"
 ];
 
@@ -65,6 +66,15 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     defaultModel: "llama-3.3-70b-versatile",
     models: ["llama-3.3-70b-versatile", "mixtral-8x7b-32768"]
   },
+  qwen: {
+    provider: "qwen",
+    label: "Qwen Code",
+    icon: "code",
+    helpUrl: "https://github.com/QwenLM/Qwen",
+    keyLabel: "Qwen API key",
+    defaultModel: "qwen-plus",
+    models: ["qwen-plus", "qwen-max"]
+  },
   custom: {
     provider: "custom",
     label: "Custom",
@@ -80,6 +90,7 @@ export const PLATFORM_TOGGLE_OPTIONS = [
   { id: "lovable", label: "Lovable", icon: "favorite" },
   { id: "bolt", label: "Bolt", icon: "bolt" },
   { id: "cursor", label: "Cursor", icon: "arrow_right_alt" },
+  { id: "qwen-code", label: "Qwen Code", icon: "code" },
   { id: "v0", label: "v0", icon: "deployed_code" },
   { id: "replit", label: "Replit", icon: "terminal" },
   { id: "perplexity", label: "Perplexity", icon: "help" },

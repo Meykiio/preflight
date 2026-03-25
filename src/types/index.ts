@@ -20,6 +20,7 @@ export type AIProvider =
   | "google"
   | "deepseek"
   | "groq"
+  | "qwen"
   | "custom";
 
 export type AgentType =

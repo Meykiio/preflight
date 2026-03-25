@@ -34,6 +34,10 @@ export const createProviderFromConfig = (
       return import("@/services/ai/providers/groqProvider").then((module) =>
         module.createGroqProvider(config.apiKey, config.model)
       );
+    case "qwen":
+      return import("@/services/ai/providers/qwenProvider").then((module) =>
+        module.createQwenProvider(config.apiKey, config.model)
+      );
     case "custom":
       return import("@/services/ai/providers/customProvider").then((module) =>
         module.createCustomProvider(config.apiKey, config.model, config.baseUrl)
