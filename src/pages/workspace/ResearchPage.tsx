@@ -1,16 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { OutputPanel } from "@/components/shared/OutputPanel";
+import { TechStackModal } from "@/components/workspace/research/TechStackModal";
 import { ResearchContextPanel } from "@/components/workspace/research/ResearchContextPanel";
 import { ResearchFilesSection } from "@/components/workspace/research/ResearchFilesSection";
 import { useArtifacts } from "@/hooks/useArtifacts";
 import { useBrief } from "@/hooks/useBrief";
 import { useProject } from "@/hooks/useProject";
+import { useProjects } from "@/hooks/useProjects";
 import { useToast } from "@/hooks/useToast";
 import { useVaultFiles } from "@/hooks/useVaultFiles";
 import { downloadFileData, validateUploadFile } from "@/lib/fileUpload";
 import { getGenerationErrorState } from "@/lib/generationErrors";
 import { formatDate } from "@/lib/utils";
+import { generateTechStackRecommendation, type TechStackRecommendation } from "@/services/generation/techStackRecommendation";
 import { generateResearchPrompt } from "@/services/generation/researchGeneration";
 
 const RESEARCH_FILE_EXTENSIONS = [".pdf", ".md", ".txt"];
@@ -19,6 +22,7 @@ export const ResearchPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const toast = useToast();
+  const { updateProject } = useProjects();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { project } = useProject(projectId);
   const { brief } = useBrief(projectId);
@@ -29,6 +33,9 @@ export const ResearchPage = (): JSX.Element => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
+  const [showTechStackModal, setShowTechStackModal] = useState(false);
+  const [techStackRecommendation, setTechStackRecommendation] = useState<TechStackRecommendation | null>(null);
+  const [isGeneratingTechStack, setIsGeneratingTechStack] = useState(false);
   const latestArtifact = getLatestByType("research_prompt");
   const researchFiles = useMemo(() => files.filter((file) => file.category === "research"), [files]);
   const nodeAvailability = useMemo(
@@ -89,6 +96,47 @@ export const ResearchPage = (): JSX.Element => {
     }
   };
 
+  const handleGenerateTechStack = async (): Promise<void> => {
+    if (!project || !brief || !latestArtifact) {
+      toast.error("Please generate research first.");
+      return;
+    }
+    setIsGeneratingTechStack(true);
+    try {
+      const recommendation = await generateTechStackRecommendation({
+        projectName: project.name,
+        brief,
+        researchContent: latestArtifact.content
+      });
+      if (recommendation) {
+        setTechStackRecommendation(recommendation);
+        setShowTechStackModal(true);
+        toast.success("Tech stack recommendation ready!");
+      } else {
+        toast.error("Failed to generate tech stack recommendation.");
+      }
+    } catch (error) {
+      console.error("Tech stack generation failed:", error);
+      toast.error("Tech stack generation failed.");
+    } finally {
+      setIsGeneratingTechStack(false);
+    }
+  };
+
+  const handleAcceptTechStack = async (): Promise<void> => {
+    if (!project || !techStackRecommendation) return;
+    const techStack = [
+      techStackRecommendation.frontend.name,
+      techStackRecommendation.styling.name,
+      techStackRecommendation.stateManagement.name,
+      techStackRecommendation.database.name
+    ];
+    await updateProject(project.id, { techStack });
+    setShowTechStackModal(false);
+    setTechStackRecommendation(null);
+    toast.success("Tech stack saved to project!");
+  };
+
   const handleFiles = async (fileList: FileList | null): Promise<void> => {
     if (!fileList || !projectId) return;
     try {
@@ -124,6 +172,42 @@ export const ResearchPage = (): JSX.Element => {
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-8">
+      {/* Tech Stack Banner - Shows after research completes */}
+      {latestArtifact && !isGenerating && (
+        <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
+          <div className="flex items-start gap-4">
+            <span className="material-symbols-outlined text-3xl text-primary">lightbulb</span>
+            <div className="flex-1">
+              <h3 className="font-headline text-lg font-semibold text-on-surface">
+                Research Complete! Get Your Tech Stack Recommendation
+              </h3>
+              <p className="mt-2 text-sm text-on-surface-variant">
+                Our AI has analyzed your brief and research. Get a personalized tech stack recommendation 
+                tailored to your project's specific needs.
+              </p>
+              <div className="mt-4 flex gap-3">
+                <button
+                  type="button"
+                  onClick={handleGenerateTechStack}
+                  disabled={isGeneratingTechStack}
+                  className="gradient-cta glow-primary flex items-center gap-2 rounded-xl px-6 py-3 font-semibold text-on-primary disabled:opacity-50"
+                >
+                  <span className="material-symbols-outlined">psychology</span>
+                  {isGeneratingTechStack ? "Generating..." : "Generate Tech Stack"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/project/${projectId}/build`)}
+                  className="rounded-xl border border-outline-variant/15 bg-surface-container px-6 py-3 text-sm text-on-surface transition hover:bg-surface-bright"
+                >
+                  Skip to Build
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
         <ResearchContextPanel
           activeNodes={activeNodes}
@@ -173,6 +257,18 @@ export const ResearchPage = (): JSX.Element => {
         onToggleContext={(fileId) => void toggleContext(fileId)}
         onUploadInputChange={(filesToUpload) => void handleFiles(filesToUpload)}
         researchFiles={researchFiles}
+      />
+
+      {/* Tech Stack Modal */}
+      <TechStackModal
+        isOpen={showTechStackModal}
+        onClose={() => {
+          setShowTechStackModal(false);
+          setTechStackRecommendation(null);
+        }}
+        recommendation={techStackRecommendation}
+        onAccept={handleAcceptTechStack}
+        projectName={project?.name ?? "Your Project"}
       />
     </div>
   );
