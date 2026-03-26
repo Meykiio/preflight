@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BriefCompletionBanner } from "@/components/workspace/brief/BriefCompletionBanner";
-import { BriefHeader } from "@/components/workspace/brief/BriefHeader";
 import { BriefMetadataColumn } from "@/components/workspace/brief/BriefMetadataColumn";
 import { BriefNotesSection } from "@/components/workspace/brief/BriefNotesSection";
 import { BriefPrimaryColumn } from "@/components/workspace/brief/BriefPrimaryColumn";
@@ -78,17 +77,9 @@ export const BriefPage = (): JSX.Element => {
   const completionScore = brief ? isBriefComplete(brief, { projectName }) : false;
 
   return (
-    <div className="workspace-max-width">
-      <BriefHeader
-        completionScore={completionScore}
-        onBlurProjectName={() => void handleProjectNameBlur()}
-        onChangeProjectName={setProjectName}
-        projectName={projectName}
-        saveState={saveState}
-      />
-
-      {/* 2-Column Grid Layout */}
-      <div className="mt-6 grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+    <div className="w-full px-8 py-6">
+      {/* 2-Column Grid Layout - Left wider (main content), Right narrower (metadata) */}
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_320px]">
         <div className="space-y-6">
           <BriefPrimaryColumn
             features={features}
