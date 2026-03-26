@@ -171,7 +171,7 @@ export const ResearchPage = (): JSX.Element => {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="workspace-max-width">
       {/* Tech Stack Banner - Shows after research completes */}
       {latestArtifact && !isGenerating && (
         <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
@@ -182,7 +182,7 @@ export const ResearchPage = (): JSX.Element => {
                 Research Complete! Get Your Tech Stack Recommendation
               </h3>
               <p className="mt-2 text-sm text-on-surface-variant">
-                Our AI has analyzed your brief and research. Get a personalized tech stack recommendation 
+                Our AI has analyzed your brief and research. Get a personalized tech stack recommendation
                 tailored to your project's specific needs.
               </p>
               <div className="mt-4 flex gap-3">

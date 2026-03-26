@@ -78,7 +78,7 @@ export const BriefPage = (): JSX.Element => {
   const completionScore = brief ? isBriefComplete(brief, { projectName }) : false;
 
   return (
-    <div className="mx-auto max-w-[1600px] px-6 py-8">
+    <div className="workspace-max-width">
       <BriefHeader
         completionScore={completionScore}
         onBlurProjectName={() => void handleProjectNameBlur()}
@@ -86,10 +86,10 @@ export const BriefPage = (): JSX.Element => {
         projectName={projectName}
         saveState={saveState}
       />
-      
-      {/* 2-Column Grid Layout - 3:2 ratio */}
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3 space-y-6">
+
+      {/* 2-Column Grid Layout */}
+      <div className="mt-6 grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+        <div className="space-y-6">
           <BriefPrimaryColumn
             features={features}
             onAddFeature={addFeature}
@@ -103,7 +103,7 @@ export const BriefPage = (): JSX.Element => {
             problem={problem}
           />
         </div>
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6">
           <BriefMetadataColumn
             onAddTargetUser={addTargetUser}
             onChangeTargetUserInput={setTargetUserInput}
@@ -113,13 +113,18 @@ export const BriefPage = (): JSX.Element => {
           />
         </div>
       </div>
-      
+
       {/* Notes Section - Full Width */}
       <div className="mt-6">
         <BriefNotesSection isOpen={isNotesOpen} notes={notes} onChangeNotes={setNotes} onToggle={() => setIsNotesOpen((current) => !current)} />
       </div>
-      
-      {completionReady ? <BriefCompletionBanner onContinue={() => setActiveTab("research")} projectName={projectName} /> : null}
+
+      {/* Completion Banner */}
+      {completionReady && (
+        <div className="mt-6">
+          <BriefCompletionBanner onContinue={() => setActiveTab("research")} projectName={projectName} />
+        </div>
+      )}
     </div>
   );
 };

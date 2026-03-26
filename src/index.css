@@ -380,3 +380,8 @@ html.light .terminal-glow:focus-within {
 .empty-state {
   @apply flex min-h-[300px] flex-col items-center justify-center text-center;
 }
+
+/* Workspace pages with FAB need bottom padding */
+.workspace-with-fab {
+  @apply pb-24;
+}

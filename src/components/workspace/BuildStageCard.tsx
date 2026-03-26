@@ -56,15 +56,17 @@ const BuildStageCardComponent = ({
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <h3 className="font-headline text-lg font-semibold text-on-surface">
+            <div className="min-w-0 flex-1">
+              <h3 className="truncate font-headline text-lg font-semibold text-on-surface" title={stage.name}>
                 {stage.name}
               </h3>
-              <p className="mt-1 text-sm text-outline">{stage.description}</p>
+              <p className="mt-1 truncate text-sm text-outline" title={stage.description}>
+                {stage.description}
+              </p>
             </div>
             <span
               className={cn(
-                "inline-flex items-center gap-2 rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]",
+                "inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em]",
                 STATUS_TONES[stage.status]
               )}
             >
