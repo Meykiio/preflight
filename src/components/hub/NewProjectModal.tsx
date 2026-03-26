@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ProjectPlatformPicker } from "@/components/hub/ProjectPlatformPicker";
-import { ProjectTechStackField } from "@/components/hub/ProjectTechStackField";
 import { useDialogAccessibility } from "@/hooks/useDialogAccessibility";
 import { useProjects } from "@/hooks/useProjects";
 import { useToast } from "@/hooks/useToast";
 import { useProjectStore } from "@/stores/projectStore";
-import type { Platform } from "@/types";
 
 interface NewProjectModalProps {
   isOpen: boolean;
@@ -18,22 +15,20 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
   const { createProject } = useProjects();
   const toast = useToast();
   const selectProject = useProjectStore((state) => state.selectProject);
-  
+
   // Use refs for input values to prevent focus loss
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLInputElement>(null);
-  
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
-  const [techStack, setTechStack] = useState<string[]>([]);
+
   const [showNameError, setShowNameError] = useState(false);
+  const [showDescriptionError, setShowDescriptionError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const resetForm = useCallback((): void => {
     if (nameRef.current) nameRef.current.value = "";
     if (descriptionRef.current) descriptionRef.current.value = "";
-    setSelectedPlatforms([]);
-    setTechStack([]);
     setShowNameError(false);
+    setShowDescriptionError(false);
     setIsSubmitting(false);
   }, []);
 
@@ -51,32 +46,31 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
 
   const canSubmit = useMemo(() => {
     const nameValue = nameRef.current?.value.trim() ?? "";
-    return nameValue.length > 0;
-  }, [isSubmitting]); // Re-check on submit state change
-
-  const togglePlatform = useCallback((platform: Platform): void => {
-    setSelectedPlatforms((current) =>
-      current.includes(platform) ? current.filter((value) => value !== platform) : [...current, platform]
-    );
-  }, []);
+    const descriptionValue = descriptionRef.current?.value.trim() ?? "";
+    return nameValue.length > 0 && descriptionValue.length > 0;
+  }, [isSubmitting]);
 
   const handleSubmit = useCallback(async (): Promise<void> => {
     const nameValue = nameRef.current?.value.trim() ?? "";
     const descriptionValue = descriptionRef.current?.value.trim() ?? "";
-    
+
     if (!nameValue) {
       setShowNameError(true);
       nameRef.current?.focus();
       return;
     }
-    
+
+    if (!descriptionValue) {
+      setShowDescriptionError(true);
+      descriptionRef.current?.focus();
+      return;
+    }
+
     setIsSubmitting(true);
-    
+
     const project = await createProject({
       name: nameValue,
-      description: descriptionValue,
-      targetPlatforms: selectedPlatforms,
-      techStack
+      description: descriptionValue
     });
     
     if (!project) {
@@ -90,7 +84,7 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
     onOpenChange(false);
     toast.success("Project created.");
     navigate(`/project/${project.id}`);
-  }, [createProject, toast, selectProject, resetForm, onOpenChange, navigate, selectedPlatforms, techStack]);
+  }, [createProject, toast, selectProject, resetForm, onOpenChange, navigate]);
 
   if (!isOpen) return null;
 
@@ -136,7 +130,7 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
             <input
               ref={nameRef}
               type="text"
-              placeholder="What are you building?"
+              placeholder="e.g., PrintFlow, TaskMaster, DesignHub"
               className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 text-sm text-on-surface outline-none transition focus:border-primary/40"
             />
             {showNameError ? (
@@ -150,19 +144,16 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
             <input
               ref={descriptionRef}
               type="text"
-              placeholder="What does this app do in one sentence?"
+              placeholder="e.g., A tool for creating custom print-on-demand designs"
               className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 text-sm text-on-surface outline-none transition focus:border-primary/40"
             />
+            {showDescriptionError ? (
+              <p className="mt-2 text-sm text-tertiary">Description is required.</p>
+            ) : null}
           </div>
-          <ProjectPlatformPicker
-            selectedPlatforms={selectedPlatforms}
-            onTogglePlatform={togglePlatform}
-          />
-          <ProjectTechStackField
-            techStack={techStack}
-            onAddTechStack={(tag) => setTechStack((current) => [...current, tag])}
-            onRemoveTag={(tag) => setTechStack((current) => current.filter((value) => value !== tag))}
-          />
+          <p className="text-sm text-on-surface-variant">
+            Tip: You'll add more details like features and tech stack on the next screen.
+          </p>
         </div>
         <div className="mt-6">
           <button
