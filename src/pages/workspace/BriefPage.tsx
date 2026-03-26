@@ -10,7 +10,7 @@ import { useProject } from "@/hooks/useProject";
 import { useProjects } from "@/hooks/useProjects";
 import { isBriefComplete } from "@/lib/briefUtils";
 import { useUIStore } from "@/stores/uiStore";
-import type { CoreFeature, Platform } from "@/types";
+import type { CoreFeature } from "@/types";
 
 export const BriefPage = (): JSX.Element => {
   const { projectId } = useParams();
@@ -23,9 +23,6 @@ export const BriefPage = (): JSX.Element => {
   const [features, setFeatures] = useState<CoreFeature[]>([]);
   const [targetUsers, setTargetUsers] = useState<string[]>([]);
   const [targetUserInput, setTargetUserInput] = useState("");
-  const [techStack, setTechStack] = useState<string[]>([]);
-  const [techStackInput, setTechStackInput] = useState("");
-  const [targetPlatforms, setTargetPlatforms] = useState<Platform[]>([]);
   const [notes, setNotes] = useState("");
   const [isNotesOpen, setIsNotesOpen] = useState(true);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
@@ -37,8 +34,6 @@ export const BriefPage = (): JSX.Element => {
     setProblem(brief.problem);
     setFeatures(brief.coreFeatures.length > 0 ? brief.coreFeatures : [{ id: crypto.randomUUID(), text: "", order: 1 }]);
     setTargetUsers(brief.targetUser.split(",").map((value) => value.trim()).filter(Boolean));
-    setTechStack(project.techStack);
-    setTargetPlatforms(project.targetPlatforms);
     setNotes(brief.notes);
     skipAutosave.current = true;
   }, [brief, project]);
@@ -58,16 +53,15 @@ export const BriefPage = (): JSX.Element => {
           coreFeatures: features.map((feature, index) => ({ ...feature, order: index + 1 })),
           notes
         });
-        await updateProject(projectId, { techStack, targetPlatforms });
         setSaveState("saved");
       })();
     }, 800);
     return () => window.clearTimeout(timeoutId);
-  }, [brief, features, notes, problem, projectId, targetPlatforms, targetUsers, techStack]);
+  }, [brief, features, notes, problem, projectId, targetUsers]);
 
   const handleProjectNameBlur = async (): Promise<void> => {
-    if (!projectId || !projectName.trim()) return;
-    await updateProject(projectId, { name: projectName.trim() });
+    if (!projectId || !projectName.trim() || !project) return;
+    await updateProject(projectId, { name: projectName.trim(), targetPlatforms: project.targetPlatforms, techStack: project.techStack });
   };
 
   const addFeature = (): void =>
@@ -80,15 +74,8 @@ export const BriefPage = (): JSX.Element => {
     setTargetUserInput("");
   };
 
-  const addTechStack = (): void => {
-    const nextTag = techStackInput.trim();
-    if (!nextTag || techStack.includes(nextTag)) return void setTechStackInput("");
-    setTechStack((current) => [...current, nextTag]);
-    setTechStackInput("");
-  };
-
   const completionReady = projectName.trim().length > 0 && problem.trim().length > 0 && features.some((feature) => feature.text.trim().length > 0);
-  const completionScore = brief ? isBriefComplete(brief, { projectName, techStackCount: techStack.length, targetPlatformsCount: targetPlatforms.length }) : false;
+  const completionScore = brief ? isBriefComplete(brief, { projectName }) : false;
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-8">
@@ -119,19 +106,10 @@ export const BriefPage = (): JSX.Element => {
         <div className="lg:col-span-2 space-y-6">
           <BriefMetadataColumn
             onAddTargetUser={addTargetUser}
-            onAddTechStack={addTechStack}
             onChangeTargetUserInput={setTargetUserInput}
-            onChangeTechStackInput={setTechStackInput}
             onRemoveTargetUser={(user) => setTargetUsers((current) => current.filter((value) => value !== user))}
-            onRemoveTechStackTag={(tag) => setTechStack((current) => current.filter((value) => value !== tag))}
-            onTogglePlatform={(platform) =>
-              setTargetPlatforms((current) => (current.includes(platform) ? current.filter((value) => value !== platform) : [...current, platform]))
-            }
-            targetPlatforms={targetPlatforms}
             targetUserInput={targetUserInput}
             targetUsers={targetUsers}
-            techStack={techStack}
-            techStackInput={techStackInput}
           />
         </div>
       </div>

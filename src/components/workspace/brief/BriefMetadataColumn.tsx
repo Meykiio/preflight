@@ -1,16 +1,5 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import type { Platform } from "@/types";
-
-const PLATFORM_OPTIONS: Platform[] = [
-  "lovable",
-  "bolt",
-  "cursor",
-  "claude-code",
-  "replit",
-  "v0",
-  "other"
-];
 
 const TARGET_USER_EXAMPLES = [
   "Freelance graphic designers, ages 25-45",
@@ -21,32 +10,18 @@ const TARGET_USER_EXAMPLES = [
 
 interface BriefMetadataColumnProps {
   onAddTargetUser: () => void;
-  onAddTechStack: () => void;
   onChangeTargetUserInput: (value: string) => void;
-  onChangeTechStackInput: (value: string) => void;
   onRemoveTargetUser: (user: string) => void;
-  onRemoveTechStackTag: (tag: string) => void;
-  onTogglePlatform: (platform: Platform) => void;
-  targetPlatforms: Platform[];
   targetUserInput: string;
   targetUsers: string[];
-  techStack: string[];
-  techStackInput: string;
 }
 
 export const BriefMetadataColumn = ({
   onAddTargetUser,
-  onAddTechStack,
   onChangeTargetUserInput,
-  onChangeTechStackInput,
   onRemoveTargetUser,
-  onRemoveTechStackTag,
-  onTogglePlatform,
-  targetPlatforms,
   targetUserInput,
-  targetUsers,
-  techStack,
-  techStackInput
+  targetUsers
 }: BriefMetadataColumnProps): JSX.Element => {
   const [showUserExamples, setShowUserExamples] = useState(false);
 
@@ -118,70 +93,18 @@ export const BriefMetadataColumn = ({
         )}
       </section>
 
-      <section className="rounded-xl bg-surface-container p-5">
+      <section className="rounded-xl border border-dashed border-outline-variant/20 bg-surface-container/50 p-5">
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-primary">stacked_line_chart</span>
-          <h2 className="font-headline text-xl font-semibold text-on-surface">
-            Tech Stack (Optional)
-          </h2>
+          <span className="material-symbols-outlined text-tertiary">info</span>
+          <h2 className="font-headline text-xl font-semibold text-on-surface">Tech Stack</h2>
         </div>
-        <p className="mt-2 text-xs text-on-surface-variant">
-          Already have tech preferences? Add them here. Not sure? Skip for now — AI can recommend later.
+        <p className="mt-2 text-sm text-on-surface-variant">
+          Tech stack recommendations will be generated automatically after you complete your research. 
+          Our AI will analyze your brief and research to recommend the best technologies for your specific project.
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {techStack.map((tag) => (
-            <button
-              key={tag}
-              type="button"
-              onClick={() => onRemoveTechStackTag(tag)}
-              className="rounded-full bg-secondary/10 px-3 py-1.5 text-xs uppercase tracking-[0.18em] text-secondary"
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-        <input
-          type="text"
-          value={techStackInput}
-          onChange={(event) => onChangeTechStackInput(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              event.preventDefault();
-              onAddTechStack();
-            }
-          }}
-          placeholder="Type a tech name and press Enter (e.g., React, Python)"
-          className="mt-4 w-full rounded-xl bg-surface-container-lowest px-4 py-3 text-sm text-on-surface outline-none placeholder:text-on-surface-variant"
-        />
-      </section>
-
-      <section className="rounded-xl bg-surface-container p-5">
-        <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-primary">desktop_windows</span>
-          <h2 className="font-headline text-xl font-semibold text-on-surface">
-            Target Platforms
-          </h2>
-        </div>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {PLATFORM_OPTIONS.map((platform) => {
-            const isSelected = targetPlatforms.includes(platform);
-
-            return (
-              <button
-                key={platform}
-                type="button"
-                onClick={() => onTogglePlatform(platform)}
-                className={cn(
-                  "rounded-xl border px-3 py-2 text-xs uppercase tracking-[0.18em] transition",
-                  isSelected
-                    ? "border-primary/40 bg-primary/15 text-primary"
-                    : "border-outline-variant/15 bg-surface-container-lowest text-on-surface-variant hover:text-on-surface"
-                )}
-              >
-                {platform}
-              </button>
-            );
-          })}
+        <div className="mt-3 flex items-center gap-2 rounded-lg bg-surface p-3 text-xs text-on-surface-variant">
+          <span className="material-symbols-outlined text-sm">lightbulb</span>
+          <span>After research completes, you'll see a "Generate Tech Stack" button with personalized recommendations.</span>
         </div>
       </section>
     </div>
