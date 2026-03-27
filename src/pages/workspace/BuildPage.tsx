@@ -116,7 +116,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
   };
 
   return (
-    <div className="mx-auto max-w-[1400px] px-6 py-8">
+    <div className="w-full px-8 py-6">
       <BuildWorkflowHeader
         isGenerating={isGenerating}
         onGenerate={() => void handleGenerateWorkflow()}

@@ -147,7 +147,7 @@ export const DesignPage = ({
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <div className="w-full px-8 py-6">
       <DesignPromptPanel
         activeNodes={activeNodes}
         briefAvailable={Boolean(brief)}
