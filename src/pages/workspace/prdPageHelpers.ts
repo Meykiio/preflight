@@ -8,10 +8,10 @@ export const buildPRDContextAvailability = (
   hasBrief: boolean,
   hasResearch: boolean,
   hasDesign: boolean
-): Array<{ available: boolean; label: string }> => [
-  { label: "Brief", available: hasBrief },
-  { label: "Research", available: hasResearch },
-  { label: "Design", available: hasDesign }
+): Array<{ id: string; available: boolean; label: string }> => [
+  { id: "brief", label: "Brief", available: hasBrief },
+  { id: "research", label: "Research", available: hasResearch },
+  { id: "design", label: "Design", available: hasDesign }
 ];
 
 export const getRulesFileLabel = (rulesPlatform: string): string =>

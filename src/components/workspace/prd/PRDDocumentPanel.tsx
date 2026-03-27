@@ -3,13 +3,16 @@ import remarkGfm from "remark-gfm";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { useState, useEffect, useRef } from "react";
 
-interface ContextAvailability {
+interface ContextNode {
   available: boolean;
   label: string;
+  id: string;
 }
 
 interface PRDDocumentPanelProps {
-  contextAvailability: ContextAvailability[];
+  contextAvailability: ContextNode[];
+  activeNodes?: string[];
+  onToggleNode?: (nodeId: string) => void;
   errorMessage: string;
   isGenerating: boolean;
   onGenerate: () => void;
@@ -21,6 +24,8 @@ const PREVIEW_HEIGHT = 300;
 
 export const PRDDocumentPanel = ({
   contextAvailability,
+  activeNodes = [],
+  onToggleNode,
   errorMessage,
   isGenerating,
   onGenerate,
@@ -43,9 +48,9 @@ export const PRDDocumentPanel = ({
     <section className="rounded-2xl border border-outline-variant/10 bg-surface-container p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="font-headline text-[28px] font-bold tracking-tight text-on-surface">
+          <h2 className="font-headline text-xl font-bold tracking-tight text-on-surface">
             PRD
-          </h1>
+          </h2>
           <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">
             v0.4.2-alpha
           </span>
@@ -55,24 +60,51 @@ export const PRDDocumentPanel = ({
           <button
             type="button"
             onClick={onGenerate}
-            className="rounded-xl bg-surface px-4 py-2 text-sm text-on-surface transition hover:bg-surface-container-high"
+            disabled={isGenerating}
+            className="rounded-xl bg-surface px-4 py-2 text-sm text-on-surface transition hover:bg-surface-container-high disabled:opacity-50"
           >
-            {isGenerating ? "Generating..." : "Regenerate"}
+            {isGenerating ? "Generating..." : prdContent ? "Regenerate" : "Generate PRD"}
           </button>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {contextAvailability.map((item) => (
-          <span
-            key={item.label}
-            className={`rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] ${
-              item.available ? "bg-secondary/10 text-secondary" : "bg-surface text-outline"
-            }`}
-          >
-            {item.label}
-          </span>
-        ))}
+      {/* Context Selection */}
+      <div className="mt-4 rounded-xl border border-outline-variant/10 bg-surface p-4">
+        <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-outline">
+          Include Context
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {contextAvailability.map((node) => (
+            <label
+              key={node.id}
+              className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition ${
+                !node.available
+                  ? "cursor-not-allowed border-outline-variant/10 bg-surface opacity-50"
+                  : activeNodes.includes(node.id)
+                    ? "border-primary/20 bg-primary/10"
+                    : "border-outline-variant/10 bg-surface hover:bg-surface-container-high"
+              }`}
+            >
+              <input
+                type="checkbox"
+                checked={activeNodes.includes(node.id)}
+                onChange={() => onToggleNode?.(node.id)}
+                disabled={!node.available}
+                className="h-4 w-4 accent-primary"
+              />
+              <span className="text-on-surface">{node.label}</span>
+              {node.available ? (
+                <span className="rounded-full bg-secondary/10 px-2 py-0.5 text-[9px] uppercase tracking-[0.18em] text-secondary">
+                  Available
+                </span>
+              ) : (
+                <span className="rounded-full bg-surface px-2 py-0.5 text-[9px] uppercase tracking-[0.18em] text-outline">
+                  Missing
+                </span>
+              )}
+            </label>
+          ))}
+        </div>
       </div>
 
       {errorMessage ? (

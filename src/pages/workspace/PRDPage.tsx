@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArtifactGeneratorPanel } from "@/components/workspace/prd/ArtifactGeneratorPanel";
 import { PRDDocumentPanel } from "@/components/workspace/prd/PRDDocumentPanel";
@@ -30,12 +30,24 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
   const [streamingPRD, setStreamingPRD] = useState("");
   const [streamingSystem, setStreamingSystem] = useState("");
   const [streamingRules, setStreamingRules] = useState("");
+  const [activeNodes, setActiveNodes] = useState<string[]>([]);
   const researchPrompt = getLatestByType("research_prompt");
   const designPrompt = getLatestByType("design_prompt");
   const prdArtifact = getLatestByType("prd");
   const systemArtifact = getLatestByType("system_instructions");
   const rulesArtifact = getLatestByType("rules_file");
   const contextAvailability = buildPRDContextAvailability(Boolean(brief), Boolean(researchPrompt), Boolean(designPrompt));
+
+  // Auto-select available context nodes
+  useEffect(() => {
+    const availableNodes: string[] = [];
+    if (brief) availableNodes.push("brief");
+    if (researchPrompt) availableNodes.push("research");
+    if (designPrompt) availableNodes.push("design");
+    if (availableNodes.length > 0 && activeNodes.length === 0) {
+      setActiveNodes(availableNodes);
+    }
+  }, [brief, researchPrompt, designPrompt, activeNodes.length]);
 
   const handleGeneratePRD = async (): Promise<void> => {
     if (!project || !brief) return void toast.error("Project context is still loading.");
@@ -45,17 +57,15 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     try {
       const content = await generatePRD({
         brief,
-        designPrompt: designPrompt?.content,
+        designPrompt: activeNodes.includes("design") ? designPrompt?.content : undefined,
         onChunk: (chunk) => setStreamingPRD((current) => `${current}${chunk}`),
         project,
-        researchPrompt: researchPrompt?.content
+        researchPrompt: activeNodes.includes("research") ? researchPrompt?.content : undefined
       });
       await createArtifact({
         agentSystemPromptId: "prd-default",
         content,
-        contextNodes: ["brief", "research", "design"].filter((node) =>
-          node === "brief" ? Boolean(brief) : node === "research" ? Boolean(researchPrompt) : Boolean(designPrompt)
-        ),
+        contextNodes: activeNodes,
         platform: "universal",
         type: "prd",
         version: (prdArtifact?.version ?? 0) + 1
@@ -129,12 +139,22 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     }
   };
 
+  const toggleNode = (nodeId: string): void => {
+    setActiveNodes((current) =>
+      current.includes(nodeId)
+        ? current.filter((id) => id !== nodeId)
+        : [...current, nodeId]
+    );
+  };
+
   return (
     <div className="w-full px-8 py-6">
       {/* PRD Panel - Full Width */}
       <div className="mb-6">
         <PRDDocumentPanel
           contextAvailability={contextAvailability}
+          activeNodes={activeNodes}
+          onToggleNode={toggleNode}
           errorMessage={errorMessage}
           isGenerating={isGeneratingPRD}
           onGenerate={() => void handleGeneratePRD()}
