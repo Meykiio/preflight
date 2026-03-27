@@ -175,7 +175,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
   }
 
   return (
-    <div className="mx-auto max-w-[1600px] px-6 py-8">
+    <div className="w-full px-8 py-6">
       {/* Header */}
       <section className="mb-8 rounded-2xl border border-outline-variant/10 bg-surface-container p-6">
         <div className="flex items-center justify-between">

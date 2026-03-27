@@ -155,7 +155,7 @@ export const VaultPage = (): JSX.Element => {
   };
 
   return (
-    <div className="mx-auto max-w-[1600px] px-6 py-8">
+    <div className="w-full px-8 py-6">
       <VaultHeader
         filterOptions={FILTER_OPTIONS}
         filterValue={filter}

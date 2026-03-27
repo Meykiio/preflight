@@ -130,7 +130,7 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
   };
 
   return (
-    <div className="mx-auto max-w-[1600px] px-6 py-8">
+    <div className="w-full px-8 py-6">
       {/* PRD Panel - Full Width */}
       <div className="mb-6">
         <PRDDocumentPanel
