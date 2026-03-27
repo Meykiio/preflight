@@ -33,13 +33,9 @@ export const ResearchContextPanel = ({
     <section className="rounded-2xl border border-outline-variant/10 bg-surface-container p-5">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="font-headline text-[28px] font-bold tracking-tight text-on-surface">
+          <h2 className="font-headline text-xl font-bold tracking-tight text-on-surface">
             Research Intelligence
-          </h1>
-          <p className="mt-2 text-sm text-on-surface-variant">
-            Synthesize project context into high-fidelity research prompts for LLM
-            analysis.
-          </p>
+          </h2>
         </div>
         <span className="rounded-full bg-secondary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-secondary">
           System Ready
@@ -53,17 +49,18 @@ export const ResearchContextPanel = ({
         <div className="mt-3 space-y-3">
           <ResearchContextCard
             checked={activeNodes.includes("brief")}
-            description="Use the structured brief to define the core product problem and features."
+            description=""
             disabled={!nodeAvailability.brief}
             icon="description"
             label="Project Brief"
             metadata={statusMeta}
             onToggle={() => onToggleNode("brief")}
             statusLabel={nodeAvailability.brief ? "Available" : "Missing data"}
+            compact={true}
           />
           <ResearchContextCard
             checked={activeNodes.includes("tech-stack")}
-            description="Include the stack hints already captured for implementation feasibility."
+            description=""
             disabled={!nodeAvailability.techStack}
             icon="stacked_line_chart"
             label="Tech Stack"
@@ -72,16 +69,18 @@ export const ResearchContextPanel = ({
             }
             onToggle={() => onToggleNode("tech-stack")}
             statusLabel={nodeAvailability.techStack ? "Available" : "Missing data"}
+            compact={true}
           />
           <ResearchContextCard
             checked={activeNodes.includes("user-personas")}
-            description="Bring target-user framing into the research output."
+            description=""
             disabled={!nodeAvailability.userPersonas}
             icon="groups"
             label="User Personas"
-            metadata={projectUserContext}
+            metadata={undefined}
             onToggle={() => onToggleNode("user-personas")}
             statusLabel={nodeAvailability.userPersonas ? "Available" : "Missing data"}
+            compact={true}
           />
         </div>
       </div>

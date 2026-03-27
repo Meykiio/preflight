@@ -9,6 +9,7 @@ interface ResearchContextCardProps {
   metadata?: string;
   onToggle: () => void;
   statusLabel: string;
+  compact?: boolean; // New prop for compact mode
 }
 
 export const ResearchContextCard = ({
@@ -19,7 +20,8 @@ export const ResearchContextCard = ({
   label,
   metadata,
   onToggle,
-  statusLabel
+  statusLabel,
+  compact = false
 }: ResearchContextCardProps): JSX.Element => {
   return (
     <button
@@ -35,19 +37,16 @@ export const ResearchContextCard = ({
             : "border-outline-variant/10 bg-surface hover:bg-surface-container-high"
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start gap-3">
-          <span className="material-symbols-outlined mt-0.5 text-base text-on-surface-variant">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="material-symbols-outlined text-base text-on-surface-variant">
             {disabled ? "lock" : icon}
           </span>
           <div>
             <p className="text-sm font-medium text-on-surface">{label}</p>
-            <p className="mt-1 text-sm text-on-surface-variant">{description}</p>
-            {metadata ? (
-              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-outline">
-                {metadata}
-              </p>
-            ) : null}
+            {!compact && description && (
+              <p className="mt-1 text-sm text-on-surface-variant">{description}</p>
+            )}
           </div>
         </div>
         <span

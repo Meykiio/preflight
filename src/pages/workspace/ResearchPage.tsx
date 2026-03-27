@@ -171,7 +171,7 @@ export const ResearchPage = (): JSX.Element => {
   };
 
   return (
-    <div className="workspace-max-width">
+    <div className="w-full px-8 py-6">
       {/* Tech Stack Banner - Shows after research completes */}
       {latestArtifact && !isGenerating && (
         <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
