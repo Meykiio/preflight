@@ -38,13 +38,13 @@ const BuildStageCardComponent = ({
   return (
     <article
       className={cn(
-        "relative rounded-xl border border-outline-variant/10 bg-surface-container p-5 transition-all",
+        "relative w-full max-w-full rounded-xl border border-outline-variant/10 bg-surface-container p-5 transition-all",
         stage.status === "in-progress" ? "border-l-[3px] border-l-primary" : "",
         stage.status === "complete" ? "opacity-80" : "",
         isLocked ? "opacity-40" : ""
       )}
     >
-      <div className="flex min-w-0 items-start gap-4">
+      <div className="flex items-start gap-4">
         <div
           className={cn(
             "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-mono text-sm font-bold",
@@ -56,11 +56,11 @@ const BuildStageCardComponent = ({
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="min-w-0 flex-1">
-              <h3 className="truncate font-headline text-lg font-semibold text-on-surface" title={stage.name}>
+            <div className="min-w-0 flex-1 pr-4">
+              <h3 className="break-words font-headline text-lg font-semibold text-on-surface" title={stage.name}>
                 {stage.name}
               </h3>
-              <p className="mt-1 truncate text-sm text-outline" title={stage.description}>
+              <p className="mt-1 break-words text-sm text-outline" title={stage.description}>
                 {stage.description}
               </p>
             </div>

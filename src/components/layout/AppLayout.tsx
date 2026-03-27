@@ -16,21 +16,36 @@ export const AppLayout = (): JSX.Element => {
   const selectProject = useProjectStore((state) => state.selectProject);
   const mainRef = useRef<HTMLElement>(null);
 
+  // Check if we're in a workspace route to conditionally hide the header
+  const isWorkspace = location.pathname.includes("/project/");
+
   useCommandPalette();
 
   // Scroll main content to top on every route change
   useEffect(() => {
-    // Force scroll to top immediately
-    const timer = setTimeout(() => {
+    // Disable browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Scroll to top immediately on route change
+    const scrollToTop = () => {
+      // Scroll the main container
       if (mainRef.current) {
-        mainRef.current.scrollTop = 0;
+        mainRef.current.scrollTo({ top: 0, behavior: 'auto' });
       }
       // Also scroll window as fallback
-      window.scrollTo(0, 0);
-    }, 0);
-    
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
+    // Scroll immediately
+    scrollToTop();
+
+    // Double-check after render completes (for lazy-loaded components)
+    const timer = setTimeout(scrollToTop, 50);
+
     return () => clearTimeout(timer);
-  }, [location.pathname, location.search, location.state]);
+  }, [location.pathname]);
 
   useEffect(() => {
     const projectId = projectMatch?.params.projectId ?? null;
@@ -69,8 +84,8 @@ export const AppLayout = (): JSX.Element => {
             sidebarCollapsed ? "pl-16" : "pl-60"
           }`}
         >
-          <Header />
-          <main ref={mainRef} key={location.pathname} className="relative z-10 flex-1 overflow-y-auto px-6 py-8">
+          {!isWorkspace && <Header />}
+          <main ref={mainRef} key={location.pathname} className="relative z-10 flex-1 overflow-y-auto px-6 py-8 fade-in">
             <Outlet />
           </main>
         </div>

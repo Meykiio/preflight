@@ -125,14 +125,16 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
   };
 
   return (
-    <div className="w-full px-8 py-6">
-      <BuildWorkflowHeader
-        isGenerating={isGenerating}
-        generationStep={generationStep}
-        onGenerate={() => void handleGenerateWorkflow()}
-        onSelectPlatform={setPlatform}
-        platform={platform}
-      />
+    <div className="flex max-w-full flex-col px-8 py-6">
+      <div className="w-full max-w-[1800px]">
+        <BuildWorkflowHeader
+          isGenerating={isGenerating}
+          generationStep={generationStep}
+          onGenerate={() => void handleGenerateWorkflow()}
+          onSelectPlatform={setPlatform}
+          platform={platform}
+        />
+      </div>
 
       {errorMessage ? (
         <div className="mt-4 rounded-xl border border-tertiary/20 bg-tertiary/10 px-4 py-3 text-sm text-tertiary">
@@ -142,7 +144,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
 
       {/* Stage Controls */}
       {stages.length > 0 && (
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 flex w-full max-w-[1800px] items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-label-md text-on-surface-variant">
               {completedCount} of {stages.length} stages completed
@@ -167,7 +169,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
       )}
 
       {/* Stages List */}
-      <div className="mt-6 space-y-4">
+      <div className="mt-6 flex w-full max-w-[1800px] flex-col space-y-4">
         {isLoading ? (
           Array.from({ length: 3 }).map((_, index) => (
             <div key={index} className="h-44 animate-pulse rounded-xl bg-surface-container-high" />

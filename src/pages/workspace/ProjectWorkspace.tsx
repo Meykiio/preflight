@@ -140,8 +140,8 @@ export const ProjectWorkspace = (): JSX.Element => {
   };
 
   return (
-    <section className="-mx-6 -my-8 flex min-h-[calc(100vh-3.5rem)] flex-col">
-      <div className="sticky top-0 z-30 border-b border-outline-variant/10 bg-surface/80 px-8 py-4 backdrop-blur-md">
+    <section key={activeTab} className="-mx-6 -my-8 flex min-h-[calc(100vh-3.5rem)] flex-col fade-in">
+      <div id="workspace-header" className="sticky top-0 z-40 border-b border-outline-variant/10 bg-surface/95 px-8 py-5 backdrop-blur-xl shadow-lg">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
@@ -190,7 +190,7 @@ export const ProjectWorkspace = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="relative flex-1 overflow-hidden">
+      <div className="relative flex-1 overflow-hidden mt-6">
         {renderActiveContent()}
 
         {projectId ? (

@@ -4,10 +4,10 @@ node_modules/
 .pnp.js
 .corepack/
 
-# Build output
+# Build output (root level only)
+/build/
 dist/
 dist-ssr/
-build/
 
 # Environment files — NEVER COMMIT
 .env
