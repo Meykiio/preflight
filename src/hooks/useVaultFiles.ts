@@ -1,3 +1,4 @@
+import { useToast } from "@/hooks/useToast";
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
 import type { VaultCategory, VaultFile } from "@/types";
@@ -12,6 +13,7 @@ interface AddVaultFileInput {
 }
 
 export const useVaultFiles = (projectId: string | undefined) => {
+  const toast = useToast();
   const filesQuery = useLiveQuery(
     async (): Promise<VaultFile[]> => {
       if (!projectId) {
@@ -52,13 +54,14 @@ export const useVaultFiles = (projectId: string | undefined) => {
       return file;
     } catch (error) {
       console.error("Failed to add vault file.", error);
+      toast.error("Failed to upload file. Please try again.");
       return null;
     }
   };
 
   const setAllFilesAsContext = async (): Promise<void> => {
     if (!projectId) return;
-    
+
     try {
       const allFiles = await db.vaultFiles.where("projectId").equals(projectId).toArray();
       const updates = allFiles
@@ -67,6 +70,7 @@ export const useVaultFiles = (projectId: string | undefined) => {
       await Promise.all(updates);
     } catch (error) {
       console.error("Failed to set all files as context.", error);
+      toast.error("Failed to set files as context. Please try again.");
     }
   };
 
@@ -75,6 +79,7 @@ export const useVaultFiles = (projectId: string | undefined) => {
       await db.vaultFiles.delete(fileId);
     } catch (error) {
       console.error("Failed to remove vault file.", error);
+      toast.error("Failed to remove file. Please try again.");
     }
   };
 
@@ -91,6 +96,7 @@ export const useVaultFiles = (projectId: string | undefined) => {
       });
     } catch (error) {
       console.error("Failed to toggle file context.", error);
+      toast.error("Failed to toggle context status. Please try again.");
     }
   };
 

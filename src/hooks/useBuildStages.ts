@@ -1,3 +1,4 @@
+import { useToast } from "@/hooks/useToast";
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
 import type { BuildStage, BuildStageStatus } from "@/types";
@@ -12,6 +13,7 @@ interface CreateBuildStageInput {
 }
 
 export const useBuildStages = (projectId: string | undefined) => {
+  const toast = useToast();
   const stagesQuery = useLiveQuery(
     async (): Promise<BuildStage[]> => {
       if (!projectId) {
@@ -58,6 +60,7 @@ export const useBuildStages = (projectId: string | undefined) => {
       return nextStages;
     } catch (error) {
       console.error("Failed to create build stages.", error);
+      toast.error("Failed to generate build workflow. Please check your AI provider settings.");
       return [];
     }
   };
@@ -73,6 +76,7 @@ export const useBuildStages = (projectId: string | undefined) => {
       });
     } catch (error) {
       console.error("Failed to update build stage status.", error);
+      toast.error("Failed to update stage status. Please try again.");
     }
   };
 
@@ -87,6 +91,7 @@ export const useBuildStages = (projectId: string | undefined) => {
       });
     } catch (error) {
       console.error("Failed to update build stage prompt.", error);
+      toast.error("Failed to update stage prompt. Please try again.");
     }
   };
 

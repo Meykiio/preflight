@@ -65,3 +65,21 @@ export const downloadAsFile = (content: string, filename: string, mimeType: stri
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 };
+
+/**
+ * Download data as file and clean up object URL
+ * @param data - ArrayBuffer or Blob data to download
+ * @param filename - Name of the downloaded file
+ * @param mimeType - MIME type of the data
+ */
+export const downloadFile = (data: ArrayBuffer | Blob, filename: string, mimeType: string): void => {
+  const blob = data instanceof Blob ? data : new Blob([data], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};

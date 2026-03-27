@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useProject } from "@/hooks/useProject";
 import { useShip } from "@/hooks/useShip";
@@ -15,7 +15,7 @@ interface ShipPageProps {
   projectId: string;
 }
 
-export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
+export const ShipPage = memo(({ projectId }: ShipPageProps): JSX.Element => {
   const { project } = useProject(projectId);
   const { brief } = useBrief(projectId);
   const { artifacts } = useArtifacts(projectId);
@@ -50,7 +50,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
   const [streamingReadme, setStreamingReadme] = useState("");
   const [showFullReadme, setShowFullReadme] = useState(false);
 
-  const handleVersionUpload = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+  const handleVersionUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -62,7 +62,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
     setIsUploadingVersion(true);
     try {
       const arrayBuffer = await file.arrayBuffer();
-      
+
       await addVersion({
         name: file.name.replace(/\.zip$/i, ""),
         description: `Version uploaded from ${file.name}`,
@@ -77,9 +77,9 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
       setIsUploadingVersion(false);
       event.target.value = "";
     }
-  };
+  }, [addVersion, versions.length, toast]);
 
-  const handleDownloadVersion = async (versionId: string, fileName: string): Promise<void> => {
+  const handleDownloadVersion = useCallback(async (versionId: string, fileName: string): Promise<void> => {
     const zipData = await getVersionZip(versionId);
     if (!zipData) {
       toast.error("Failed to download version.");
@@ -87,15 +87,15 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
     }
     downloadFileData(zipData, fileName, "application/zip");
     toast.success("Download started.");
-  };
+  }, [getVersionZip, toast]);
 
-  const handleSaveLiveUrl = async (versionId: string): Promise<void> => {
+  const handleSaveLiveUrl = useCallback(async (versionId: string): Promise<void> => {
     await updateLiveUrl(versionId, liveUrlInput);
     setEditingLiveUrl(null);
     toast.success("Live URL updated.");
-  };
+  }, [updateLiveUrl, liveUrlInput, toast]);
 
-  const handleGenerateReadme = async (): Promise<void> => {
+  const handleGenerateReadme = useCallback(async (): Promise<void> => {
     if (!project || !brief) {
       toast.error("Project data not available.");
       return;
@@ -129,9 +129,9 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
     } finally {
       setIsGeneratingReadme(false);
     }
-  };
+  }, [project, brief, artifacts, stages, toast]);
 
-  const handleAddCredential = async (): Promise<void> => {
+  const handleAddCredential = useCallback(async (): Promise<void> => {
     if (!newCredential.name || !newCredential.value) {
       toast.error("Name and value are required.");
       return;
@@ -145,23 +145,37 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
     } catch (error) {
       toast.error("Failed to add credential.");
     }
-  };
+  }, [newCredential, addCredential, toast]);
 
-  const handleCopyCredential = async (value: string): Promise<void> => {
+  const handleCopyCredential = useCallback(async (value: string): Promise<void> => {
     try {
       await navigator.clipboard.writeText(value);
       toast.success("Credential copied to clipboard.");
     } catch (error) {
       toast.error("Failed to copy credential.");
     }
-  };
+  }, [toast]);
 
-  const toggleCredentialVisibility = (credentialId: string): void => {
+  const toggleCredentialVisibility = useCallback((credentialId: string): void => {
     setShowCredentialValue((prev) => ({
       ...prev,
       [credentialId]: !prev[credentialId]
     }));
-  };
+  }, []);
+
+  const handleNewCredentialChange = useCallback((field: string, value: string): void => {
+    setNewCredential((prev) => ({ ...prev, [field]: value }));
+  }, []);
+
+  const handleExportCredentials = useCallback((): void => {
+    exportCredentials();
+  }, [exportCredentials]);
+
+  // Memoize derived state for version size display
+  const versionDisplayData = useMemo(() => versions.map((version) => ({
+    ...version,
+    sizeMB: (version.zipSize / 1024 / 1024).toFixed(2)
+  })), [versions]);
 
   if (isLoading) {
     return (
@@ -197,7 +211,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
             </button>
             <button
               type="button"
-              onClick={() => exportCredentials()}
+              onClick={handleExportCredentials}
               className="rounded-xl bg-surface px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-on-surface transition hover:bg-surface-container-high"
             >
               Export Credentials
@@ -302,7 +316,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                 <p className="mt-1 text-xs text-outline">Upload your first project build ZIP.</p>
               </div>
             ) : (
-              versions.map((version) => (
+              versionDisplayData.map((version) => (
                 <div
                   key={version.id}
                   className="flex items-center justify-between rounded-xl border border-outline-variant/10 bg-surface p-4"
@@ -320,7 +334,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                       {version.description}
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-3 text-[10px] text-outline">
-                      <span>{(version.zipSize / 1024 / 1024).toFixed(2)} MB</span>
+                      <span>{version.sizeMB} MB</span>
                       <span>•</span>
                       <span>{new Date(version.createdAt).toLocaleDateString()}</span>
                     </div>
@@ -428,7 +442,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                 <input
                   type="text"
                   value={newCredential.name}
-                  onChange={(e) => setNewCredential({ ...newCredential, name: e.target.value })}
+                  onChange={(e) => handleNewCredentialChange("name", e.target.value)}
                   placeholder="e.g., OpenAI API Key"
                   className="w-full rounded-lg border border-outline-variant/15 bg-surface-container-low px-3 py-2 text-sm text-on-surface outline-none focus:border-primary/40"
                 />
@@ -440,7 +454,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                 <input
                   type="text"
                   value={newCredential.value}
-                  onChange={(e) => setNewCredential({ ...newCredential, value: e.target.value })}
+                  onChange={(e) => handleNewCredentialChange("value", e.target.value)}
                   placeholder="sk-..."
                   className="w-full rounded-lg border border-outline-variant/15 bg-surface-container-low px-3 py-2 text-sm text-on-surface outline-none focus:border-primary/40"
                 />
@@ -451,7 +465,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                 </label>
                 <select
                   value={newCredential.category}
-                  onChange={(e) => setNewCredential({ ...newCredential, category: e.target.value as CredentialCategory })}
+                  onChange={(e) => handleNewCredentialChange("category", e.target.value)}
                   className="w-full rounded-lg border border-outline-variant/15 bg-surface-container-low px-3 py-2 text-sm text-on-surface outline-none focus:border-primary/40"
                 >
                   <option value="api_key">API Key</option>
@@ -467,7 +481,7 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
                 <input
                   type="text"
                   value={newCredential.notes}
-                  onChange={(e) => setNewCredential({ ...newCredential, notes: e.target.value })}
+                  onChange={(e) => handleNewCredentialChange("notes", e.target.value)}
                   placeholder="Additional context"
                   className="w-full rounded-lg border border-outline-variant/15 bg-surface-container-low px-3 py-2 text-sm text-on-surface outline-none focus:border-primary/40"
                 />
@@ -550,4 +564,6 @@ export const ShipPage = ({ projectId }: ShipPageProps): JSX.Element => {
       </div>
     </div>
   );
-};
+});
+
+ShipPage.displayName = "ShipPage";

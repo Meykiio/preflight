@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useState, useMemo, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArtifactGeneratorPanel } from "@/components/workspace/prd/ArtifactGeneratorPanel";
 import { PRDDocumentPanel } from "@/components/workspace/prd/PRDDocumentPanel";
@@ -15,7 +15,7 @@ interface PRDPageProps {
   projectId: string;
 }
 
-export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
+export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
   const navigate = useNavigate();
   const toast = useToast();
   const { project } = useProject(projectId);
@@ -31,12 +31,17 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
   const [streamingSystem, setStreamingSystem] = useState("");
   const [streamingRules, setStreamingRules] = useState("");
   const [activeNodes, setActiveNodes] = useState<string[]>([]);
-  const researchPrompt = getLatestByType("research_prompt");
-  const designPrompt = getLatestByType("design_prompt");
-  const prdArtifact = getLatestByType("prd");
-  const systemArtifact = getLatestByType("system_instructions");
-  const rulesArtifact = getLatestByType("rules_file");
-  const contextAvailability = buildPRDContextAvailability(Boolean(brief), Boolean(researchPrompt), Boolean(designPrompt));
+
+  // Memoize derived state
+  const researchPrompt = useMemo(() => getLatestByType("research_prompt"), [getLatestByType]);
+  const designPrompt = useMemo(() => getLatestByType("design_prompt"), [getLatestByType]);
+  const prdArtifact = useMemo(() => getLatestByType("prd"), [getLatestByType]);
+  const systemArtifact = useMemo(() => getLatestByType("system_instructions"), [getLatestByType]);
+  const rulesArtifact = useMemo(() => getLatestByType("rules_file"), [getLatestByType]);
+  const contextAvailability = useMemo(
+    () => buildPRDContextAvailability(Boolean(brief), Boolean(researchPrompt), Boolean(designPrompt)),
+    [brief, researchPrompt, designPrompt]
+  );
 
   // Auto-select available context nodes
   useEffect(() => {
@@ -49,7 +54,7 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     }
   }, [brief, researchPrompt, designPrompt, activeNodes.length]);
 
-  const handleGeneratePRD = async (): Promise<void> => {
+  const handleGeneratePRD = useCallback(async (): Promise<void> => {
     if (!project || !brief) return void toast.error("Project context is still loading.");
     setErrorMessage("");
     setIsGeneratingPRD(true);
@@ -77,9 +82,9 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     } finally {
       setIsGeneratingPRD(false);
     }
-  };
+  }, [project, brief, activeNodes, designPrompt, researchPrompt, createArtifact, prdArtifact, navigate, toast]);
 
-  const handleGenerateSystemInstructions = async (): Promise<void> => {
+  const handleGenerateSystemInstructions = useCallback(async (): Promise<void> => {
     if (!project || !brief) return void toast.error("Project context is still loading.");
     setErrorMessage("");
     setIsGeneratingSystem(true);
@@ -107,9 +112,9 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     } finally {
       setIsGeneratingSystem(false);
     }
-  };
+  }, [project, brief, systemPlatform, prdArtifact, createArtifact, systemArtifact, navigate, toast]);
 
-  const handleGenerateRules = async (): Promise<void> => {
+  const handleGenerateRules = useCallback(async (): Promise<void> => {
     if (!project || !brief) return void toast.error("Project context is still loading.");
     setErrorMessage("");
     setIsGeneratingRules(true);
@@ -137,15 +142,15 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
     } finally {
       setIsGeneratingRules(false);
     }
-  };
+  }, [project, brief, rulesPlatform, prdArtifact, createArtifact, rulesArtifact, navigate, toast]);
 
-  const toggleNode = (nodeId: string): void => {
+  const toggleNode = useCallback((nodeId: string): void => {
     setActiveNodes((current) =>
       current.includes(nodeId)
         ? current.filter((id) => id !== nodeId)
         : [...current, nodeId]
     );
-  };
+  }, []);
 
   return (
     <div className="w-full px-8 py-6">
@@ -194,4 +199,6 @@ export const PRDPage = ({ projectId }: PRDPageProps): JSX.Element => {
       </div>
     </div>
   );
-};
+});
+
+PRDPage.displayName = "PRDPage";

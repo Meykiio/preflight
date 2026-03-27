@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { memo, useMemo, useRef, useState, useCallback } from "react";
 import {
   ProjectHubControls
 } from "@/components/hub/ProjectHubControls";
@@ -16,7 +16,7 @@ import { useSettings } from "@/hooks/useSettings";
 import { useToast } from "@/hooks/useToast";
 import { cn, formatDate } from "@/lib/utils";
 
-export const ProjectHub = (): JSX.Element => {
+export const ProjectHub = memo((): JSX.Element => {
   const { projects, isLoading, createProject, deleteProject } = useProjects();
   const { settings } = useSettings();
   const toast = useToast();
@@ -28,6 +28,7 @@ export const ProjectHub = (): JSX.Element => {
   const [isBatchMode, setIsBatchMode] = useState(false);
   const [selectedProjects, setSelectedProjects] = useState<Set<string>>(new Set());
 
+  // Memoize derived state
   const filteredProjects = useMemo(() => {
     const nextProjects =
       filter === "all"
@@ -45,18 +46,18 @@ export const ProjectHub = (): JSX.Element => {
     return nextProjects.sort((left, right) => right.updatedAt - left.updatedAt);
   }, [filter, projects, sortBy]);
 
-  const lastActive = projects.length > 0 ? formatDate(projects[0].updatedAt) : "just now";
+  const lastActive = useMemo(() => projects.length > 0 ? formatDate(projects[0].updatedAt) : "just now", [projects]);
 
-  const handleImportClick = (): void => {
+  const handleImportClick = useCallback((): void => {
     importInputRef.current?.click();
-  };
+  }, []);
 
-  const handleToggleBatchMode = (): void => {
+  const handleToggleBatchMode = useCallback((): void => {
     setIsBatchMode(!isBatchMode);
     setSelectedProjects(new Set());
-  };
+  }, []);
 
-  const handleToggleSelectProject = (projectId: string): void => {
+  const handleToggleSelectProject = useCallback((projectId: string): void => {
     setSelectedProjects((prev) => {
       const next = new Set(prev);
       if (next.has(projectId)) {
@@ -66,30 +67,30 @@ export const ProjectHub = (): JSX.Element => {
       }
       return next;
     });
-  };
+  }, []);
 
-  const handleSelectAll = (): void => {
+  const handleSelectAll = useCallback((): void => {
     if (selectedProjects.size === filteredProjects.length) {
       setSelectedProjects(new Set());
     } else {
       setSelectedProjects(new Set(filteredProjects.map((p) => p.id)));
     }
-  };
+  }, [selectedProjects.size, filteredProjects]);
 
-  const handleBatchDelete = async (): Promise<void> => {
+  const handleBatchDelete = useCallback(async (): Promise<void> => {
     const confirmed = window.confirm(`Delete ${selectedProjects.size} project(s)? This action cannot be undone.`);
     if (!confirmed) return;
 
     for (const projectId of selectedProjects) {
       await deleteProject(projectId);
     }
-    
+
     toast.success(`Deleted ${selectedProjects.size} project(s).`);
     setSelectedProjects(new Set());
     setIsBatchMode(false);
-  };
+  }, [selectedProjects, deleteProject, toast]);
 
-  const handleImportChange = async (
+  const handleImportChange = useCallback(async (
     event: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> => {
     const file = event.target.files?.[0];
@@ -113,7 +114,27 @@ export const ProjectHub = (): JSX.Element => {
         error instanceof Error ? error.message : "Import failed. Invalid JSON.";
       toast.error(message);
     }
-  };
+  }, [createProject, toast]);
+
+  const handleCreateProject = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleModalOpenChange = useCallback((open: boolean): void => {
+    setIsModalOpen(open);
+  }, []);
+
+  const handleChangeFilter = useCallback((value: FilterValue): void => {
+    setFilter(value);
+  }, []);
+
+  const handleChangeSort = useCallback((value: SortValue): void => {
+    setSortBy(value);
+  }, []);
+
+  const handleChangeViewMode = useCallback((value: ViewMode): void => {
+    setViewMode(value);
+  }, []);
 
   return (
     <>
@@ -160,7 +181,7 @@ export const ProjectHub = (): JSX.Element => {
               <>
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={handleCreateProject}
                   className="gradient-cta glow-primary rounded-xl px-5 py-3 text-sm font-semibold text-on-primary"
                 >
                   New Project
@@ -193,9 +214,9 @@ export const ProjectHub = (): JSX.Element => {
 
         <ProjectHubControls
           filter={filter}
-          onChangeFilter={setFilter}
-          onChangeSort={setSortBy}
-          onChangeViewMode={setViewMode}
+          onChangeFilter={handleChangeFilter}
+          onChangeSort={handleChangeSort}
+          onChangeViewMode={handleChangeViewMode}
           sortBy={sortBy}
           viewMode={viewMode}
         />
@@ -230,12 +251,14 @@ export const ProjectHub = (): JSX.Element => {
               ))}
             </div>
           ) : (
-            <ProjectHubEmptyState onCreateProject={() => setIsModalOpen(true)} />
+            <ProjectHubEmptyState onCreateProject={handleCreateProject} />
           )}
         </div>
       </section>
 
-      <NewProjectModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+      <NewProjectModal isOpen={isModalOpen} onOpenChange={handleModalOpenChange} />
     </>
   );
-};
+});
+
+ProjectHub.displayName = "ProjectHub";

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { VaultHeader } from "@/components/workspace/vault/VaultHeader";
@@ -49,7 +49,7 @@ const getCategoryFromFile = (file: File): VaultCategory => {
   return "other";
 };
 
-export const VaultPage = (): JSX.Element => {
+export const VaultPage = memo((): JSX.Element => {
   const { projectId } = useParams();
   const { project } = useProject(projectId);
   const toast = useToast();
@@ -58,6 +58,7 @@ export const VaultPage = (): JSX.Element => {
   const [search, setSearch] = useState("");
   const [uploading, setUploading] = useState<UploadingFile[]>([]);
 
+  // Memoize derived state
   const filteredFiles = useMemo(() => {
     const normalizedQuery = search.trim().toLowerCase();
 
@@ -79,7 +80,7 @@ export const VaultPage = (): JSX.Element => {
     [activeFiles]
   );
 
-  const handleFiles = async (incomingFiles: File[]): Promise<void> => {
+  const handleFiles = useCallback(async (incomingFiles: File[]): Promise<void> => {
     if (incomingFiles.length === 0) {
       toast.warning("Please choose at least one file to upload.");
       return;
@@ -120,7 +121,7 @@ export const VaultPage = (): JSX.Element => {
         setUploading((current) => current.filter((item) => item.id !== uploadId));
       }
     }
-  };
+  }, [files, addFile, toast]);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     accept: {
@@ -137,7 +138,8 @@ export const VaultPage = (): JSX.Element => {
     }
   });
 
-  const uploadingCards = uploading.map((item) => ({
+  // Memoize derived state
+  const uploadingCards = useMemo(() => uploading.map((item) => ({
     id: item.id,
     projectId: projectId ?? "",
     name: item.name,
@@ -147,12 +149,20 @@ export const VaultPage = (): JSX.Element => {
     isActiveContext: false,
     data: new ArrayBuffer(0),
     uploadedAt: Date.now()
-  }));
+  })), [uploading, projectId]);
 
-  const handleDeleteFile = async (fileId: string, fileName: string): Promise<void> => {
+  const handleDeleteFile = useCallback(async (fileId: string, fileName: string): Promise<void> => {
     await removeFile(fileId);
     toast.success(`${fileName} deleted.`);
-  };
+  }, [removeFile, toast]);
+
+  const handleToggleContext = useCallback((fileId: string): void => {
+    void toggleContext(fileId);
+  }, [toggleContext]);
+
+  const handleDownloadFile = useCallback((file: { data: ArrayBuffer; name: string; mimeType: string }): void => {
+    downloadFileData(file.data, file.name, file.mimeType);
+  }, []);
 
   return (
     <div className="w-full px-8 py-6">
@@ -185,12 +195,14 @@ export const VaultPage = (): JSX.Element => {
           <VaultLibraryGrid
             files={filteredFiles}
             onDeleteFile={(fileId, fileName) => void handleDeleteFile(fileId, fileName)}
-            onDownloadFile={(file) => downloadFileData(file.data, file.name, file.mimeType)}
-            onToggleContext={(fileId) => void toggleContext(fileId)}
+            onDownloadFile={handleDownloadFile}
+            onToggleContext={handleToggleContext}
             uploadingCards={uploadingCards}
           />
         </div>
       </div>
     </div>
   );
-};
+});
+
+VaultPage.displayName = "VaultPage";

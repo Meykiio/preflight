@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
+import { MAX_UPLOAD_BYTES } from "@/lib/constants";
 import {
   getFileExtension,
   validateUploadFile,
-  downloadFileData,
-  MAX_UPLOAD_BYTES
+  downloadFileData
 } from "@/lib/fileUpload";
 import type { VaultFile } from "@/types";
 

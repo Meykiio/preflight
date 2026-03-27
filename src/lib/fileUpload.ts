@@ -1,6 +1,6 @@
+import { MAX_UPLOAD_BYTES } from "@/lib/constants";
+import { downloadFile } from "@/lib/utils";
 import type { VaultFile } from "@/types";
-
-export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 const DEFAULT_LIMIT_LABEL = "10 MB";
 
@@ -49,11 +49,5 @@ export const downloadFileData = (
   fileName: string,
   mimeType: string
 ): void => {
-  const blob = new Blob([data], { type: mimeType });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  link.click();
-  URL.revokeObjectURL(url);
+  downloadFile(data, fileName, mimeType);
 };

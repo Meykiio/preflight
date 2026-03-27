@@ -1,3 +1,5 @@
+import { estimateTokens } from "@/lib/utils";
+
 /**
  * Checkpoint configuration for generation progress
  * Saves progress every 500 tokens to enable resume
@@ -76,10 +78,10 @@ export const clearCheckpoint = (): void => {
 };
 
 /**
- * Estimate token count from text (simple character-based estimation)
+ * Estimate token count from text (uses centralized utility)
+ * @see {@link estimateTokens} in `@/lib/utils`
  */
-export const estimateTokenCount = (text: string): number =>
-  Math.ceil(text.length / 4);
+export const estimateTokenCount = estimateTokens;
 
 /**
  * Check if content should trigger a checkpoint save

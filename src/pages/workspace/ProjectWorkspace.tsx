@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useState } from "react";
+import { memo, Suspense, lazy, useMemo, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContextNodeSelector } from "@/components/workspace/ContextNodeSelector";
 import { FloatingActionButton } from "@/components/shared/FloatingActionButton";
@@ -16,7 +16,7 @@ const ShipPage = lazy(() => import("@/pages/workspace/ShipPage").then(module => 
 const VaultPage = lazy(() => import("@/pages/workspace/VaultPage").then(module => ({ default: module.VaultPage })));
 
 // Loading fallback component
-const PageLoader = () => (
+const PageLoader = memo(() => (
   <div className="flex h-full items-center justify-center">
     <div className="rounded-2xl border border-outline-variant/10 bg-surface-container px-6 py-5">
       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
@@ -27,7 +27,9 @@ const PageLoader = () => (
       </div>
     </div>
   </div>
-);
+));
+
+PageLoader.displayName = "PageLoader";
 
 const WORKSPACE_STAGES = [
   { id: "brief", label: "Brief" },
@@ -56,7 +58,7 @@ const STATUS_STAGE_INDEX = {
   shipped: 5
 } as const;
 
-export const ProjectWorkspace = (): JSX.Element => {
+export const ProjectWorkspace = memo((): JSX.Element => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { project, isLoading } = useProject(projectId);
@@ -64,6 +66,7 @@ export const ProjectWorkspace = (): JSX.Element => {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
 
+  // Memoize derived state
   const currentStageIndex = useMemo(() => {
     if (project?.status === "shipped") {
       return 5;
@@ -77,33 +80,23 @@ export const ProjectWorkspace = (): JSX.Element => {
     return project ? STATUS_STAGE_INDEX[project.status] : 0;
   }, [activeTab, project]);
 
-  if (!isLoading && !project) {
-    return (
-      <section className="flex min-h-[60vh] items-center justify-center">
-        <div className="rounded-2xl bg-surface-container p-8 text-center">
-          <h1 className="font-headline text-3xl font-bold text-on-surface">
-            Project not found
-          </h1>
-          <p className="mt-3 text-on-surface-variant">
-            The requested workspace could not be loaded.
-          </p>
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="gradient-cta glow-primary mt-6 rounded-xl px-4 py-3 text-sm font-semibold text-on-primary"
-          >
-            Back to Projects
-          </button>
-        </div>
-      </section>
-    );
-  }
+  const handleNavigateToProjects = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
+  const handleToggleSelector = useCallback(() => {
+    setIsSelectorOpen((current) => !current);
+  }, []);
+
+  const handleChangeNodes = useCallback((nodes: string[]): void => {
+    setSelectedNodes(nodes);
+  }, []);
 
   const stageNumber = PLACEHOLDER_STAGE_LABELS[activeTab] ?? 6;
   const activeLabel =
     WORKSPACE_STAGES.find((stage) => stage.id === activeTab)?.label ?? "Brief";
 
-  const renderActiveContent = (): JSX.Element => {
+  const renderActiveContent = useCallback((): JSX.Element => {
     return (
       <Suspense fallback={<PageLoader />}>
         {activeTab === "brief" ? (
@@ -137,7 +130,29 @@ export const ProjectWorkspace = (): JSX.Element => {
         )}
       </Suspense>
     );
-  };
+  }, [activeTab, projectId, activeLabel, stageNumber]);
+
+  if (!isLoading && !project) {
+    return (
+      <section className="flex min-h-[60vh] items-center justify-center">
+        <div className="rounded-2xl bg-surface-container p-8 text-center">
+          <h1 className="font-headline text-3xl font-bold text-on-surface">
+            Project not found
+          </h1>
+          <p className="mt-3 text-on-surface-variant">
+            The requested workspace could not be loaded.
+          </p>
+          <button
+            type="button"
+            onClick={handleNavigateToProjects}
+            className="gradient-cta glow-primary mt-6 rounded-xl px-4 py-3 text-sm font-semibold text-on-primary"
+          >
+            Back to Projects
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section key={activeTab} className="-mx-6 -my-8 flex min-h-[calc(100vh-3.5rem)] flex-col fade-in">
@@ -147,7 +162,7 @@ export const ProjectWorkspace = (): JSX.Element => {
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
               <button
                 type="button"
-                onClick={() => navigate("/")}
+                onClick={handleNavigateToProjects}
                 className="transition hover:text-on-surface"
               >
                 Projects
@@ -182,7 +197,7 @@ export const ProjectWorkspace = (): JSX.Element => {
 
           <button
             type="button"
-            onClick={() => setIsSelectorOpen((current) => !current)}
+            onClick={handleToggleSelector}
             className="rounded-xl border border-outline-variant/15 bg-surface-container px-4 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
           >
             Context Nodes
@@ -198,7 +213,7 @@ export const ProjectWorkspace = (): JSX.Element => {
             isOpen={isSelectorOpen}
             projectId={projectId}
             selectedNodes={selectedNodes}
-            onChangeNodes={setSelectedNodes}
+            onChangeNodes={handleChangeNodes}
           />
         ) : null}
       </div>
@@ -207,4 +222,6 @@ export const ProjectWorkspace = (): JSX.Element => {
       <FloatingActionButton />
     </section>
   );
-};
+});
+
+ProjectWorkspace.displayName = "ProjectWorkspace";

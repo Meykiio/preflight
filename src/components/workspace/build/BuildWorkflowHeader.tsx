@@ -1,4 +1,4 @@
-import { GenerationProgress } from "./GenerationProgress";
+import { GenerationProgress } from "@/components/shared/GenerationProgress";
 
 const PLATFORM_OPTIONS = ["Universal", "Lovable", "Cursor"];
 

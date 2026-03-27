@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { OutputPanel } from "@/components/shared/OutputPanel";
 import { TechStackModal } from "@/components/workspace/research/TechStackModal";
@@ -18,7 +18,7 @@ import { generateResearchPrompt } from "@/services/generation/researchGeneration
 
 const RESEARCH_FILE_EXTENSIONS = [".pdf", ".md", ".txt"];
 
-export const ResearchPage = (): JSX.Element => {
+export const ResearchPage = memo((): JSX.Element => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const toast = useToast();
@@ -36,7 +36,9 @@ export const ResearchPage = (): JSX.Element => {
   const [showTechStackModal, setShowTechStackModal] = useState(false);
   const [techStackRecommendation, setTechStackRecommendation] = useState<TechStackRecommendation | null>(null);
   const [isGeneratingTechStack, setIsGeneratingTechStack] = useState(false);
-  const latestArtifact = getLatestByType("research_prompt");
+
+  // Memoize derived state
+  const latestArtifact = useMemo(() => getLatestByType("research_prompt"), [getLatestByType]);
   const researchFiles = useMemo(() => files.filter((file) => file.category === "research"), [files]);
   const nodeAvailability = useMemo(
     () => ({
@@ -59,10 +61,10 @@ export const ResearchPage = (): JSX.Element => {
     );
   }, [nodeAvailability]);
 
-  const toggleNode = (nodeId: string): void =>
-    setActiveNodes((current) => (current.includes(nodeId) ? current.filter((value) => value !== nodeId) : [...current, nodeId]));
+  const toggleNode = useCallback((nodeId: string): void =>
+    setActiveNodes((current) => (current.includes(nodeId) ? current.filter((value) => value !== nodeId) : [...current, nodeId])), []);
 
-  const handleGenerate = async (): Promise<void> => {
+  const handleGenerate = useCallback(async (): Promise<void> => {
     if (!project || !brief) return void toast.error("Project context is still loading.");
     setErrorMessage("");
     setIsGenerating(true);
@@ -94,9 +96,9 @@ export const ResearchPage = (): JSX.Element => {
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [project, brief, activeNodes, researchFiles, createArtifact, latestArtifact, navigate, toast]);
 
-  const handleGenerateTechStack = async (): Promise<void> => {
+  const handleGenerateTechStack = useCallback(async (): Promise<void> => {
     if (!project || !brief || !latestArtifact) {
       toast.error("Please generate research first.");
       return;
@@ -121,9 +123,9 @@ export const ResearchPage = (): JSX.Element => {
     } finally {
       setIsGeneratingTechStack(false);
     }
-  };
+  }, [project, brief, latestArtifact, toast]);
 
-  const handleAcceptTechStack = async (): Promise<void> => {
+  const handleAcceptTechStack = useCallback(async (): Promise<void> => {
     if (!project || !techStackRecommendation) return;
     const techStack = [
       techStackRecommendation.frontend.name,
@@ -135,9 +137,9 @@ export const ResearchPage = (): JSX.Element => {
     setShowTechStackModal(false);
     setTechStackRecommendation(null);
     toast.success("Tech stack saved to project!");
-  };
+  }, [project, techStackRecommendation, updateProject, toast]);
 
-  const handleFiles = async (fileList: FileList | null): Promise<void> => {
+  const handleFiles = useCallback(async (fileList: FileList | null): Promise<void> => {
     if (!fileList || !projectId) return;
     try {
       for (const file of Array.from(fileList)) {
@@ -163,12 +165,42 @@ export const ResearchPage = (): JSX.Element => {
     } catch {
       toast.error("Research file upload failed.");
     }
-  };
+  }, [projectId, files, addFile, toast]);
 
-  const handleDeleteFile = async (fileId: string, fileName: string): Promise<void> => {
+  const handleDeleteFile = useCallback(async (fileId: string, fileName: string): Promise<void> => {
     await removeFile(fileId);
     toast.success(`${fileName} deleted.`);
-  };
+  }, [removeFile, toast]);
+
+  const handleDragEnter = useCallback((event: React.DragEvent): void => {
+    event.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((event: React.DragEvent): void => {
+    event.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((event: React.DragEvent): void => {
+    event.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDrop = useCallback((event: React.DragEvent): void => {
+    event.preventDefault();
+    setIsDragging(false);
+    void handleFiles(event.dataTransfer.files);
+  }, [handleFiles]);
+
+  const handleUploadInputChange = useCallback((filesToUpload: FileList | null): void => {
+    void handleFiles(filesToUpload);
+  }, [handleFiles]);
+
+  const handleModalClose = useCallback(() => {
+    setShowTechStackModal(false);
+    setTechStackRecommendation(null);
+  }, []);
 
   return (
     <div className="w-full px-8 py-6">
@@ -237,39 +269,25 @@ export const ResearchPage = (): JSX.Element => {
         isDragging={isDragging}
         onDeleteFile={(fileId, fileName) => void handleDeleteFile(fileId, fileName)}
         onDownloadFile={(file) => downloadFileData(file.data, file.name, file.mimeType)}
-        onDragEnter={(event) => {
-          event.preventDefault();
-          setIsDragging(true);
-        }}
-        onDragLeave={(event) => {
-          event.preventDefault();
-          setIsDragging(false);
-        }}
-        onDragOver={(event) => {
-          event.preventDefault();
-          setIsDragging(true);
-        }}
-        onDrop={(event) => {
-          event.preventDefault();
-          setIsDragging(false);
-          void handleFiles(event.dataTransfer.files);
-        }}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
         onToggleContext={(fileId) => void toggleContext(fileId)}
-        onUploadInputChange={(filesToUpload) => void handleFiles(filesToUpload)}
+        onUploadInputChange={handleUploadInputChange}
         researchFiles={researchFiles}
       />
 
       {/* Tech Stack Modal */}
       <TechStackModal
         isOpen={showTechStackModal}
-        onClose={() => {
-          setShowTechStackModal(false);
-          setTechStackRecommendation(null);
-        }}
+        onClose={handleModalClose}
         recommendation={techStackRecommendation}
         onAccept={handleAcceptTechStack}
         projectName={project?.name ?? "Your Project"}
       />
     </div>
   );
-};
+});
+
+ResearchPage.displayName = "ResearchPage";

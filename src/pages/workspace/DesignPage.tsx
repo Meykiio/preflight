@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { memo, useMemo, useRef, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DesignHistorySection } from "@/components/workspace/design/DesignHistorySection";
 import { DesignPromptPanel } from "@/components/workspace/design/DesignPromptPanel";
@@ -17,7 +17,7 @@ interface DesignPageProps {
 
 const DESIGN_FILE_EXTENSIONS = [".pdf", ".png", ".jpg", ".jpeg", ".webp", ".gif"];
 
-export const DesignPage = ({
+export const DesignPage = memo(({
   onOpenContextSelector
 }: DesignPageProps): JSX.Element => {
   const navigate = useNavigate();
@@ -34,8 +34,9 @@ export const DesignPage = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
 
-  const latestResearchPrompt = getLatestByType("research_prompt");
-  const latestDesignPrompt = getLatestByType("design_prompt");
+  // Memoize derived state
+  const latestResearchPrompt = useMemo(() => getLatestByType("research_prompt"), [getLatestByType]);
+  const latestDesignPrompt = useMemo(() => getLatestByType("design_prompt"), [getLatestByType]);
   const designFiles = useMemo(
     () => files.filter((file) => file.category === "design"),
     [files]
@@ -45,7 +46,7 @@ export const DesignPage = ({
     [files]
   );
 
-  const handleGenerate = async (): Promise<void> => {
+  const handleGenerate = useCallback(async (): Promise<void> => {
     if (!project || !brief) {
       toast.error("Project context is still loading.");
       return;
@@ -90,9 +91,9 @@ export const DesignPage = ({
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [project, brief, toast, selectedPlatform, activeNodes, latestResearchPrompt, designFiles, createArtifact, latestDesignPrompt, navigate]);
 
-  const handleFiles = async (fileList: FileList | null): Promise<void> => {
+  const handleFiles = useCallback(async (fileList: FileList | null): Promise<void> => {
     if (!fileList) {
       return;
     }
@@ -127,23 +128,31 @@ export const DesignPage = ({
     } catch (error) {
       toast.error("Design file upload failed.");
     }
-  };
+  }, [files, addFile, toast]);
 
-  const handleDeleteFile = async (fileId: string, fileName: string): Promise<void> => {
+  const handleDeleteFile = useCallback(async (fileId: string, fileName: string): Promise<void> => {
     await removeFile(fileId);
     toast.success(`${fileName} deleted.`);
-  };
+  }, [removeFile, toast]);
 
-  const toggleNode = (nodeId: string): void => {
+  const toggleNode = useCallback((nodeId: string): void => {
     setActiveNodes((current) =>
       current.includes(nodeId)
         ? current.filter((value) => value !== nodeId)
         : [...current, nodeId]
     );
-  };
+  }, []);
 
-  const outputPlatforms = Array.from(
-    new Set([selectedPlatform, "v0"].filter((platform) => platform !== "Universal"))
+  const handleUploadInputChange = useCallback((filesToUpload: FileList | null): void => {
+    void handleFiles(filesToUpload);
+  }, [handleFiles]);
+
+  // Memoize derived state
+  const outputPlatforms = useMemo(
+    () => Array.from(
+      new Set([selectedPlatform, "v0"].filter((platform) => platform !== "Universal"))
+    ),
+    [selectedPlatform]
   );
 
   return (
@@ -169,8 +178,10 @@ export const DesignPage = ({
         fileInputRef={fileInputRef}
         onDeleteFile={(fileId, fileName) => void handleDeleteFile(fileId, fileName)}
         onDownloadFile={(file) => downloadFileData(file.data, file.name, file.mimeType)}
-        onUploadInputChange={(filesToUpload) => void handleFiles(filesToUpload)}
+        onUploadInputChange={handleUploadInputChange}
       />
     </div>
   );
-};
+});
+
+DesignPage.displayName = "DesignPage";

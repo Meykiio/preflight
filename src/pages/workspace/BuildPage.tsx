@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { BuildStageCard } from "@/components/workspace/BuildStageCard";
 import { BuildWorkflowEmptyState } from "@/components/workspace/build/BuildWorkflowEmptyState";
@@ -18,7 +18,7 @@ interface BuildPageProps {
   projectId: string;
 }
 
-export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
+export const BuildPage = memo(({ projectId }: BuildPageProps): JSX.Element => {
   const navigate = useNavigate();
   const toast = useToast();
   const { project } = useProject(projectId);
@@ -37,18 +37,29 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
   const [generationStep, setGenerationStep] = useState(0);
   const [showCompleted, setShowCompleted] = useState(true);
 
-  const prd = getLatestByType("prd")?.content ?? "No PRD generated yet.";
-  const completedCount = stages.filter((stage) => stage.status === "complete").length;
-  const currentStageId =
-    stages.find((stage) => stage.status === "in-progress")?.id ??
-    stages.find((stage) => stage.status === "not-started")?.id;
+  // Memoize derived state to prevent unnecessary recalculations
+  const prd = useMemo(() => getLatestByType("prd")?.content ?? "No PRD generated yet.", [getLatestByType]);
+  
+  const completedCount = useMemo(
+    () => stages.filter((stage) => stage.status === "complete").length,
+    [stages]
+  );
+  
+  const currentStageId = useMemo(
+    () => stages.find((stage) => stage.status === "in-progress")?.id ??
+          stages.find((stage) => stage.status === "not-started")?.id,
+    [stages]
+  );
 
   // Filter stages based on showCompleted toggle
-  const displayedStages = showCompleted
-    ? stages
-    : stages.filter((stage) => stage.status !== "complete");
+  const displayedStages = useMemo(
+    () => showCompleted
+      ? stages
+      : stages.filter((stage) => stage.status !== "complete"),
+    [showCompleted, stages]
+  );
 
-  const handleGenerateWorkflow = async (): Promise<void> => {
+  const handleGenerateWorkflow = useCallback(async (): Promise<void> => {
     if (!project || !brief) {
       toast.error("Project context is still loading.");
       return;
@@ -95,9 +106,9 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
       setIsGenerating(false);
       setGenerationStep(0);
     }
-  };
+  }, [brief, createStages, navigate, platform, prd, project, toast]);
 
-  const cycleStatus = async (stage: BuildStage): Promise<void> => {
+  const cycleStatus = useCallback(async (stage: BuildStage): Promise<void> => {
     const nextStatus =
       stage.status === "not-started"
         ? "in-progress"
@@ -117,12 +128,16 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
     }
 
     toast.success("Stage status updated.");
-  };
+  }, [stages, updateStageStatus, toast]);
 
-  const handleExportAll = (): void => {
+  const handleExportAll = useCallback((): void => {
     exportAllPrompts(stages);
     toast.success("Build workflow exported.");
-  };
+  }, [stages, toast]);
+
+  const handleToggleShowCompleted = useCallback(() => {
+    setShowCompleted((current) => !current);
+  }, []);
 
   return (
     <div className="flex max-w-full flex-col px-8 py-6">
@@ -151,7 +166,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
             </span>
             <button
               type="button"
-              onClick={() => setShowCompleted(!showCompleted)}
+              onClick={handleToggleShowCompleted}
               className={cn(
                 "flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs transition",
                 showCompleted
@@ -196,4 +211,6 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
       />
     </div>
   );
-};
+});
+
+BuildPage.displayName = "BuildPage";
