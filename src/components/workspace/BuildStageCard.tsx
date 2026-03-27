@@ -44,10 +44,10 @@ const BuildStageCardComponent = ({
         isLocked ? "opacity-40" : ""
       )}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex min-w-0 items-start gap-4">
         <div
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-lg font-mono text-sm font-bold",
+            "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-mono text-sm font-bold",
             stageTone
           )}
         >

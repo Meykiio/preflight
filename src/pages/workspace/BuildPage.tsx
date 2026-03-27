@@ -34,6 +34,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
   const [platform, setPlatform] = useState("Universal");
   const [errorMessage, setErrorMessage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStep, setGenerationStep] = useState(0);
   const [showCompleted, setShowCompleted] = useState(true);
 
   const prd = getLatestByType("prd")?.content ?? "No PRD generated yet.";
@@ -55,14 +56,21 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
 
     setErrorMessage("");
     setIsGenerating(true);
+    setGenerationStep(0); // Start with "Analyzing PRD..."
 
     try {
+      // Simulate step progression
+      const stepTimeout = setTimeout(() => setGenerationStep(1), 1500); // "Generating stages..."
+
       const generatedStages = await generateFullWorkflow({
         brief,
         platform,
         prd,
         project
       });
+
+      clearTimeout(stepTimeout);
+      setGenerationStep(2); // "Complete"
 
       await createStages(
         generatedStages.map((stage) => ({
@@ -85,6 +93,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
       toast.error(errorState.toastMessage);
     } finally {
       setIsGenerating(false);
+      setGenerationStep(0);
     }
   };
 
@@ -119,6 +128,7 @@ export const BuildPage = ({ projectId }: BuildPageProps): JSX.Element => {
     <div className="w-full px-8 py-6">
       <BuildWorkflowHeader
         isGenerating={isGenerating}
+        generationStep={generationStep}
         onGenerate={() => void handleGenerateWorkflow()}
         onSelectPlatform={setPlatform}
         platform={platform}
