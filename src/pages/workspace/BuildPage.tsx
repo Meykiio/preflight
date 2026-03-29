@@ -1,6 +1,7 @@
 import { memo, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { BuildStageCard } from "@/components/workspace/BuildStageCard";
+import { StageZeroCard } from "@/components/workspace/build/StageZeroCard";
 import { BuildWorkflowEmptyState } from "@/components/workspace/build/BuildWorkflowEmptyState";
 import { BuildWorkflowFooter } from "@/components/workspace/build/BuildWorkflowFooter";
 import { BuildWorkflowHeader } from "@/components/workspace/build/BuildWorkflowHeader";
@@ -67,7 +68,8 @@ export const BuildPage = memo(({ projectId }: BuildPageProps): JSX.Element => {
 
     setErrorMessage("");
     setIsGenerating(true);
-    setGenerationStep(0); // Start with "Analyzing PRD..."
+    setGenerationStep(0);
+    toast.info("Generating... You can navigate to other pages and come back.");
 
     try {
       // Simulate step progression
@@ -146,8 +148,10 @@ export const BuildPage = memo(({ projectId }: BuildPageProps): JSX.Element => {
           isGenerating={isGenerating}
           generationStep={generationStep}
           onGenerate={() => void handleGenerateWorkflow()}
+          onExport={stages.length > 0 ? handleExportAll : undefined}
           onSelectPlatform={setPlatform}
           platform={platform}
+          hasStages={stages.length > 0}
         />
       </div>
 
@@ -185,6 +189,9 @@ export const BuildPage = memo(({ projectId }: BuildPageProps): JSX.Element => {
 
       {/* Stages List */}
       <div className="mt-6 flex w-full max-w-[1800px] flex-col space-y-4">
+        {/* Stage 0 - Always shown as first optional stage */}
+        <StageZeroCard />
+
         {isLoading ? (
           Array.from({ length: 3 }).map((_, index) => (
             <div key={index} className="h-44 animate-pulse rounded-xl bg-surface-container-high" />
@@ -205,7 +212,6 @@ export const BuildPage = memo(({ projectId }: BuildPageProps): JSX.Element => {
       <BuildWorkflowFooter
         completedCount={completedCount}
         currentStageId={currentStageId}
-        onExport={handleExportAll}
         platform={platform}
         stages={stages}
       />

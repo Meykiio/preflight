@@ -11,15 +11,9 @@ import { downloadFileData, validateUploadFile } from "@/lib/fileUpload";
 import { getGenerationErrorState } from "@/lib/generationErrors";
 import { generateDesignPrompt } from "@/services/generation/designGeneration";
 
-interface DesignPageProps {
-  onOpenContextSelector: () => void;
-}
-
 const DESIGN_FILE_EXTENSIONS = [".pdf", ".png", ".jpg", ".jpeg", ".webp", ".gif"];
 
-export const DesignPage = memo(({
-  onOpenContextSelector
-}: DesignPageProps): JSX.Element => {
+export const DesignPage = memo((): JSX.Element => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const toast = useToast();
@@ -27,7 +21,7 @@ export const DesignPage = memo(({
   const { project } = useProject(projectId);
   const { brief } = useBrief(projectId);
   const { files, addFile, removeFile } = useVaultFiles(projectId);
-  const { createArtifact, getLatestByType } = useArtifacts(projectId);
+  const { createArtifact, getLatestByType, deleteArtifact } = useArtifacts(projectId);
   const [selectedPlatform, setSelectedPlatform] = useState("Universal");
   const [activeNodes, setActiveNodes] = useState<string[]>(["brief"]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,6 +49,7 @@ export const DesignPage = memo(({
     setErrorMessage("");
     setIsGenerating(true);
     setStreamingContent("");
+    toast.info("Generating... You can navigate to other pages and come back.");
 
     try {
       const content = await generateDesignPrompt({
@@ -155,15 +150,21 @@ export const DesignPage = memo(({
     [selectedPlatform]
   );
 
+  const handleReset = useCallback(async (): Promise<void> => {
+    if (latestDesignPrompt) {
+      await deleteArtifact(latestDesignPrompt.id);
+      toast.success("Design prompt cleared.");
+    }
+  }, [latestDesignPrompt, deleteArtifact, toast]);
+
   return (
-    <div className="w-full px-8 py-6">
+    <div className="w-full max-w-full overflow-x-hidden px-8 py-6">
       <DesignPromptPanel
         activeNodes={activeNodes}
         briefAvailable={Boolean(brief)}
         errorMessage={errorMessage}
         isGenerating={isGenerating}
         onGenerate={() => void handleGenerate()}
-        onOpenContextSelector={onOpenContextSelector}
         onSelectPlatform={setSelectedPlatform}
         onToggleNode={toggleNode}
         outputPlatforms={outputPlatforms}
@@ -171,6 +172,21 @@ export const DesignPage = memo(({
         researchFileCount={researchFiles.length}
         selectedPlatform={selectedPlatform}
         streamingContent={streamingContent}
+        isEditable={Boolean(latestDesignPrompt)}
+        onSave={async (newContent: string) => {
+          if (latestDesignPrompt) {
+            await createArtifact({
+              agentSystemPromptId: latestDesignPrompt.agentSystemPromptId,
+              content: newContent,
+              contextNodes: latestDesignPrompt.contextNodes,
+              platform: selectedPlatform,
+              type: "design_prompt",
+              version: latestDesignPrompt.version + 1
+            });
+            toast.success("Design prompt updated.");
+          }
+        }}
+        onReset={handleReset}
       />
 
       <DesignHistorySection

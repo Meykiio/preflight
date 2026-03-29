@@ -3,7 +3,6 @@ import type { BuildStage } from "@/types";
 interface BuildWorkflowFooterProps {
   completedCount: number;
   currentStageId?: string;
-  onExport: () => void;
   platform: string;
   stages: BuildStage[];
 }
@@ -11,7 +10,6 @@ interface BuildWorkflowFooterProps {
 export const BuildWorkflowFooter = ({
   completedCount,
   currentStageId,
-  onExport,
   platform,
   stages
 }: BuildWorkflowFooterProps): JSX.Element => {
@@ -44,13 +42,6 @@ export const BuildWorkflowFooter = ({
           <span className="rounded-full bg-surface px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-on-surface-variant">
             {platform}
           </span>
-          <button
-            type="button"
-            onClick={onExport}
-            className="gradient-cta glow-primary rounded-xl px-4 py-2 text-sm font-semibold text-on-primary"
-          >
-            Export All
-          </button>
         </div>
       </div>
     </div>

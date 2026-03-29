@@ -20,7 +20,7 @@ export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
   const toast = useToast();
   const { project } = useProject(projectId);
   const { brief } = useBrief(projectId);
-  const { createArtifact, getLatestByType } = useArtifacts(projectId);
+  const { createArtifact, getLatestByType, deleteArtifact } = useArtifacts(projectId);
   const [systemPlatform, setSystemPlatform] = useState("Universal");
   const [rulesPlatform, setRulesPlatform] = useState("Universal");
   const [errorMessage, setErrorMessage] = useState("");
@@ -59,6 +59,7 @@ export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
     setErrorMessage("");
     setIsGeneratingPRD(true);
     setStreamingPRD("");
+    toast.info("Generating... You can navigate to other pages and come back.");
     try {
       const content = await generatePRD({
         brief,
@@ -89,6 +90,7 @@ export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
     setErrorMessage("");
     setIsGeneratingSystem(true);
     setStreamingSystem("");
+    toast.info("Generating... You can navigate to other pages and come back.");
     try {
       const content = await generateSystemInstructions({
         platform: systemPlatform,
@@ -119,6 +121,7 @@ export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
     setErrorMessage("");
     setIsGeneratingRules(true);
     setStreamingRules("");
+    toast.info("Generating... You can navigate to other pages and come back.");
     try {
       const content = await generateRulesFile({
         platform: rulesPlatform,
@@ -152,51 +155,130 @@ export const PRDPage = memo(({ projectId }: PRDPageProps): JSX.Element => {
     );
   }, []);
 
+  const handleResetPRD = useCallback(async (): Promise<void> => {
+    if (prdArtifact) {
+      await deleteArtifact(prdArtifact.id);
+      toast.success("PRD cleared.");
+    }
+  }, [prdArtifact, deleteArtifact, toast]);
+
+  const handleResetSystem = useCallback(async (): Promise<void> => {
+    if (systemArtifact) {
+      await deleteArtifact(systemArtifact.id);
+      toast.success("System instructions cleared.");
+    }
+  }, [systemArtifact, deleteArtifact, toast]);
+
+  const handleResetRules = useCallback(async (): Promise<void> => {
+    if (rulesArtifact) {
+      await deleteArtifact(rulesArtifact.id);
+      toast.success("Rules file cleared.");
+    }
+  }, [rulesArtifact, deleteArtifact, toast]);
+
   return (
-    <div className="w-full px-8 py-6">
-      {/* PRD Panel - Full Width */}
-      <div className="mb-6">
-        <PRDDocumentPanel
-          contextAvailability={contextAvailability}
-          activeNodes={activeNodes}
-          onToggleNode={toggleNode}
-          errorMessage={errorMessage}
-          isGenerating={isGeneratingPRD}
-          onGenerate={() => void handleGeneratePRD()}
-          prdContent={prdArtifact?.content ?? null}
-          streamingContent={streamingPRD}
-        />
+    <div className="flex w-full max-w-full flex-col overflow-x-hidden px-8 py-6">
+      {/* Page Header */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3">
+          <span className="material-symbols-outlined text-3xl text-primary">article</span>
+          <div>
+            <h1 className="font-headline text-3xl font-bold tracking-tight text-on-surface">
+              Product Requirements
+            </h1>
+            <p className="mt-1 text-sm text-on-surface-variant">
+              Generate comprehensive PRD, system instructions, and coding rules
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* System Instructions & Rules - Side by Side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <ArtifactGeneratorPanel
-          badgeLabel="Live Context"
-          content={systemArtifact?.content ?? null}
-          description="Paste this as the system prompt for your AI coding tool."
-          fileLabel="SYSTEM_PROMPT.TXT"
-          isGenerating={isGeneratingSystem}
-          onGenerate={() => void handleGenerateSystemInstructions()}
-          onSelectPlatform={setSystemPlatform}
-          platforms={SYSTEM_PLATFORMS}
-          selectedPlatform={systemPlatform}
-          streamingContent={streamingSystem}
-          title="System Instructions"
-        />
-        <ArtifactGeneratorPanel
-          badgeLabel="Neural_Sync_Optimized"
-          content={rulesArtifact?.content ?? null}
-          description="Platform-specific agent constraints."
-          fileLabel={getRulesFileLabel(rulesPlatform)}
-          isGenerating={isGeneratingRules}
-          onGenerate={() => void handleGenerateRules()}
-          onSelectPlatform={setRulesPlatform}
-          platforms={RULE_PLATFORMS}
-          selectedPlatform={rulesPlatform}
-          streamingContent={streamingRules}
-          title="Rules File"
-        />
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* PRD Panel - Spans 2 columns on large screens */}
+        <div className="lg:col-span-2">
+          <PRDDocumentPanel
+            contextAvailability={contextAvailability}
+            activeNodes={activeNodes}
+            onToggleNode={toggleNode}
+            errorMessage={errorMessage}
+            isGenerating={isGeneratingPRD}
+            onGenerate={() => void handleGeneratePRD()}
+            prdContent={prdArtifact?.content ?? null}
+            streamingContent={streamingPRD}
+            isEditable={Boolean(prdArtifact)}
+            onSave={async (newContent: string) => {
+              if (prdArtifact) {
+                await createArtifact({
+                  agentSystemPromptId: prdArtifact.agentSystemPromptId,
+                  content: newContent,
+                  contextNodes: prdArtifact.contextNodes,
+                  platform: prdArtifact.platform,
+                  type: "prd",
+                  version: prdArtifact.version + 1
+                });
+                toast.success("PRD updated.");
+              }
+            }}
+            onReset={handleResetPRD}
+          />
+        </div>
+
+        {/* Right Column - System Instructions + Rules stacked */}
+        <div className="flex flex-col gap-6">
+          {/* System Instructions Panel */}
+          <ArtifactGeneratorPanel
+            badgeLabel="AI Agent Config"
+            content={systemArtifact?.content ?? null}
+            description="System prompt for your AI coding assistant"
+            fileLabel="SYSTEM_INSTRUCTIONS.md"
+            isGenerating={isGeneratingSystem}
+            onGenerate={() => void handleGenerateSystemInstructions()}
+            onSelectPlatform={setSystemPlatform}
+            platforms={SYSTEM_PLATFORMS}
+            selectedPlatform={systemPlatform}
+            streamingContent={streamingSystem}
+            title="System Instructions"
+            onReset={handleResetSystem}
+          />
+
+          {/* Rules File Panel */}
+          <ArtifactGeneratorPanel
+            badgeLabel="Coding Rules"
+            content={rulesArtifact?.content ?? null}
+            description="Platform-specific coding constraints"
+            fileLabel={getRulesFileLabel(rulesPlatform)}
+            isGenerating={isGeneratingRules}
+            onGenerate={() => void handleGenerateRules()}
+            onSelectPlatform={setRulesPlatform}
+            platforms={RULE_PLATFORMS}
+            selectedPlatform={rulesPlatform}
+            streamingContent={streamingRules}
+            title="Rules File"
+            onReset={handleResetRules}
+          />
+        </div>
       </div>
+
+      {/* Context Summary Footer */}
+      {activeNodes.length > 0 && (
+        <div className="mt-8 rounded-xl border border-outline-variant/10 bg-surface-container/50 p-4">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="material-symbols-outlined text-base text-secondary">contextual_token</span>
+            <span className="text-on-surface-variant">Active context:</span>
+            <div className="flex gap-2">
+              {activeNodes.map((node) => (
+                <span
+                  key={node}
+                  className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+                >
+                  {node}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });

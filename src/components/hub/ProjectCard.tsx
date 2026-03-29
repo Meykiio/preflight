@@ -81,10 +81,12 @@ export const ProjectCard = memo(({
   );
 
   const openProject = (): void => {
+    // In batch mode or editing, toggle selection instead of navigating
     if (isInBatchMode || isEditing) {
       onToggleSelect?.(project.id);
       return;
     }
+    // Ensure we're not in any selection state before navigating
     selectProject(project.id);
     navigate(`/project/${project.id}`);
   };

@@ -7,7 +7,6 @@ interface DesignPromptPanelProps {
   errorMessage: string;
   isGenerating: boolean;
   onGenerate: () => void;
-  onOpenContextSelector: () => void;
   onSelectPlatform: (platform: string) => void;
   onToggleNode: (nodeId: string) => void;
   outputPlatforms: string[];
@@ -15,6 +14,9 @@ interface DesignPromptPanelProps {
   researchFileCount: number;
   selectedPlatform: string;
   streamingContent: string;
+  isEditable?: boolean;
+  onSave?: (content: string) => void;
+  onReset?: () => void;
 }
 
 const PLATFORM_OPTIONS = ["Stitch", "v0", "Figma AI", "Locofy", "Universal"];
@@ -25,14 +27,16 @@ export const DesignPromptPanel = ({
   errorMessage,
   isGenerating,
   onGenerate,
-  onOpenContextSelector,
   onSelectPlatform,
   onToggleNode,
   outputPlatforms,
   promptContent,
   researchFileCount,
   selectedPlatform,
-  streamingContent
+  streamingContent,
+  isEditable = false,
+  onSave,
+  onReset
 }: DesignPromptPanelProps): JSX.Element => {
   return (
     <section className="rounded-2xl border border-outline-variant/10 bg-surface-container p-5">
@@ -45,7 +49,7 @@ export const DesignPromptPanel = ({
             Shape the visual system and interface direction for the selected platform.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {PLATFORM_OPTIONS.map((platform) => (
             <button
               key={platform}
@@ -60,6 +64,14 @@ export const DesignPromptPanel = ({
               {platform}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={onGenerate}
+            disabled={isGenerating}
+            className="gradient-cta glow-primary shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold text-on-primary disabled:opacity-50"
+          >
+            {isGenerating ? "Generating..." : "Generate Design"}
+          </button>
         </div>
       </div>
 
@@ -89,21 +101,6 @@ export const DesignPromptPanel = ({
             onToggle={() => onToggleNode("research-results")}
             statusLabel={researchFileCount > 0 ? "Available" : "Missing data"}
           />
-          <button
-            type="button"
-            onClick={onOpenContextSelector}
-            className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
-          >
-            + Add context
-          </button>
-          <button
-            type="button"
-            onClick={onGenerate}
-            disabled={isGenerating}
-            className="gradient-cta glow-primary flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-on-primary disabled:opacity-60"
-          >
-            {isGenerating ? "Generating..." : "Generate Design Prompt"}
-          </button>
 
           {errorMessage ? (
             <div className="rounded-xl border border-tertiary/20 bg-tertiary/10 px-4 py-3 text-sm text-tertiary">
@@ -124,6 +121,9 @@ export const DesignPromptPanel = ({
             platforms={outputPlatforms}
             streamingContent={streamingContent}
             variant="terminal"
+            isEditable={isEditable}
+            onSave={onSave}
+            onReset={onReset}
           />
         </div>
       </div>

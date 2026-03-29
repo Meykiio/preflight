@@ -12,16 +12,20 @@ interface BuildWorkflowHeaderProps {
   isGenerating: boolean;
   generationStep?: number; // 0 = analyzing, 1 = generating, 2 = complete
   onGenerate: () => void;
+  onExport?: () => void;
   onSelectPlatform: (platform: string) => void;
   platform: string;
+  hasStages?: boolean;
 }
 
 export const BuildWorkflowHeader = ({
   isGenerating,
   generationStep = 0,
   onGenerate,
+  onExport,
   onSelectPlatform,
-  platform
+  platform,
+  hasStages = false
 }: BuildWorkflowHeaderProps): JSX.Element => {
   const currentStatus = isGenerating
     ? GENERATION_STEPS[Math.min(generationStep, GENERATION_STEPS.length - 1)]
@@ -49,7 +53,7 @@ export const BuildWorkflowHeader = ({
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {PLATFORM_OPTIONS.map((option) => (
             <button
               key={option}
@@ -64,6 +68,17 @@ export const BuildWorkflowHeader = ({
               {option}
             </button>
           ))}
+          {hasStages && onExport && (
+            <button
+              type="button"
+              onClick={onExport}
+              className="flex items-center gap-1.5 rounded-xl border border-outline-variant/15 bg-surface px-4 py-2 text-sm text-on-surface transition hover:bg-surface-container-high"
+              title="Download all build prompts as a single markdown file"
+            >
+              <span className="material-symbols-outlined text-sm">download</span>
+              Export All
+            </button>
+          )}
         </div>
       </div>
 

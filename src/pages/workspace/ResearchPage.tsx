@@ -27,7 +27,7 @@ export const ResearchPage = memo((): JSX.Element => {
   const { project } = useProject(projectId);
   const { brief } = useBrief(projectId);
   const { files, addFile, removeFile, toggleContext } = useVaultFiles(projectId);
-  const { createArtifact, getLatestByType } = useArtifacts(projectId);
+  const { createArtifact, getLatestByType, deleteArtifact } = useArtifacts(projectId);
   const [activeNodes, setActiveNodes] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -69,6 +69,7 @@ export const ResearchPage = memo((): JSX.Element => {
     setErrorMessage("");
     setIsGenerating(true);
     setStreamingContent("");
+    toast.info("Generating... You can navigate to other pages and come back.");
     try {
       const content = await generateResearchPrompt({
         project,
@@ -202,8 +203,15 @@ export const ResearchPage = memo((): JSX.Element => {
     setTechStackRecommendation(null);
   }, []);
 
+  const handleReset = useCallback(async (): Promise<void> => {
+    if (latestArtifact) {
+      await deleteArtifact(latestArtifact.id);
+      toast.success("Research prompt cleared.");
+    }
+  }, [latestArtifact, deleteArtifact, toast]);
+
   return (
-    <div className="w-full px-8 py-6">
+    <div className="w-full max-w-full overflow-x-hidden px-8 py-6">
       {/* Tech Stack Banner - Shows after research completes */}
       {latestArtifact && !isGenerating && (
         <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-5">
@@ -226,13 +234,6 @@ export const ResearchPage = memo((): JSX.Element => {
                 >
                   <span className="material-symbols-outlined">psychology</span>
                   {isGeneratingTechStack ? "Generating..." : "Generate Tech Stack"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => navigate(`/project/${projectId}/build`)}
-                  className="rounded-xl border border-outline-variant/15 bg-surface-container px-6 py-3 text-sm text-on-surface transition hover:bg-surface-bright"
-                >
-                  Skip to Build
                 </button>
               </div>
             </div>
@@ -262,6 +263,21 @@ export const ResearchPage = memo((): JSX.Element => {
           isStreaming={isGenerating}
           platforms={["Perplexity", "Gemini", "ChatGPT"]}
           streamingContent={streamingContent}
+          isEditable={Boolean(latestArtifact)}
+          onSave={async (newContent: string) => {
+            if (latestArtifact) {
+              await createArtifact({
+                agentSystemPromptId: latestArtifact.agentSystemPromptId,
+                content: newContent,
+                contextNodes: latestArtifact.contextNodes,
+                platform: latestArtifact.platform,
+                type: "research_prompt",
+                version: latestArtifact.version + 1
+              });
+              toast.success("Research prompt updated.");
+            }
+          }}
+          onReset={handleReset}
         />
       </div>
       <ResearchFilesSection

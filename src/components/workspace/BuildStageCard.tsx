@@ -1,5 +1,6 @@
 import { memo, useState } from "react";
 import { CopyButton } from "@/components/shared/CopyButton";
+import { downloadAsFile } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import type { BuildStage } from "@/types";
 
@@ -7,6 +8,13 @@ interface BuildStageCardProps {
   onStatusChange: (stage: BuildStage) => void;
   stage: BuildStage;
 }
+
+const slugify = (text: string): string => {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9_]/g, "");
+};
 
 const STATUS_LABELS: Record<BuildStage["status"], string> = {
   locked: "Locked",
@@ -100,7 +108,23 @@ const BuildStageCardComponent = ({
                 {stage.name.replace(/\s+/g, "-").toUpperCase()}.txt
               </span>
               <div className="flex items-center gap-2">
-                {!isLocked ? <CopyButton text={stage.promptContent} size="sm" /> : null}
+                {!isLocked ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const slug = slugify(stage.name);
+                        const filename = `BUILD_STAGE_${stage.stageNumber.toString().padStart(2, "0")}_${slug}.md`;
+                        downloadAsFile(stage.promptContent, filename);
+                      }}
+                      className="rounded-full p-2 text-on-surface-variant transition hover:bg-surface hover:text-on-surface"
+                      title="Download stage prompt"
+                    >
+                      <span className="material-symbols-outlined text-base">download</span>
+                    </button>
+                    <CopyButton text={stage.promptContent} size="sm" />
+                  </>
+                ) : null}
                 <button
                   type="button"
                   onClick={() => setIsExpanded((current) => !current)}

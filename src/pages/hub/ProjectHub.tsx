@@ -52,8 +52,13 @@ export const ProjectHub = memo((): JSX.Element => {
     importInputRef.current?.click();
   }, []);
 
-  const handleToggleBatchMode = useCallback((): void => {
-    setIsBatchMode(!isBatchMode);
+  const handleEnterBatchMode = useCallback((): void => {
+    setIsBatchMode(true);
+    setSelectedProjects(new Set());
+  }, []);
+
+  const handleCancelBatchMode = useCallback((): void => {
+    setIsBatchMode(false);
     setSelectedProjects(new Set());
   }, []);
 
@@ -87,8 +92,8 @@ export const ProjectHub = memo((): JSX.Element => {
 
     toast.success(`Deleted ${selectedProjects.size} project(s).`);
     setSelectedProjects(new Set());
-    setIsBatchMode(false);
-  }, [selectedProjects, deleteProject, toast]);
+    handleCancelBatchMode();
+  }, [selectedProjects, deleteProject, handleCancelBatchMode, toast]);
 
   const handleImportChange = useCallback(async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -171,7 +176,7 @@ export const ProjectHub = memo((): JSX.Element => {
                 </button>
                 <button
                   type="button"
-                  onClick={handleToggleBatchMode}
+                  onClick={handleCancelBatchMode}
                   className="rounded-xl border border-outline-variant/15 bg-surface-container px-5 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
                 >
                   Cancel
@@ -195,7 +200,7 @@ export const ProjectHub = memo((): JSX.Element => {
                 </button>
                 <button
                   type="button"
-                  onClick={handleToggleBatchMode}
+                  onClick={handleEnterBatchMode}
                   className="rounded-xl border border-outline-variant/15 bg-surface-container px-5 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
                 >
                   Select Multiple

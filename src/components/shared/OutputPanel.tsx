@@ -15,6 +15,9 @@ interface OutputPanelProps {
   streamingContent?: string;
   title: string;
   variant?: "default" | "terminal";
+  isEditable?: boolean;
+  onSave?: (content: string) => void;
+  onReset?: () => void;
 }
 
 const PREVIEW_HEIGHT = 200; // Fixed height in pixels
@@ -30,16 +33,29 @@ const OutputPanelComponent = ({
   platforms = [],
   streamingContent = "",
   title,
-  variant = "default"
+  variant = "default",
+  isEditable = false,
+  onSave,
+  onReset
 }: OutputPanelProps): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState("");
   const contentRef = useRef<HTMLPreElement>(null);
   const hasFinishedStreaming = useRef(false);
 
   const resolvedContent = isStreaming ? streamingContent : content ?? "";
-  const hasContent = Boolean(resolvedContent.trim());
-  const contentLines = resolvedContent.split("\n");
+  const displayContent = isEditing ? editedContent : resolvedContent;
+  const hasContent = Boolean(displayContent.trim());
+  const contentLines = displayContent.split("\n");
   const isLongContent = contentLines.length > 6;
+
+  // Initialize edited content when content changes
+  useEffect(() => {
+    if (content && !isEditing) {
+      setEditedContent(content);
+    }
+  }, [content, isEditing]);
 
   // Track when streaming finishes
   useEffect(() => {
@@ -85,17 +101,74 @@ const OutputPanelComponent = ({
         {hasContent && !isStreaming ? (
           <div className="flex flex-wrap items-center gap-3">
             {platforms.length > 0 ? <PlatformLaunchers platforms={platforms} /> : null}
-            <CopyButton text={resolvedContent} size="sm" />
-            <button
-              type="button"
-              onClick={() => downloadAsFile(resolvedContent, `${title.toLowerCase().replace(/\s+/g, "-")}.md`)}
-              className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high hover:text-on-surface"
-              title="Download as markdown file"
-            >
-              <span className="material-symbols-outlined text-sm">download</span>
-              Download
-            </button>
-            {!isExpanded && isLongContent && (
+            {onReset && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.confirm("Clear generated content? This cannot be undone.")) {
+                    onReset();
+                  }
+                }}
+                className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high hover:text-on-surface"
+                title="Reset"
+              >
+                <span className="material-symbols-outlined text-sm">restart_alt</span>
+                Reset
+              </button>
+            )}
+            {isEditable && !isEditing ? (
+              <button
+                type="button"
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high hover:text-on-surface"
+                title="Edit prompt"
+              >
+                <span className="material-symbols-outlined text-sm">edit</span>
+                Edit
+              </button>
+            ) : null}
+            {isEditing ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onSave?.(editedContent);
+                    setIsEditing(false);
+                  }}
+                  className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-semibold text-primary transition hover:bg-primary/20"
+                  title="Save changes"
+                >
+                  <span className="material-symbols-outlined text-sm">check</span>
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditedContent(resolvedContent);
+                    setIsEditing(false);
+                  }}
+                  className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high"
+                  title="Cancel edits"
+                >
+                  <span className="material-symbols-outlined text-sm">close</span>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <CopyButton text={resolvedContent} size="sm" />
+                <button
+                  type="button"
+                  onClick={() => downloadAsFile(resolvedContent, `${title.toLowerCase().replace(/\s+/g, "-")}.md`)}
+                  className="flex items-center gap-1.5 rounded-lg border border-outline-variant/15 bg-surface px-3 py-2 text-xs text-on-surface-variant transition hover:bg-surface-container-high hover:text-on-surface"
+                  title="Download as markdown file"
+                >
+                  <span className="material-symbols-outlined text-sm">download</span>
+                  Download
+                </button>
+              </>
+            )}
+            {!isExpanded && isLongContent && !isEditing && (
               <button
                 type="button"
                 onClick={() => setIsExpanded(true)}
@@ -107,7 +180,7 @@ const OutputPanelComponent = ({
                 Expand
               </button>
             )}
-            {isExpanded && (
+            {isExpanded && !isEditing && (
               <button
                 type="button"
                 onClick={() => setIsExpanded(false)}
@@ -145,6 +218,16 @@ const OutputPanelComponent = ({
             isStreaming && "border-primary/30 shadow-[0_0_20px_rgba(197,192,255,0.1)]"
           )}
         >
+          {/* Edit mode - textarea */}
+          {isEditing ? (
+            <textarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="h-96 w-full resize-y rounded-lg bg-surface-container-lowest p-4 font-mono text-sm text-on-surface outline-none focus:ring-2 focus:ring-primary/30"
+              style={{ minHeight: "400px" }}
+            />
+          ) : (
+            <>
           {/* Fixed height container during streaming or when collapsed with long content */}
           {(showStreamingView || (showCollapsedView && isLongContent)) && (
             <div
@@ -154,10 +237,10 @@ const OutputPanelComponent = ({
               <pre
                 ref={contentRef}
                 className={cn(
-                  "whitespace-pre-wrap break-words text-sm text-on-surface",
+                  "whitespace-pre-wrap break-words overflow-x-auto text-sm text-on-surface",
                   showStreamingView && "backdrop-blur-[2px]"
                 )}
-                style={{ 
+                style={{
                   height: "100%",
                   maxHeight: PREVIEW_HEIGHT,
                   overflowY: "auto"
@@ -168,17 +251,21 @@ const OutputPanelComponent = ({
                   <span className="ml-1 inline-block h-4 w-2 animate-pulse rounded-sm bg-primary align-middle" />
                 ) : null}
               </pre>
-              
+
               {/* Gradient fade at bottom */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-container" />
             </div>
           )}
-          
+
           {/* Full content when expanded */}
           {showExpanded && (
-            <pre className="whitespace-pre-wrap break-words text-sm text-on-surface">
-              {resolvedContent}
-            </pre>
+            <div className="overflow-x-auto">
+              <pre className="whitespace-pre-wrap break-words text-sm text-on-surface">
+                {resolvedContent}
+              </pre>
+            </div>
+          )}
+            </>
           )}
           
           {/* Show expand button after streaming completes or for long collapsed content */}

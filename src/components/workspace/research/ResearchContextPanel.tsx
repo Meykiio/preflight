@@ -31,15 +31,25 @@ export const ResearchContextPanel = ({
 }: ResearchContextPanelProps): JSX.Element => {
   return (
     <section className="rounded-2xl border border-outline-variant/10 bg-surface-container p-5">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h2 className="font-headline text-xl font-bold tracking-tight text-on-surface">
             Research Intelligence
           </h2>
         </div>
-        <span className="rounded-full bg-secondary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-secondary">
-          System Ready
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="rounded-full bg-secondary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-secondary">
+            System Ready
+          </span>
+          <button
+            type="button"
+            onClick={onGenerate}
+            disabled={isGenerating}
+            className="gradient-cta glow-primary shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold text-on-primary disabled:opacity-50"
+          >
+            {isGenerating ? "Generating..." : "Generate Research"}
+          </button>
+        </div>
       </div>
 
       <div className="mt-6">
@@ -84,24 +94,6 @@ export const ResearchContextPanel = ({
           />
         </div>
       </div>
-
-      <button
-        type="button"
-        onClick={onGenerate}
-        disabled={isGenerating}
-        className="gradient-cta glow-primary mt-6 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-on-primary disabled:opacity-60"
-      >
-        {isGenerating ? (
-          <>
-            <span className="material-symbols-outlined animate-spin text-base">
-              progress_activity
-            </span>
-            <span>Generating...</span>
-          </>
-        ) : (
-          <span>Generate Research Prompt</span>
-        )}
-      </button>
 
       {errorMessage ? (
         <div className="mt-4 rounded-xl border border-tertiary/20 bg-tertiary/10 px-4 py-3 text-sm text-tertiary">

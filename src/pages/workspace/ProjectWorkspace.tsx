@@ -1,7 +1,5 @@
 import { memo, Suspense, lazy, useMemo, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ContextNodeSelector } from "@/components/workspace/ContextNodeSelector";
-import { FloatingActionButton } from "@/components/shared/FloatingActionButton";
 import { useProject } from "@/hooks/useProject";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores/uiStore";
@@ -14,6 +12,10 @@ const DesignPage = lazy(() => import("@/pages/workspace/DesignPage").then(module
 const ResearchPage = lazy(() => import("@/pages/workspace/ResearchPage").then(module => ({ default: module.ResearchPage })));
 const ShipPage = lazy(() => import("@/pages/workspace/ShipPage").then(module => ({ default: module.ShipPage })));
 const VaultPage = lazy(() => import("@/pages/workspace/VaultPage").then(module => ({ default: module.VaultPage })));
+
+// Workspace flow order
+const WORKSPACE_FLOW = ["brief", "research", "design", "prd", "build", "ship", "vault"] as const;
+type WorkspaceStage = (typeof WORKSPACE_FLOW)[number];
 
 // Loading fallback component
 const PageLoader = memo(() => (
@@ -63,8 +65,7 @@ export const ProjectWorkspace = memo((): JSX.Element => {
   const { projectId } = useParams();
   const { project, isLoading } = useProject(projectId);
   const activeTab = useUIStore((state) => state.activeTab);
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
-  const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
+  const setActiveTab = useUIStore((state) => state.setActiveTab);
 
   // Memoize derived state
   const currentStageIndex = useMemo(() => {
@@ -84,17 +85,21 @@ export const ProjectWorkspace = memo((): JSX.Element => {
     navigate("/");
   }, [navigate]);
 
-  const handleToggleSelector = useCallback(() => {
-    setIsSelectorOpen((current) => !current);
-  }, []);
-
-  const handleChangeNodes = useCallback((nodes: string[]): void => {
-    setSelectedNodes(nodes);
-  }, []);
-
   const stageNumber = PLACEHOLDER_STAGE_LABELS[activeTab] ?? 6;
   const activeLabel =
     WORKSPACE_STAGES.find((stage) => stage.id === activeTab)?.label ?? "Brief";
+
+  // Calculate next stage for navigation button
+  const currentIndex = WORKSPACE_FLOW.indexOf(activeTab as WorkspaceStage);
+  const isLastStage = currentIndex === WORKSPACE_FLOW.length - 1;
+  const nextStage = !isLastStage ? WORKSPACE_FLOW[currentIndex + 1] : null;
+
+  const handleGoToNextStage = useCallback(() => {
+    if (nextStage) {
+      setActiveTab(nextStage);
+      window.scrollTo(0, 0);
+    }
+  }, [nextStage, setActiveTab]);
 
   const renderActiveContent = useCallback((): JSX.Element => {
     return (
@@ -104,7 +109,7 @@ export const ProjectWorkspace = memo((): JSX.Element => {
         ) : activeTab === "research" ? (
           <ResearchPage />
         ) : activeTab === "design" ? (
-          <DesignPage onOpenContextSelector={() => setIsSelectorOpen(true)} />
+          <DesignPage />
         ) : activeTab === "prd" && projectId ? (
           <PRDPage projectId={projectId} />
         ) : activeTab === "build" && projectId ? (
@@ -195,31 +200,23 @@ export const ProjectWorkspace = memo((): JSX.Element => {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={handleToggleSelector}
-            className="rounded-xl border border-outline-variant/15 bg-surface-container px-4 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
-          >
-            Context Nodes
-          </button>
+          {/* Next stage navigation button */}
+          {nextStage && (
+            <button
+              type="button"
+              onClick={handleGoToNextStage}
+              className="flex items-center gap-2 rounded-xl border border-outline-variant/15 bg-surface-container px-4 py-3 text-sm text-on-surface transition hover:bg-surface-container-high"
+            >
+              <span>Next: {nextStage === "prd" ? "PRD" : nextStage.charAt(0).toUpperCase() + nextStage.slice(1)}</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+          )}
         </div>
       </div>
 
       <div className="relative flex-1 overflow-hidden mt-6">
         {renderActiveContent()}
-
-        {projectId ? (
-          <ContextNodeSelector
-            isOpen={isSelectorOpen}
-            projectId={projectId}
-            selectedNodes={selectedNodes}
-            onChangeNodes={handleChangeNodes}
-          />
-        ) : null}
       </div>
-
-      {/* Floating Action Button for navigation */}
-      <FloatingActionButton />
     </section>
   );
 });

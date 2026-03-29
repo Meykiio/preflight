@@ -115,23 +115,33 @@ describe("fileUpload", () => {
   describe("downloadFileData", () => {
     it("creates and clicks download link", () => {
       const clickSpy = vi.fn();
+      const removeSpy = vi.fn();
       const createSpy = vi.spyOn(document, "createElement");
+      const appendChildSpy = vi.spyOn(document.body, "appendChild");
+      const removeChildSpy = vi.spyOn(document.body, "removeChild");
+      
       createSpy.mockImplementation((tagName: string) => {
         if (tagName === "a") {
           return {
             href: "",
             download: "",
-            click: clickSpy
+            click: clickSpy,
+            parentNode: document.body
           } as unknown as HTMLAnchorElement;
         }
         return document.createElement(tagName);
       });
+      
+      appendChildSpy.mockImplementation((child: Node) => child);
+      removeChildSpy.mockImplementation((child: Node) => child);
 
       const data = new ArrayBuffer(10);
       downloadFileData(data, "test.pdf", "application/pdf");
 
       expect(clickSpy).toHaveBeenCalled();
       createSpy.mockRestore();
+      appendChildSpy.mockRestore();
+      removeChildSpy.mockRestore();
     });
   });
 });

@@ -136,10 +136,15 @@ export const generateFullWorkflow = ({
 };
 
 export const exportAllPrompts = (stages: BuildStage[]): void => {
+  const slugify = (text: string): string => {
+    return text.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+  };
+
+  const projectName = stages.length > 0 ? slugify(stages[0].name.split(" - ")[0] || "project") : "project";
   const content = stages
     .map(
       (stage) =>
-        `## Stage ${stage.stageNumber.toString().padStart(2, "0")} - ${stage.name}\n\n\`\`\`\n${stage.promptContent}\n\`\`\``
+        `## Stage ${stage.stageNumber.toString().padStart(2, "0")} — ${stage.name}\n\n${stage.promptContent}`
     )
     .join("\n\n---\n\n");
 
@@ -147,7 +152,7 @@ export const exportAllPrompts = (stages: BuildStage[]): void => {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "preflight-build-workflow.md";
+  link.download = `BUILD_PROMPTS_${projectName}.md`;
   link.click();
   URL.revokeObjectURL(url);
 };
