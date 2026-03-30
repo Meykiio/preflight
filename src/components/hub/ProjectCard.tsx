@@ -7,6 +7,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useToast } from "@/hooks/useToast";
 import { cn, formatDate } from "@/lib/utils";
 import { useProjectStore } from "@/stores/projectStore";
+import { Tooltip } from "@/components/shared/Tooltip";
 import type { Platform, Project } from "@/types";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 
@@ -18,13 +19,13 @@ interface ProjectCardProps {
 }
 
 const MODULE_ICONS = [
-  { id: "brief", icon: "description" },
-  { id: "research_prompt", icon: "analytics" },
-  { id: "design_prompt", icon: "palette" },
-  { id: "prd", icon: "article" },
-  { id: "system_instructions", icon: "terminal" },
-  { id: "rules_file", icon: "rule" },
-  { id: "build_prompt", icon: "build" }
+  { id: "brief", icon: "description", label: "Brief", tooltip: "Project brief and requirements" },
+  { id: "research_prompt", icon: "analytics", label: "Research", tooltip: "Market and technical research" },
+  { id: "design_prompt", icon: "palette", label: "Design", tooltip: "UI/UX design specifications" },
+  { id: "prd", icon: "article", label: "PRD", tooltip: "Product requirements document" },
+  { id: "system_instructions", icon: "terminal", label: "System", tooltip: "AI coding agent instructions" },
+  { id: "rules_file", icon: "rule", label: "Rules", tooltip: "Coding rules and constraints" },
+  { id: "build_prompt", icon: "build", label: "Build", tooltip: "Sequential build prompts" }
 ] as const;
 
 const getGradientForProject = (projectId: string): string => {
@@ -399,19 +400,20 @@ export const ProjectCard = memo(({
                 item.id === "brief" ? hasBriefContent : artifactTypes.has(item.id);
 
               return (
-                <div
-                  key={item.id}
-                  className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-full border text-sm transition-all duration-300",
-                    isFilled
-                      ? "border-primary/20 bg-primary/10 text-primary shadow-glow-primary"
-                      : "border-outline-variant/20 bg-surface text-outline"
-                  )}
-                >
-                  <span className="material-symbols-outlined text-base">
-                    {item.icon}
-                  </span>
-                </div>
+                <Tooltip key={item.id} content={item.tooltip} position="top">
+                  <div
+                    className={cn(
+                      "flex h-8 w-8 items-center justify-center rounded-full border text-sm transition-all duration-300",
+                      isFilled
+                        ? "border-primary/20 bg-primary/10 text-primary shadow-glow-primary"
+                        : "border-outline-variant/20 bg-surface text-outline"
+                    )}
+                  >
+                    <span className="material-symbols-outlined text-base">
+                      {item.icon}
+                    </span>
+                  </div>
+                </Tooltip>
               );
             })}
           </div>

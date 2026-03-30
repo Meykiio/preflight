@@ -5,6 +5,7 @@ import {
 import { ProjectHubEmptyState } from "@/components/hub/ProjectHubEmptyState";
 import { ProjectCard } from "@/components/hub/ProjectCard";
 import { NewProjectModal } from "@/components/hub/NewProjectModal";
+import { ImportProjectModal } from "@/components/hub/ImportProjectModal";
 import {
   parseImportedProjects,
   type FilterValue,
@@ -20,11 +21,11 @@ export const ProjectHub = memo((): JSX.Element => {
   const { projects, isLoading, createProject, deleteProject } = useProjects();
   const { settings } = useSettings();
   const toast = useToast();
-  const importInputRef = useRef<HTMLInputElement | null>(null);
   const [filter, setFilter] = useState<FilterValue>("all");
   const [sortBy, setSortBy] = useState<SortValue>("updated");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [isBatchMode, setIsBatchMode] = useState(false);
   const [selectedProjects, setSelectedProjects] = useState<Set<string>>(new Set());
 
@@ -49,17 +50,15 @@ export const ProjectHub = memo((): JSX.Element => {
   const lastActive = useMemo(() => projects.length > 0 ? formatDate(projects[0].updatedAt) : "just now", [projects]);
 
   const handleImportClick = useCallback((): void => {
-    importInputRef.current?.click();
+    setIsImportModalOpen(true);
   }, []);
 
-  const handleEnterBatchMode = useCallback((): void => {
-    setIsBatchMode(true);
-    setSelectedProjects(new Set());
+  const handleNewProjectModalOpenChange = useCallback((open: boolean): void => {
+    setIsNewProjectModalOpen(open);
   }, []);
 
-  const handleCancelBatchMode = useCallback((): void => {
-    setIsBatchMode(false);
-    setSelectedProjects(new Set());
+  const handleImportModalOpenChange = useCallback((open: boolean): void => {
+    setIsImportModalOpen(open);
   }, []);
 
   const handleToggleSelectProject = useCallback((projectId: string): void => {
@@ -72,6 +71,16 @@ export const ProjectHub = memo((): JSX.Element => {
       }
       return next;
     });
+  }, []);
+
+  const handleEnterBatchMode = useCallback((): void => {
+    setIsBatchMode(true);
+    setSelectedProjects(new Set());
+  }, []);
+
+  const handleCancelBatchMode = useCallback((): void => {
+    setIsBatchMode(false);
+    setSelectedProjects(new Set());
   }, []);
 
   const handleSelectAll = useCallback((): void => {
@@ -122,11 +131,11 @@ export const ProjectHub = memo((): JSX.Element => {
   }, [createProject, toast]);
 
   const handleCreateProject = useCallback(() => {
-    setIsModalOpen(true);
+    setIsNewProjectModalOpen(true);
   }, []);
 
   const handleModalOpenChange = useCallback((open: boolean): void => {
-    setIsModalOpen(open);
+    setIsNewProjectModalOpen(open);
   }, []);
 
   const handleChangeFilter = useCallback((value: FilterValue): void => {
@@ -205,13 +214,6 @@ export const ProjectHub = memo((): JSX.Element => {
                 >
                   Select Multiple
                 </button>
-                <input
-                  ref={importInputRef}
-                  type="file"
-                  accept=".json,application/json"
-                  className="hidden"
-                  onChange={(event) => void handleImportChange(event)}
-                />
               </>
             )}
           </div>
@@ -261,7 +263,8 @@ export const ProjectHub = memo((): JSX.Element => {
         </div>
       </section>
 
-      <NewProjectModal isOpen={isModalOpen} onOpenChange={handleModalOpenChange} />
+      <NewProjectModal isOpen={isNewProjectModalOpen} onOpenChange={handleNewProjectModalOpenChange} />
+      <ImportProjectModal isOpen={isImportModalOpen} onOpenChange={handleImportModalOpenChange} />
     </>
   );
 });

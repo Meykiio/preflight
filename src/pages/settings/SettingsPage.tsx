@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { AgentPromptsSection } from "@/components/settings/AgentPromptsSection";
 import { AppearanceSection } from "@/components/settings/AppearanceSection";
+import { ClaudeSkillsSection } from "@/components/settings/ClaudeSkillsSection";
 import { DiagnosticsCard } from "@/components/settings/DiagnosticsCard";
 import { PlatformLaunchersSection } from "@/components/settings/PlatformLaunchersSection";
 import { ProviderSettingsSection } from "@/components/settings/ProviderSettingsSection";
@@ -168,6 +169,9 @@ export const SettingsPage = (): JSX.Element => {
             }}
             prompts={prompts}
           />
+
+          {/* Claude Skills Section */}
+          <ClaudeSkillsSection />
 
           {/* Storage & Diagnostics - Side by Side */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
