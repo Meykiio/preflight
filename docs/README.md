@@ -1,6 +1,6 @@
 # Preflight — Documentation
 
-**Version:** 0.1.0 | **Last Updated:** March 25, 2026
+**Version:** 0.2.0 | **Last Updated:** March 29, 2026
 
 Welcome to the Preflight documentation hub. This is your complete guide to understanding, using, and contributing to Preflight — the Project OS for vibe coders.
 
@@ -15,9 +15,45 @@ Welcome to the Preflight documentation hub. This is your complete guide to under
 3. **[User Guide →](user-guide/project-management.md)** — Learn all the features
 
 **Already familiar?** Jump to:
-- **[Build Prompts →](build-prompts/overview.md)** — Generate AI-ready build prompts
+- **[Build Prompts →](build-prompts/overview.md)** — Generate AI-ready build prompts (including Stage 0)
 - **[Technical Docs →](technical/architecture.md)** — Architecture and API reference
 - **[Contributing →](contributing/workflow.md)** — How to contribute
+- **[Claude Skills →](#claude-skills)** — Use Preflight in Claude Desktop
+
+---
+
+## 🆕 What's New in v0.2.0
+
+| Feature | Description |
+|---------|-------------|
+| ✨ **Import from Idea** | AI-powered brief extraction from pasted text or `.md`/`.txt` files |
+| 🔄 **Reset Prompts** | Clear any generated content with confirmation dialog |
+| 💬 **Tooltips** | Hover explanations on pipeline icons and key UI elements |
+| 📝 **Editable Prompts** | Edit any generated prompt inline — saves to database |
+| 🔔 **Generation Toasts** | Notifications when generation starts and completes |
+| 📊 **Stage 0** | Optional Context Scan before building — agent reads all DOCS |
+| 🤖 **Claude Skills** | Downloadable skills for Claude Desktop integration |
+
+---
+
+## 🤖 Claude Skills
+
+Preflight is available as a Claude skill! Use it conversationally in Claude Desktop:
+
+1. Go to **Settings** → **Claude Skills**
+2. Click **Download** on `preflight-interactive-SKILL.md`
+3. Open Claude Desktop Settings → Developer → Skills
+4. Click **Add Skill** and select the downloaded file
+5. Start chatting: *"I have an app idea..."* or *"Help me build an app"*
+
+Claude will guide you through the full 7-phase pipeline:
+- Brief collection
+- Research prompt generation
+- Design prompt generation
+- PRD writing
+- System instructions + rules file
+- Sequential build prompts (Stage 0-7)
+- Package summary
 
 ---
 

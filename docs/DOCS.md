@@ -1,10 +1,35 @@
 # Preflight - Project Documentation
-**Last Updated:** 2026-03-23
-**Version:** 0.1.0
+**Last Updated:** 2026-03-29
+**Version:** 0.2.0
 **Stack:** React 18 + Vite + TypeScript + Tailwind + Dexie.js + Zustand
 
 ## Project Overview
-Preflight is a local-first project operating system for vibe coders. It turns an idea into a build-ready delivery flow with structured briefs, research prompts, design prompts, PRDs, system instructions, rules files, staged build workflows, a reusable vault, and BYOK AI generation.
+Preflight is a local-first project operating system for vibe coders. It turns an idea into a build-ready delivery flow with structured briefs, research prompts, design prompts, PRDs, system instructions, rules files, staged build workflows (including Stage 0 Context Scan), a reusable vault, BYOK AI generation, editable prompts, and Claude Desktop skills.
+
+## What's New in v0.2.0
+
+### Features
+- **Import from Idea:** AI-powered brief extraction from text or `.md`/`.txt` files
+- **Reset Prompts:** Clear any generated content with confirmation
+- **Tooltips:** Hover explanations throughout the UI
+- **Editable Prompts:** Edit generated prompts inline with save/cancel
+- **Generation Toasts:** Notifications on generation start/complete
+- **Stage 0:** Optional Context Scan prompt before building
+- **Claude Skills:** Downloadable skills for Claude Desktop
+
+### Bug Fixes
+- Fixed Research page button overflow
+- Fixed Project Hub "Select Multiple" regression
+- Fixed PRD page horizontal overflow
+- Removed broken "Skip to Build" button
+
+### UX Improvements
+- "Next: Research →" button in workspace header
+- Removed Floating Action Button
+- Generate buttons now prominent with gradient styling
+- Reset buttons on all generation panels
+- Export All moved to Build page header
+- Tooltips on pipeline icons
 
 ## Tech Stack
 - `react` 18.3.1
@@ -119,17 +144,24 @@ src/
 - `useCommandPalette`: global keyboard toggle handling for `⌘K` / `Ctrl+K`
 
 ## Features
+
+### Core Modules
 - ✅ Project Hub with filters, sorting, list/grid views, JSON import, and create-project modal
-- ✅ Workspace shell with sidebar, sticky header, stage chips, and context selector
+- ✅ **Import from Idea** — AI-powered brief extraction from text or files
+- ✅ Workspace shell with sidebar, sticky header, stage chips, and "Next" navigation
 - ✅ Brief module with autosave, feature capture, platform tags, and completion scoring
 - ✅ Research module with context-node selection, AI generation, streaming output, and research vault uploads
 - ✅ Design module with platform variants, AI generation, streaming output, and design history uploads
 - ✅ PRD module with markdown rendering plus generated system instructions and rules files
-- ✅ Sequential Build Engine with AI-generated stage prompts, status tracking, and export
+- ✅ **Editable Prompts** — Edit any generated output inline with save/cancel
+- ✅ **Reset Prompts** — Clear generated content with confirmation dialog
+- ✅ Sequential Build Engine with Stage 0 (Context Scan) + AI-generated stage prompts, status tracking, and export
 - ✅ Vault module with dropzone uploads, search, category filters, context injection, and integrity metrics
-- ✅ Settings module with BYOK providers, model routing, launcher toggles, theme selection, exports, and usage logs
+- ✅ Settings module with BYOK providers, model routing, launcher toggles, theme selection, exports, usage logs, and **Claude Skills download**
 - ✅ Splash screen and first-run onboarding with provider validation
 - ✅ Global command palette with project search, navigation, quick actions, and platform links
+- ✅ **Tooltips** — Hover explanations on pipeline icons and key UI elements
+- ✅ **Generation Toasts** — Notifications when generation starts and completes
 
 ## AI Integration
 - The app uses a Dexie-backed BYOK model.
@@ -196,5 +228,22 @@ src/
 - Dynamic provider imports to keep the initial bundle smaller and defer SDK loading until generation time
 
 ## Known Issues
+
+### Fixed in v0.2.0 ✅
+- ~~Research page button overflow~~ — Fixed with `whitespace-nowrap` and flex-wrap
+- ~~Project Hub "Select Multiple" not working~~ — Fixed state management
+- ~~PRD page horizontal overflow~~ — Fixed with responsive grid and `break-all`
+- ~~"Skip to Build" causing blank page~~ — Button removed
+- ~~Floating Action Button blocking content~~ — Replaced with header navigation
+- ~~Context sidebar inaccessible~~ — Removed, replaced with inline context
+
+### Current Limitations
 - The custom provider path supports an optional `baseUrl` in the service layer, but the Settings UI does not yet expose a dedicated base URL field.
-- The open-source build is local-first only; cloud sync and multi-user collaboration are intentionally out of scope for v0.1.0.
+- The open-source build is local-first only; cloud sync and multi-user collaboration are intentionally out of scope for v0.2.0.
+- Test coverage is at ~25% (71 tests); target is 70%+ for v1.0.
+
+### Planned for v1.0
+- Interactive onboarding tutorial
+- Mobile/tablet optimization
+- Keyboard shortcuts
+- Component and integration tests

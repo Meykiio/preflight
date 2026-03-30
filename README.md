@@ -40,9 +40,21 @@ If you use AI coding assistants like Lovable, Bolt, Cursor, Claude Code, Replit,
 | 🎨 **Design** | Creates design prompts for Stitch, v0, Figma AI, Locofy, Universal |
 | 📋 **PRD** | Full product requirements document with TypeScript data models |
 | ⚙️ **System** | System instructions + .cursorrules / CLAUDE.md for your AI coding tool |
-| 🏗️ **Build** | Sequential build workflow: Foundation → Database → Features → Audit → Deploy |
+| 🏗️ **Build** | Sequential build workflow: Stage 0 (Context Scan) → Foundation → Database → Features → Audit → Deploy |
 | 🗄️ **Vault** | Project file storage with context injection for generations |
 | 🔐 **BYOK** | Bring your own key — Anthropic, OpenAI, Google, DeepSeek, Groq, custom |
+| 🤖 **Claude Skills** | Downloadable skills for Claude Desktop — run Preflight conversationally |
+
+### New Features (v0.2.0)
+
+| Feature | Description |
+|---------|-------------|
+| ✨ **Import from Idea** | Paste your app idea or upload `.md`/`.txt` — AI extracts and fills Brief automatically |
+| 🔄 **Reset Prompts** | Clear any generated content with confirmation — available on all generation panels |
+| 💬 **Tooltips** | Hover explanations on pipeline icons and key UI elements throughout the app |
+| 📝 **Editable Prompts** | Edit any generated prompt inline — changes save to database |
+| 🔔 **Generation Toasts** | Notifications when generation starts and completes |
+| 📊 **Stage 0** | Optional Context Scan prompt — agent reads all your DOCS folder before building |
 
 ### Platform Support
 
@@ -50,6 +62,7 @@ Preflight generates platform-adapted prompts for:
 - **AI Coding:** Lovable, Bolt, Cursor, Claude Code, Replit
 - **AI Design:** Stitch, v0, Figma AI, Locofy, Uizard
 - **AI Research:** Perplexity Deep Research, Gemini Deep Research, ChatGPT Deep Research
+- **Claude Desktop:** Downloadable skills for conversational Preflight workflow
 
 ---
 
@@ -88,11 +101,26 @@ Open **http://localhost:5173** → Complete onboarding → Create your first pro
 
 ### 1. Create a Project
 
+**Option A: New Project**
 1. Click **New Project** on the Project Hub
 2. Enter name and description
 3. Select target platforms (Lovable, Bolt, Cursor, etc.)
 4. Add tech stack tags (React, Tailwind, Supabase, etc.)
 5. Click **Create Project**
+
+**Option B: Import from Idea** ✨ NEW
+1. Click **Import** on the Project Hub
+2. Select **"From Idea"** tab
+3. Paste your app idea or upload `.md`/`.txt` file
+4. Click **"Generate Brief with AI"**
+5. AI extracts and fills Brief automatically
+6. Review and edit as needed
+
+**Option C: Import Backup**
+1. Click **Import** on the Project Hub
+2. Select **"From Backup"** tab
+3. Choose Preflight JSON backup file
+4. Project restored with all artifacts
 
 ### 2. Fill the Brief
 
@@ -135,11 +163,28 @@ Open **http://localhost:5173** → Complete onboarding → Create your first pro
 ### 6. Build Your App
 
 1. Navigate to **Build** tab
-2. Click **Generate Full Build Workflow**
-3. Review generated stages
-4. Start with Stage 1 (Foundation)
-5. Copy prompt and paste into AI coding tool
-6. Mark stages complete as you progress
+2. **Stage 0 (Optional):** Context Scan — agent reads all DOCS folder
+3. Click **Generate Full Build Workflow**
+4. Review generated stages
+5. Start with Stage 1 (Foundation)
+6. Copy prompt and paste into AI coding tool
+7. Mark stages complete as you progress
+8. **Export All:** Download all prompts as single `.md` file (button in header)
+
+### 7. Edit Generated Prompts ✨ NEW
+
+1. Click **Edit** (pencil icon) on any generated panel
+2. Modify the content in the textarea
+3. Click **Save** to persist changes
+4. Copy/Download uses edited content
+5. Click **Cancel** to discard changes
+
+### 8. Reset Generated Content ✨ NEW
+
+1. Click **Reset** button on any panel
+2. Confirm: "Clear generated content? This cannot be undone."
+3. Content cleared, page returns to pre-generation state
+4. **Build page:** Click "Reset Workflow" in header to clear all stages
 
 ---
 

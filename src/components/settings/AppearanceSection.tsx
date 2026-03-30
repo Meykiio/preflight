@@ -7,7 +7,7 @@ interface AppearanceSectionProps {
 
 export const AppearanceSection = ({
   userName,
-  onChangeUserName
+  onChangeUserName,
 }: AppearanceSectionProps): JSX.Element => {
   return (
     <section className="rounded-2xl border border-outline-variant/10 bg-surface-container p-6">
@@ -27,15 +27,6 @@ export const AppearanceSection = ({
             placeholder="How should Preflight greet you?"
             className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 text-sm text-on-surface outline-none transition focus:border-primary/40"
           />
-        </div>
-
-        <div className="rounded-xl border border-outline-variant/10 bg-surface p-4 text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-on-surface-variant">
-            Dark Theme
-          </p>
-          <p className="mt-2 text-sm text-outline">
-            Preflight uses a dark-only theme for optimal developer experience.
-          </p>
         </div>
       </div>
     </section>
