@@ -26,6 +26,7 @@ const SettingsPage = lazy(() =>
     default: module.SettingsPage
   }))
 );
+const DocumentationPage = lazy(() => import("@/pages/DocumentationPage"));
 
 const RouteFallback = (): JSX.Element => (
   <div className="flex min-h-[60vh] items-center justify-center">
@@ -82,6 +83,7 @@ const App = (): JSX.Element => {
             <Route path="/" element={<ProjectHubPage />} />
             <Route path="/project/:projectId" element={<ProjectWorkspacePage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/docs" element={<DocumentationPage />} />
           </Route>
         </Routes>
       </Suspense>

@@ -25,7 +25,8 @@ const MODULE_ICONS = [
   { id: "prd", icon: "article", label: "PRD", tooltip: "Product requirements document" },
   { id: "system_instructions", icon: "terminal", label: "System", tooltip: "AI coding agent instructions" },
   { id: "rules_file", icon: "rule", label: "Rules", tooltip: "Coding rules and constraints" },
-  { id: "build_prompt", icon: "build", label: "Build", tooltip: "Sequential build prompts" }
+  { id: "build_prompt", icon: "build", label: "Build", tooltip: "Sequential build prompts" },
+  { id: "ship", icon: "rocket_launch", label: "Ship", tooltip: "Project shipped successfully" }
 ] as const;
 
 const getGradientForProject = (projectId: string): string => {
@@ -397,7 +398,9 @@ export const ProjectCard = memo(({
           <div className="mt-4 flex items-center gap-2">
             {MODULE_ICONS.map((item) => {
               const isFilled =
-                item.id === "brief" ? hasBriefContent : artifactTypes.has(item.id);
+                item.id === "brief" ? hasBriefContent :
+                item.id === "ship" ? project.status === "shipped" :
+                artifactTypes.has(item.id);
 
               return (
                 <Tooltip key={item.id} content={item.tooltip} position="top">

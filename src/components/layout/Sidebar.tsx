@@ -73,6 +73,20 @@ export const Sidebar = (): JSX.Element => {
             {!sidebarCollapsed ? <span className="truncate">Projects</span> : null}
           </button>
 
+          {/* Documentation Link */}
+          <Link
+            to="/docs"
+            className={cn(
+              "relative flex w-full items-center justify-start gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition",
+              location.pathname === "/docs"
+                ? "text-primary"
+                : "text-on-surface-variant hover:text-on-surface"
+            )}
+          >
+            <span className={cn("material-symbols-outlined text-lg", location.pathname === "/docs" && "fill-1")}>menu_book</span>
+            {!sidebarCollapsed ? <span className="truncate">Documentation</span> : null}
+          </Link>
+
           {selectedProjectId
             ? PROJECT_LINKS.map((link) => {
                 const isActive =
