@@ -8,6 +8,8 @@ export interface ProviderCatalogEntry {
   keyLabel: string;
   defaultModel: string;
   models: string[];
+  requiresApiKey?: boolean;
+  defaultBaseUrl?: string;
 }
 
 export const PROVIDER_ORDER: AIProvider[] = [
@@ -17,6 +19,9 @@ export const PROVIDER_ORDER: AIProvider[] = [
   "deepseek",
   "groq",
   "qwen",
+  "openrouter",
+  "ollama",
+  "lmstudio",
   "custom"
 ];
 
@@ -73,7 +78,51 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     helpUrl: "https://github.com/QwenLM/Qwen",
     keyLabel: "Qwen API key",
     defaultModel: "qwen-plus",
-    models: ["qwen-plus", "qwen-max"]
+    models: ["qwen-plus", "qwen-max"],
+    requiresApiKey: true
+  },
+  openrouter: {
+    provider: "openrouter",
+    label: "OpenRouter",
+    icon: "hub",
+    helpUrl: "https://openrouter.ai/keys",
+    keyLabel: "OpenRouter API key",
+    defaultModel: "meta-llama/llama-3.1-8b-instruct:free",
+    models: [
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "meta-llama/llama-3.2-90b-vision-instruct:free",
+      "google/gemma-2-9b-it:free",
+      "mistralai/mistral-7b-instruct:free",
+      "qwen/qwen-2-7b-instruct:free",
+      "openai/gpt-4o-mini",
+      "openai/gpt-4o",
+      "anthropic/claude-3.5-sonnet",
+      "anthropic/claude-3-opus"
+    ],
+    requiresApiKey: true,
+    defaultBaseUrl: "https://openrouter.ai/api/v1"
+  },
+  ollama: {
+    provider: "ollama",
+    label: "Ollama (Local)",
+    icon: "desktop_windows",
+    helpUrl: "https://ollama.ai",
+    keyLabel: "Not required (optional)",
+    defaultModel: "llama3.2",
+    models: ["llama3.2", "llama3.1", "mistral", "mixtral", "phi3"],
+    requiresApiKey: false,
+    defaultBaseUrl: "http://localhost:11434/v1"
+  },
+  lmstudio: {
+    provider: "lmstudio",
+    label: "LM Studio (Local)",
+    icon: "studio",
+    helpUrl: "https://lmstudio.ai",
+    keyLabel: "Not required",
+    defaultModel: "local-model",
+    models: ["local-model"],
+    requiresApiKey: false,
+    defaultBaseUrl: "http://localhost:1234/v1"
   },
   custom: {
     provider: "custom",
@@ -82,7 +131,8 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     helpUrl: "https://platform.openai.com/docs/api-reference",
     keyLabel: "Custom provider API key",
     defaultModel: "gpt-4o-mini",
-    models: ["gpt-4o-mini"]
+    models: ["gpt-4o-mini"],
+    requiresApiKey: true
   }
 };
 

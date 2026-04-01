@@ -10,11 +10,12 @@ export interface ProviderCardValue {
   isDefault: boolean;
   hasKey: boolean;
   maskedKey: string;
+  baseUrl?: string;
 }
 
 interface ProviderCardProps {
   provider: ProviderCardValue;
-  onSave: (provider: AIProvider, apiKey: string) => Promise<void>;
+  onSave: (provider: AIProvider, apiKey: string, baseUrl?: string) => Promise<void>;
   onSetDefault: (providerId: string) => Promise<void>;
 }
 
@@ -26,19 +27,41 @@ export const ProviderCard = ({
   const config = PROVIDER_CATALOG[provider.provider];
   const providerId = provider.id;
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const baseUrlRef = useRef<HTMLInputElement | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [showBaseUrl, setShowBaseUrl] = useState(false);
+
+  const requiresApiKey = config.requiresApiKey ?? true;
+  const defaultBaseUrl = config.defaultBaseUrl;
+  const currentBaseUrl = provider.baseUrl || defaultBaseUrl || "";
 
   const handleSave = async (): Promise<void> => {
     const value = inputRef.current?.value.trim() ?? "";
-    if (!value) {
+    const baseUrlValue = baseUrlRef.current?.value.trim() || defaultBaseUrl || "";
+    
+    // For providers without API key requirement, allow empty key
+    if (!requiresApiKey && !value) {
+      setIsSaving(true);
+      try {
+        await onSave(provider.provider, "", baseUrlValue);
+        setIsEditing(false);
+        setShowBaseUrl(false);
+      } finally {
+        setIsSaving(false);
+      }
+      return;
+    }
+    
+    if (!value && requiresApiKey) {
       return;
     }
 
     setIsSaving(true);
     try {
-      await onSave(provider.provider, value);
+      await onSave(provider.provider, value, baseUrlValue);
       setIsEditing(false);
+      setShowBaseUrl(false);
       if (inputRef.current) {
         inputRef.current.value = "";
       }
@@ -94,13 +117,60 @@ export const ProviderCard = ({
 
         {isEditing ? (
           <div className="mt-4 space-y-3">
-            <input
-              ref={inputRef}
-              type="password"
-              autoFocus
-              placeholder={`Paste your ${config.keyLabel.toLowerCase()}`}
-              className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 font-mono text-sm text-on-surface outline-none transition focus:border-primary/40"
-            />
+            {/* API Key Input */}
+            {requiresApiKey ? (
+              <input
+                ref={inputRef}
+                type="password"
+                autoFocus
+                placeholder={`Paste your ${config.keyLabel.toLowerCase()}`}
+                className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 font-mono text-sm text-on-surface outline-none transition focus:border-primary/40"
+              />
+            ) : (
+              <div className="rounded-xl border border-outline-variant/15 bg-surface px-4 py-3">
+                <p className="font-mono text-xs text-on-surface-variant">
+                  🔓 No API key required
+                </p>
+                <p className="mt-1 font-mono text-[10px] text-on-surface-variant/70">
+                  {config.label} runs locally on your machine
+                </p>
+              </div>
+            )}
+
+            {/* Base URL Input (show for providers with defaultBaseUrl) */}
+            {defaultBaseUrl && (
+              <div>
+                <label className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-on-surface-variant">
+                  API Endpoint
+                </label>
+                <input
+                  ref={baseUrlRef}
+                  type="text"
+                  defaultValue={currentBaseUrl}
+                  placeholder={defaultBaseUrl}
+                  className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 font-mono text-sm text-on-surface outline-none transition focus:border-primary/40"
+                />
+              </div>
+            )}
+
+            {/* Model Selector */}
+            <div>
+              <label className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-on-surface-variant">
+                Model
+              </label>
+              <select
+                defaultValue={provider.model || config.defaultModel}
+                className="w-full rounded-xl border border-outline-variant/15 bg-surface px-4 py-3 font-mono text-sm text-on-surface outline-none transition focus:border-primary/40"
+              >
+                {config.models.map((model) => (
+                  <option key={model} value={model}>
+                    {model}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Action Buttons */}
             <div className="flex items-center gap-2">
               <button
                 type="button"

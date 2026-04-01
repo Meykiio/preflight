@@ -18,6 +18,7 @@ interface SaveProviderInput {
   apiKey: string;
   model: string;
   isDefault?: boolean;
+  baseUrl?: string;
 }
 
 const maskApiKey = (apiKey: string): string => {
@@ -66,7 +67,7 @@ export const useAIProviders = () => {
         apiKey: input.apiKey.trim() || existing?.apiKey || "",
         model: input.model,
         isDefault: input.isDefault ?? false,
-        baseUrl: existing?.baseUrl,
+        baseUrl: input.baseUrl ?? existing?.baseUrl,
         createdAt: existing?.createdAt ?? Date.now()
       };
 

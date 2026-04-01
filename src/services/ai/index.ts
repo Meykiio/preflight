@@ -38,6 +38,18 @@ export const createProviderFromConfig = (
       return import("@/services/ai/providers/qwenProvider").then((module) =>
         module.createQwenProvider(config.apiKey, config.model)
       );
+    case "openrouter":
+      return import("@/services/ai/providers/openrouterProvider").then((module) =>
+        module.createOpenRouterProvider(config.apiKey, config.model, config.baseUrl)
+      );
+    case "ollama":
+      return import("@/services/ai/providers/ollamaProvider").then((module) =>
+        module.createOllamaProvider(config.apiKey, config.model, config.baseUrl)
+      );
+    case "lmstudio":
+      return import("@/services/ai/providers/lmStudioProvider").then((module) =>
+        module.createLMStudioProvider(config.apiKey, config.model, config.baseUrl)
+      );
     case "custom":
       return import("@/services/ai/providers/customProvider").then((module) =>
         module.createCustomProvider(config.apiKey, config.model, config.baseUrl)

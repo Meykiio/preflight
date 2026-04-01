@@ -21,6 +21,9 @@ export type AIProvider =
   | "deepseek"
   | "groq"
   | "qwen"
+  | "openrouter"
+  | "ollama"
+  | "lmstudio"
   | "custom";
 
 export type AgentType =

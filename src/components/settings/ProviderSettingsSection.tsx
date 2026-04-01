@@ -6,7 +6,7 @@ interface ProviderSettingsSectionProps {
   connectedCount: number;
   isLoading: boolean;
   providerCards: AIProviderSummary[];
-  onSaveProvider: (provider: AIProvider, apiKey: string) => Promise<void>;
+  onSaveProvider: (provider: AIProvider, apiKey: string, baseUrl?: string) => Promise<void>;
   onSetDefault: (providerId: string) => Promise<void>;
 }
 

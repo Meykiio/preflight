@@ -58,7 +58,7 @@ export const useAIStore = create<AIStoreState>((set, get) => ({
     const nextProvider: AIProviderConfig = {
       id: input.id ?? generateId(),
       provider: input.provider,
-      apiKey: input.apiKey.trim() || storedProvider?.apiKey || "",
+      apiKey: input.apiKey?.trim() || storedProvider?.apiKey || "",
       model: input.model,
       isDefault: input.isDefault ?? false,
       baseUrl: storedProvider?.baseUrl,
