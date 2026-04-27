@@ -21,99 +21,98 @@
 
 ## What is Preflight?
 
-**Preflight is the layer that comes before coding.**
+**Preflight is the tool you use *before* you start coding.**
 
-If you use AI tools like Lovable, Bolt, Cursor, or Claude Code, you know how it feels when things get messy. Prompts get weird, you lose track of your plan, and the AI starts making mistakes because it doesn't have the full picture.
+If you've ever tried building an app with AI tools like Lovable, Bolt, Cursor, or Claude Code, you know it can get messy fast. You lose track of the plan, the AI starts hallucinating, and you end up with a project that's hard to finish.
 
-Preflight is a structured "Operating System" for your projects. It helps you turn a rough idea into a complete, AI-ready plan. No more "vibe coding" into a dead end.
+Preflight fixes this. It's a simple, structured "Project OS" that helps you turn your rough idea into a solid plan that AI can actually follow. 
 
 ### How it works:
-1.  **Capture your idea** in a structured brief.
-2.  **Generate research & design prompts** to get all your assets ready.
-3.  **Create a solid PRD** and system instructions.
-4.  **Follow a step-by-step build workflow** that keeps the AI on track.
+1.  **Write down your idea** in a simple, structured brief.
+2.  **Generate prompts** for deep research and UI design.
+3.  **Create a clear PRD** (Product Requirements Document) so the AI knows exactly what to build.
+4.  **Follow the build stages** one by one to get a clean, working app.
 
 ---
 
-## 📸 Guided Tour
+## 📸 A Quick Look
 
 ### 1. Project Hub
-Manage all your builds in one place. See exactly where each project stands.
+Keep all your app ideas in one place. No more scattered notes or lost context.
 <img src="public/assets/project-hub.png" alt="Project Hub" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
 ### 2. The Brief
-Don't just say "build an Uber for dogs." Preflight helps you define the problem, the users, and the actual features you need.
-<img src="public/assets/brief-module.png" alt="Brief Module" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
+Preflight guides you through defining the problem, your users, and the core features before you write a single line of code.
+<img src="public/assets/brief-module.png" alt="The Brief" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
 ### 3. Deep Research & Design
-Generate high-quality prompts for Perplexity or v0 to get the data and designs you need before you write a single line of code.
+Get high-quality research from tools like Perplexity and design prompts for v0 or Stitch. This gives you all the ingredients you need for a great build.
 <div align="center">
   <img src="public/assets/research-module.png" alt="Research" width="48%" style="border-radius: 8px; border: 1px solid #222;" />
   <img src="public/assets/design-module.png" alt="Design" width="48%" style="border-radius: 8px; border: 1px solid #222;" />
 </div>
 
 ### 4. PRD & System Setup
-Generate a full Product Requirements Document and the exact `.cursorrules` or `CLAUDE.md` your AI agent needs to behave like a senior engineer.
+Generate a full PRD and the perfect `.cursorrules` or `CLAUDE.md` files. This tells the AI agent exactly how to behave like a pro.
 <img src="public/assets/prd-module.png" alt="PRD Module" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
-### 5. Sequential Build
-The magic part. Preflight breaks your build into logical stages: Foundation → Database → Features → Audit → Deploy. Paste these prompts one by one for a perfect build.
+### 5. Step-by-Step Build
+This is where the magic happens. Preflight breaks your build into stages: Foundation → Database → Features → Audit → Deploy. Paste these prompts one by one into your AI tool for a perfect result.
 <img src="public/assets/build-module.png" alt="Build Workflow" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Getting Started
 
 ### 1. Install & Run
-You'll need **Node.js 20+** and **pnpm** (or npm).
+You just need **Node.js 20+** and **pnpm** (or npm).
 
 ```bash
 # Clone the repo
 git clone https://github.com/Meykiio/preflight.git
 cd preflight
 
-# Install stuff
+# Install dependencies
 pnpm install
 
-# Start it up
+# Start the dev server
 pnpm dev
 ```
 
 ### 2. Connect your AI
-Go to **Settings → AI Providers** and add your keys (Anthropic, OpenAI, or Google). Your keys stay on your computer—they are never sent to our servers.
+Head over to **Settings → AI Providers** and paste your API keys (Anthropic, OpenAI, or Google). 
+
+**Note on Privacy:** Your keys are stored locally in your browser. They never touch our servers.
 
 ---
 
 ## 🛠 Tech Stack
 - **Frontend:** React + TypeScript
-- **Styling:** Tailwind CSS (Dark Mode by default)
+- **Styling:** Tailwind CSS (Dark Mode for life)
 - **Database:** Dexie.js (Local-first, lives in your browser)
 - **State:** Zustand
 
 ---
 
-## ❓ Common Issues
+## 🔧 Recent Fixes
 
-### "Network Error" or "404" with Gemini
-If you're getting a network error when connecting Google Gemini:
-1.  Make sure your API key is correct from [Google AI Studio](https://aistudio.google.com/).
-2.  Check if Gemini is available in your region.
-3.  We've updated the model IDs—try selecting `gemini-1.5-pro` or `gemini-2.0-flash` from the list.
-
-### Why is it local-only?
-Because your project ideas and API keys are private. Preflight stores everything in your browser's IndexedDB. No accounts, no subscriptions, just you and your code.
+### Fixed Gemini API "Network Error"
+If you were seeing a 404 or Network Error when connecting Google Gemini, we've fixed it!
+- Updated model IDs to match the latest API.
+- Better error messages if you're in a region where Gemini isn't available yet.
+- Just go to Settings and make sure `gemini-1.5-pro` is selected.
 
 ---
 
 ## 🤝 Contributing
-I'm just one person building this, so help is always welcome! Check out [CONTRIBUTING.md](.github/CONTRIBUTING.md) if you want to jump in.
+Preflight is open-source and I'd love your help! If you find a bug or have an idea, feel free to open an issue or a PR.
 
 ---
 
 <div align="center">
 
 Made with ⚡ by the Preflight team.
-If this helps you ship faster, give it a ⭐!
+If this helps you build better apps, give it a ⭐!
 
 [Report a Bug](https://github.com/Meykiio/preflight/issues) · [Request a Feature](https://github.com/Meykiio/preflight/issues)
 
