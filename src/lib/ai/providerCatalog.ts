@@ -51,7 +51,7 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     helpUrl: "https://aistudio.google.com/app/apikey",
     keyLabel: "Gemini API key",
     defaultModel: "gemini-1.5-pro",
-    models: ["gemini-1.5-pro", "gemini-1.5-flash"]
+    models: ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.0-pro"]
   },
   deepseek: {
     provider: "deepseek",

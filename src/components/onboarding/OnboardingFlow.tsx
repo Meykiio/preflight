@@ -83,6 +83,10 @@ export const OnboardingFlow = ({
     }
   };
 
+  const handleSkipProvider = (): void => {
+    setStep(3);
+  };
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-surface-dim/80 px-4 backdrop-blur-sm">
       <div
@@ -110,6 +114,7 @@ export const OnboardingFlow = ({
             onSelectProvider={setSelectedProvider}
             onToggleApiVisibility={() => setShowApiKey((current) => !current)}
             onVerify={() => void handleVerifyProvider()}
+            onSkip={handleSkipProvider}
             selectedProvider={selectedProvider}
             showApiKey={showApiKey}
           />

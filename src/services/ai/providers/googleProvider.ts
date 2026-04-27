@@ -2,29 +2,41 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { toAIServiceError } from "@/services/ai/errors";
 import type { AICompleteParams, AIProvider } from "@/services/ai/types";
 
-const buildPrompt = (params: AICompleteParams): string =>
-  [
-    `SYSTEM:\n${params.system}`,
-    ...params.messages.map(
-      (message) => `${message.role.toUpperCase()}:\n${message.content}`
-    ),
-    "ASSISTANT:"
-  ].join("\n\n");
-
 export const createGoogleProvider = (
   apiKey: string,
   model: string
 ): AIProvider => {
   const client = new GoogleGenerativeAI(apiKey);
 
+  const getModel = (params: AICompleteParams) => {
+    return client.getGenerativeModel(
+      { model: params.model || model },
+      { apiVersion: "v1beta" }
+    );
+  };
+
+  const buildContents = (params: AICompleteParams) => {
+    return [
+      {
+        role: "user",
+        parts: [{ text: `SYSTEM INSTRUCTIONS:\n${params.system}` }]
+      },
+      ...params.messages.map((msg) => ({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }]
+      }))
+    ];
+  };
+
   return {
     complete: async (params: AICompleteParams): Promise<string> => {
       try {
-        const generativeModel = client.getGenerativeModel({
-          model: params.model || model
+        const generativeModel = getModel(params);
+        const result = await generativeModel.generateContent({
+          contents: buildContents(params)
         });
-        const result = await generativeModel.generateContent(buildPrompt(params));
-        return result.response.text().trim();
+        const text = result.response.text();
+        return text.trim();
       } catch (error) {
         throw toAIServiceError(error, "Google completion failed.");
       }
@@ -34,10 +46,10 @@ export const createGoogleProvider = (
       onChunk: (chunk: string) => void
     ): Promise<void> => {
       try {
-        const generativeModel = client.getGenerativeModel({
-          model: params.model || model
+        const generativeModel = getModel(params);
+        const result = await generativeModel.generateContentStream({
+          contents: buildContents(params)
         });
-        const result = await generativeModel.generateContentStream(buildPrompt(params));
         for await (const chunk of result.stream) {
           const text = chunk.text();
           if (text) {
@@ -50,7 +62,7 @@ export const createGoogleProvider = (
     },
     validateKey: async (): Promise<boolean> => {
       try {
-        const generativeModel = client.getGenerativeModel({ model });
+        const generativeModel = getModel({ model } as any);
         await generativeModel.generateContent("Reply with OK.");
         return true;
       } catch (error) {

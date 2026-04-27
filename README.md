@@ -1,6 +1,6 @@
 <div align="center">
 
-# ✈ Preflight
+# ✈️ Preflight
 
 **Your launchpad. Every build.**
 
@@ -13,350 +13,108 @@
 
 [Documentation](docs/README.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
 
+<img src="public/assets/project-hub.png" alt="Preflight Project Hub" width="100%" style="border-radius: 12px; margin: 20px 0; border: 1px solid #333;" />
+
 </div>
 
 ---
 
 ## What is Preflight?
 
-**Preflight is not a coding tool. It's the layer that precedes coding.**
+**Preflight is the layer that comes before coding.**
 
-If you use AI coding assistants like Lovable, Bolt, Cursor, Claude Code, Replit, or v0, you know the frustration: chaotic prompts, fragmented context, and builds that go nowhere. Preflight solves this by providing a **structured project operating system** that transforms your raw idea into a complete, AI-ready build package.
+If you use AI tools like Lovable, Bolt, Cursor, or Claude Code, you know how it feels when things get messy. Prompts get weird, you lose track of your plan, and the AI starts making mistakes because it doesn't have the full picture.
 
-**The Problem:** Vibe coding without structure leads to abandoned projects. You jump between research, design, and coding without a clear plan. Context gets lost. Builds stall.
+Preflight is a structured "Operating System" for your projects. It helps you turn a rough idea into a complete, AI-ready plan. No more "vibe coding" into a dead end.
 
-**The Solution:** Preflight guides you through a proven sequence: capture a structured brief → generate research prompts → create design prompts → write a PRD → generate system instructions → produce sequential build prompts. Each step builds on the last, with all context preserved.
-
-**Who It's For:** Builders who use AI coding tools and want to ship complete projects, not just prototypes. Solo founders, indie hackers, and developers who want AI to amplify their output, not replace their judgment.
-
----
-
-## Features
-
-| Module | What It Does |
-|--------|-------------|
-| 📝 **Brief** | Structured idea capture — problem, users, features, stack — with autosave |
-| 🔬 **Research** | Generates deep research prompts for Perplexity, Gemini, ChatGPT Deep Research |
-| 🎨 **Design** | Creates design prompts for Stitch, v0, Figma AI, Locofy, Universal |
-| 📋 **PRD** | Full product requirements document with TypeScript data models |
-| ⚙️ **System** | System instructions + .cursorrules / CLAUDE.md for your AI coding tool |
-| 🏗️ **Build** | Sequential build workflow: Stage 0 (Context Scan) → Foundation → Database → Features → Audit → Deploy |
-| 🗄️ **Vault** | Project file storage with context injection for generations |
-| 🔐 **BYOK** | Bring your own key — Anthropic, OpenAI, Google, DeepSeek, Groq, custom |
-| 🤖 **Claude Skills** | Downloadable skills for Claude Desktop — run Preflight conversationally |
-
-### New Features (v0.2.0)
-
-| Feature | Description |
-|---------|-------------|
-| ✨ **Import from Idea** | Paste your app idea or upload `.md`/`.txt` — AI extracts and fills Brief automatically |
-| 🔄 **Reset Prompts** | Clear any generated content with confirmation — available on all generation panels |
-| 💬 **Tooltips** | Hover explanations on pipeline icons and key UI elements throughout the app |
-| 📝 **Editable Prompts** | Edit any generated prompt inline — changes save to database |
-| 🔔 **Generation Toasts** | Notifications when generation starts and completes |
-| 📊 **Stage 0** | Optional Context Scan prompt — agent reads all your DOCS folder before building |
-
-### Platform Support
-
-Preflight generates platform-adapted prompts for:
-- **AI Coding:** Lovable, Bolt, Cursor, Claude Code, Replit
-- **AI Design:** Stitch, v0, Figma AI, Locofy, Uizard
-- **AI Research:** Perplexity Deep Research, Gemini Deep Research, ChatGPT Deep Research
-- **Claude Desktop:** Downloadable skills for conversational Preflight workflow
+### How it works:
+1.  **Capture your idea** in a structured brief.
+2.  **Generate research & design prompts** to get all your assets ready.
+3.  **Create a solid PRD** and system instructions.
+4.  **Follow a step-by-step build workflow** that keeps the AI on track.
 
 ---
 
-## Quick Start
+## 📸 Guided Tour
 
-### Prerequisites
+### 1. Project Hub
+Manage all your builds in one place. See exactly where each project stands.
+<img src="public/assets/project-hub.png" alt="Project Hub" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
-- **Node.js 20+** ([Download](https://nodejs.org/))
-- **pnpm** (recommended) or npm ([Install](https://pnpm.io/installation))
-- **Git** ([Download](https://git-scm.com/))
+### 2. The Brief
+Don't just say "build an Uber for dogs." Preflight helps you define the problem, the users, and the actual features you need.
+<img src="public/assets/brief-module.png" alt="Brief Module" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
 
-### Installation
+### 3. Deep Research & Design
+Generate high-quality prompts for Perplexity or v0 to get the data and designs you need before you write a single line of code.
+<div align="center">
+  <img src="public/assets/research-module.png" alt="Research" width="48%" style="border-radius: 8px; border: 1px solid #222;" />
+  <img src="public/assets/design-module.png" alt="Design" width="48%" style="border-radius: 8px; border: 1px solid #222;" />
+</div>
+
+### 4. PRD & System Setup
+Generate a full Product Requirements Document and the exact `.cursorrules` or `CLAUDE.md` your AI agent needs to behave like a senior engineer.
+<img src="public/assets/prd-module.png" alt="PRD Module" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
+
+### 5. Sequential Build
+The magic part. Preflight breaks your build into logical stages: Foundation → Database → Features → Audit → Deploy. Paste these prompts one by one for a perfect build.
+<img src="public/assets/build-module.png" alt="Build Workflow" width="100%" style="border-radius: 8px; border: 1px solid #222;" />
+
+---
+
+## ⚡ Quick Start
+
+### 1. Install & Run
+You'll need **Node.js 20+** and **pnpm** (or npm).
 
 ```bash
-# Clone the repository
+# Clone the repo
 git clone https://github.com/Meykiio/preflight.git
 cd preflight
 
-# Install dependencies
+# Install stuff
 pnpm install
 
-# Copy environment example (optional - works without env vars)
-cp .env.example .env
-
-# Start development server
+# Start it up
 pnpm dev
 ```
 
-Open **http://localhost:5173** → Complete onboarding → Create your first project.
-
-**No environment variables required.** Everything runs locally in your browser. Add AI provider keys in Settings after onboarding.
-
----
-
-## Usage Guide
-
-### 1. Create a Project
-
-**Option A: New Project**
-1. Click **New Project** on the Project Hub
-2. Enter name and description
-3. Select target platforms (Lovable, Bolt, Cursor, etc.)
-4. Add tech stack tags (React, Tailwind, Supabase, etc.)
-5. Click **Create Project**
-
-**Option B: Import from Idea** ✨ NEW
-1. Click **Import** on the Project Hub
-2. Select **"From Idea"** tab
-3. Paste your app idea or upload `.md`/`.txt` file
-4. Click **"Generate Brief with AI"**
-5. AI extracts and fills Brief automatically
-6. Review and edit as needed
-
-**Option C: Import Backup**
-1. Click **Import** on the Project Hub
-2. Select **"From Backup"** tab
-3. Choose Preflight JSON backup file
-4. Project restored with all artifacts
-
-### 2. Fill the Brief
-
-1. Navigate to the **Brief** tab
-2. Define the problem you're solving
-3. Describe target users (who, technical level, current solution)
-4. List core features (ordered by priority)
-5. Add tech stack hints and target platforms
-6. Add notes (optional)
-
-> 💡 **Tip:** The completion indicator shows when your brief is ready. Aim for 80%+ before proceeding.
-
-### 3. Generate Research
-
-1. Go to **Research** tab
-2. Select context nodes (Brief, Tech Stack, User Personas)
-3. Click **Generate Research Prompt**
-4. Copy the generated prompt
-5. Paste into Perplexity, Gemini, or ChatGPT Deep Research
-6. Upload research results to the Vault
-
-### 4. Generate Design
-
-1. Navigate to **Design** tab
-2. Select target platform (Stitch, v0, Figma AI, etc.)
-3. Choose context nodes (Brief, Research Results)
-4. Click **Generate Design Prompt**
-5. Copy and paste into your design platform
-6. Upload design outputs to the Vault
-
-### 5. Generate PRD & System
-
-1. Go to **PRD** tab
-2. Click **Generate PRD** — wait for completion
-3. Select platform for System Instructions
-4. Click **Generate System Instructions**
-5. Generate Rules File for your platform
-6. Copy all generated content
-
-### 6. Build Your App
-
-1. Navigate to **Build** tab
-2. **Stage 0 (Optional):** Context Scan — agent reads all DOCS folder
-3. Click **Generate Full Build Workflow**
-4. Review generated stages
-5. Start with Stage 1 (Foundation)
-6. Copy prompt and paste into AI coding tool
-7. Mark stages complete as you progress
-8. **Export All:** Download all prompts as single `.md` file (button in header)
-
-### 7. Edit Generated Prompts ✨ NEW
-
-1. Click **Edit** (pencil icon) on any generated panel
-2. Modify the content in the textarea
-3. Click **Save** to persist changes
-4. Copy/Download uses edited content
-5. Click **Cancel** to discard changes
-
-### 8. Reset Generated Content ✨ NEW
-
-1. Click **Reset** button on any panel
-2. Confirm: "Clear generated content? This cannot be undone."
-3. Content cleared, page returns to pre-generation state
-4. **Build page:** Click "Reset Workflow" in header to clear all stages
+### 2. Connect your AI
+Go to **Settings → AI Providers** and add your keys (Anthropic, OpenAI, or Google). Your keys stay on your computer—they are never sent to our servers.
 
 ---
 
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | React 18.3 + TypeScript |
-| **Build** | Vite 6.2 |
-| **Styling** | Tailwind CSS 3.4 |
-| **State** | Zustand 5.0 |
-| **Database** | Dexie.js 4.0 (IndexedDB) |
-| **Routing** | React Router 6.30 |
-| **AI SDKs** | OpenAI, Anthropic, Google |
-| **Testing** | Vitest 4.1 |
-
-### Design System
-
-- **Fonts:** Space Grotesk (headings), Inter (body), JetBrains Mono (code)
-- **Theme:** Dark only (optimized for long coding sessions)
-- **Icons:** Material Symbols Outlined
-- **Components:** Custom + shadcn/ui patterns
+## 🛠 Tech Stack
+- **Frontend:** React + TypeScript
+- **Styling:** Tailwind CSS (Dark Mode by default)
+- **Database:** Dexie.js (Local-first, lives in your browser)
+- **State:** Zustand
 
 ---
 
-## Configuration
+## ❓ Common Issues
 
-All optional. Preflight works fully offline without any environment variables.
+### "Network Error" or "404" with Gemini
+If you're getting a network error when connecting Google Gemini:
+1.  Make sure your API key is correct from [Google AI Studio](https://aistudio.google.com/).
+2.  Check if Gemini is available in your region.
+3.  We've updated the model IDs—try selecting `gemini-1.5-pro` or `gemini-2.0-flash` from the list.
 
-| Variable | Required | Where to Get |
-|----------|----------|--------------|
-| `VITE_SUPABASE_URL` | No | Supabase dashboard → Settings → API |
-| `VITE_SUPABASE_ANON_KEY` | No | Supabase dashboard → Settings → API |
-
-**AI Provider Keys:** Added in-app via Settings → AI Providers. Stored encrypted in your browser's IndexedDB — they never leave your device except when calling official provider APIs.
-
----
-
-## Deployment
-
-### Vercel (Recommended)
-
-```bash
-# Push to GitHub
-git add . && git commit -m "feat: initial release" && git push origin main
-
-# Import in Vercel dashboard
-# Build settings auto-detected
-```
-
-### Netlify
-
-```bash
-# Push to GitHub
-# Connect repo in Netlify
-# Build command: npm run build
-# Publish directory: dist
-```
-
-### Self-Hosted
-
-```bash
-npm run build
-# Copy dist/ to any static file server
-# Configure SPA rewrites (all routes → index.html)
-```
+### Why is it local-only?
+Because your project ideas and API keys are private. Preflight stores everything in your browser's IndexedDB. No accounts, no subscriptions, just you and your code.
 
 ---
 
-## Development
-
-```bash
-# Start dev server
-pnpm dev
-
-# Run tests
-pnpm test
-
-# Type check
-pnpm typecheck
-
-# Production build
-pnpm build
-
-# Preview production build
-pnpm preview
-```
-
----
-
-## Contributing
-
-Contributions welcome! See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the full workflow.
-
-### Ways to Contribute
-
-- 🐛 **Bug Reports** — File issues for bugs
-- 💡 **Feature Requests** — Suggest improvements
-- 📝 **Documentation** — Fix typos, add examples
-- 🎨 **UI/UX** — Design improvements
-- ⚡ **Performance** — Optimization suggestions
-- 🧪 **Tests** — Add test coverage
-
-### Before Submitting a PR
-
-```bash
-pnpm typecheck   # Zero TypeScript errors
-pnpm test        # All tests pass
-pnpm build       # Clean production build
-```
-
-Update documentation in `docs/` with your changes.
-
----
-
-## How This Was Built
-
-**Preflight was built in 3 days using [Qwen Code](https://github.com/QwenLM/Qwen) — a free, open-source AI pair programmer.**
-
-I toggled between **Plan mode** (for architecture) and **YOLO mode** (for rapid implementation). When stuck, I used **Claude Desktop** for explanations. After each feature, I tested thoroughly, reported bugs, requested redesigns, and iterated until it was right.
-
-The workflow I followed wasn't new — it was refined over **months** of building apps with AI, open-sourced as [yuno-docs](https://github.com/sifeddinemeb/yuno-docs) during the Bolt hackathon. Preflight is that workflow turned into a platform.
-
-Read the full story in [**Behind the Scenes**](docs/behind-the-scenes/):
-- [Origin Story: From yuno-docs to Preflight](docs/behind-the-scenes/origin-story.md)
-- [3-Day Build with Qwen Code](docs/behind-the-scenes/vibe-coding-workflow.md)
-- [Using Preflight to Rebuild Preflight](docs/behind-the-scenes/self-dogfooding.md)
-- [Lessons Learned](docs/behind-the-scenes/lessons-learned.md)
-
----
-
-## Roadmap
-
-### Q2 2026
-- [ ] Template marketplace (pre-built project templates)
-- [ ] AI chat assistant for brief filling
-- [ ] Advanced analytics dashboard
-- [ ] More AI provider integrations
-
-### Q3 2026
-- [ ] Cloud sync with Supabase (optional)
-- [ ] Team collaboration features
-- [ ] Plugin system
-- [ ] Multi-language support
-
----
-
-## Acknowledgments
-
-Built with ❤️ using [Qwen Code](https://github.com/QwenLM/Qwen) (Plan mode + YOLO mode) and [Claude Desktop](https://claude.ai/download).
-
-**Workflow ancestor:** [yuno-docs](https://github.com/sifeddinemeb/yuno-docs) — open-source prompts from the Bolt hackathon
-
-**Inspired by:**
-- [Lovable](https://lovable.dev)
-- [Bolt](https://bolt.new)
-- [v0](https://v0.dev)
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE) for details.
+## 🤝 Contributing
+I'm just one person building this, so help is always welcome! Check out [CONTRIBUTING.md](.github/CONTRIBUTING.md) if you want to jump in.
 
 ---
 
 <div align="center">
 
-**Made with ⚡ by the Preflight Team**
+Made with ⚡ by the Preflight team.
+If this helps you ship faster, give it a ⭐!
 
-If you find Preflight useful, please consider giving it a ⭐️!
-
-[Documentation](docs/README.md) · [Report Bug](https://github.com/Meykiio/preflight/issues) · [Request Feature](https://github.com/Meykiio/preflight/issues)
+[Report a Bug](https://github.com/Meykiio/preflight/issues) · [Request a Feature](https://github.com/Meykiio/preflight/issues)
 
 </div>

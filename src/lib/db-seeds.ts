@@ -866,3 +866,47 @@ export const DEFAULT_PLATFORM_LAUNCHERS = [
   "gemini",
   "chatgpt"
 ];
+
+export const MOCK_PROJECTS = [
+  {
+    id: "project-nexus-api",
+    name: "Nexus API Gateway",
+    description: "High-performance edge computing platform for distributed microservices with automated security audits.",
+    status: "building",
+    targetPlatforms: ["bolt", "cursor"],
+    techStack: ["Go", "Redis", "Terraform", "Cloudflare Workers"],
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7, // 7 days ago
+    updatedAt: Date.now() - 1000 * 60 * 60 * 2
+  },
+  {
+    id: "project-lumina-ui",
+    name: "Lumina Design System",
+    description: "Enterprise-grade component library with accessibility at its core and automatic documentation generation.",
+    status: "designing",
+    targetPlatforms: ["v0", "lovable"],
+    techStack: ["React", "Tailwind CSS", "Storybook", "Framer Motion"],
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 3, // 3 days ago
+    updatedAt: Date.now() - 1000 * 60 * 60 * 5
+  },
+  {
+    id: "project-vibe-scribe",
+    name: "VibeScribe AI",
+    description: "Intelligent content orchestration platform that transforms raw audio into structured multi-format assets.",
+    status: "shipped",
+    targetPlatforms: ["claude-code", "replit"],
+    techStack: ["Python", "FastAPI", "PostgreSQL", "OpenAI API"],
+    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 14, // 14 days ago
+    updatedAt: Date.now() - 1000 * 60 * 30
+  },
+  {
+    id: "project-eco-track",
+    name: "EcoTrack Pro",
+    description: "Sustainable supply chain monitoring with real-time carbon footprint calculations and ESG reporting.",
+    status: "researching",
+    targetPlatforms: ["cursor"],
+    techStack: ["Next.js", "Supabase", "Prisma", "D3.js"],
+    createdAt: Date.now() - 1000 * 60 * 60 * 24, // 1 day ago
+    updatedAt: Date.now() - 1000 * 60 * 15
+  }
+];
+

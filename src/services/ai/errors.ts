@@ -83,6 +83,14 @@ export const toAIServiceError = (
   }
 
   if (isNetworkMessage(message)) {
+    // Check for 404 or not found which might be a model ID issue or region lock
+    if (/404|not found/i.test(message)) {
+      return new AIServiceError("PROVIDER", "The requested model was not found. Please check your model ID or regional availability.", {
+        cause: error,
+        status: 404
+      });
+    }
+
     return new AIServiceError("NETWORK", "A network error interrupted the AI request.", {
       cause: error,
       status

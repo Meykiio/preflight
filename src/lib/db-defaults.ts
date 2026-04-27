@@ -1,6 +1,6 @@
-import type { AgentType } from "@/types";
+import type { AgentType, ProjectStatus } from "@/types";
 import { PreflightDatabase } from "@/lib/db-schema";
-import { DEFAULT_AGENT_PROMPTS, DEFAULT_PLATFORM_LAUNCHERS } from "@/lib/db-seeds";
+import { DEFAULT_AGENT_PROMPTS, DEFAULT_PLATFORM_LAUNCHERS, MOCK_PROJECTS } from "@/lib/db-seeds";
 
 export async function initializeDatabaseDefaults(
   db: PreflightDatabase
@@ -18,6 +18,16 @@ export async function initializeDatabaseDefaults(
       isOnboardingComplete: false,
       updatedAt: Date.now()
     });
+  }
+
+  const projectCount = await db.projects.count();
+  if (projectCount === 0) {
+    await db.projects.bulkAdd(
+      MOCK_PROJECTS.map((p) => ({
+        ...p,
+        status: p.status as ProjectStatus
+      }))
+    );
   }
 
   const promptCount = await db.agentSystemPrompts.count();

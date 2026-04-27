@@ -9,6 +9,7 @@ interface OnboardingProviderStepProps {
   onSelectProvider: (provider: AIProvider) => void;
   onToggleApiVisibility: () => void;
   onVerify: () => void;
+  onSkip: () => void;
   selectedProvider: AIProvider;
   showApiKey: boolean;
 }
@@ -20,6 +21,7 @@ export const OnboardingProviderStep = ({
   onSelectProvider,
   onToggleApiVisibility,
   onVerify,
+  onSkip,
   selectedProvider,
   showApiKey
 }: OnboardingProviderStepProps): JSX.Element => {
@@ -109,26 +111,37 @@ export const OnboardingProviderStep = ({
         ) : null}
       </div>
 
-      <button
-        type="button"
-        onClick={onVerify}
-        disabled={isVerifying}
-        className="gradient-cta glow-primary mt-10 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 font-semibold text-on-primary disabled:opacity-70"
-      >
-        {isVerifying ? (
-          <>
-            <span className="material-symbols-outlined animate-spin text-base">
-              progress_activity
-            </span>
-            <span>Verifying...</span>
-          </>
-        ) : (
-          <>
-            <span>Verify & Continue</span>
-            <span className="material-symbols-outlined text-base">arrow_forward</span>
-          </>
-        )}
-      </button>
+      <div className="mt-10 flex flex-col gap-3">
+        <button
+          type="button"
+          onClick={onVerify}
+          disabled={isVerifying}
+          className="gradient-cta glow-primary flex w-full items-center justify-center gap-3 rounded-xl px-5 py-4 font-semibold text-on-primary disabled:opacity-70"
+        >
+          {isVerifying ? (
+            <>
+              <span className="material-symbols-outlined animate-spin text-base">
+                progress_activity
+              </span>
+              <span>Verifying...</span>
+            </>
+          ) : (
+            <>
+              <span>Verify & Continue</span>
+              <span className="material-symbols-outlined text-base">arrow_forward</span>
+            </>
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={onSkip}
+          disabled={isVerifying}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-surface-container-high py-3 text-xs font-semibold uppercase tracking-[0.16em] text-on-surface-variant transition hover:bg-surface-container-highest hover:text-on-surface disabled:opacity-50"
+        >
+          <span>Skip for now</span>
+        </button>
+      </div>
 
       <div className="mt-6 flex flex-col gap-3 text-[10px] uppercase tracking-[0.22em] text-outline/60 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
