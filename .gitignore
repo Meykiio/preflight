@@ -41,5 +41,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Docs & AI context (User request: hide from GitHub)
+docs/
+GEMINI.md
+GITHUB_META.md
+
 # TypeScript build info
 *.tsbuildinfo

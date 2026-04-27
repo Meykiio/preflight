@@ -25,7 +25,8 @@ export async function initializeDatabaseDefaults(
     await db.projects.bulkAdd(
       MOCK_PROJECTS.map((p) => ({
         ...p,
-        status: p.status as ProjectStatus
+        status: p.status as ProjectStatus,
+        targetPlatforms: p.targetPlatforms as any
       }))
     );
   }
