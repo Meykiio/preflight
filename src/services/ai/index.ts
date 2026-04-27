@@ -30,18 +30,6 @@ export const createProviderFromConfig = async (
       return import("@/services/ai/providers/googleProvider").then((module) =>
         module.createGoogleProvider(decryptedKey, config.model)
       );
-    case "deepseek":
-      return import("@/services/ai/providers/deepseekProvider").then((module) =>
-        module.createDeepSeekProvider(decryptedKey, config.model)
-      );
-    case "groq":
-      return import("@/services/ai/providers/groqProvider").then((module) =>
-        module.createGroqProvider(decryptedKey, config.model)
-      );
-    case "qwen":
-      return import("@/services/ai/providers/qwenProvider").then((module) =>
-        module.createQwenProvider(decryptedKey, config.model)
-      );
     case "openrouter":
       return import("@/services/ai/providers/openrouterProvider").then((module) =>
         module.createOpenRouterProvider(decryptedKey, config.model, config.baseUrl)
@@ -49,14 +37,6 @@ export const createProviderFromConfig = async (
     case "ollama":
       return import("@/services/ai/providers/ollamaProvider").then((module) =>
         module.createOllamaProvider(decryptedKey, config.model, config.baseUrl)
-      );
-    case "lmstudio":
-      return import("@/services/ai/providers/lmStudioProvider").then((module) =>
-        module.createLMStudioProvider(decryptedKey, config.model, config.baseUrl)
-      );
-    case "custom":
-      return import("@/services/ai/providers/customProvider").then((module) =>
-        module.createCustomProvider(decryptedKey, config.model, config.baseUrl)
       );
     default:
       throw new AIServiceError(

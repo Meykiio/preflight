@@ -16,13 +16,8 @@ export const PROVIDER_ORDER: AIProvider[] = [
   "anthropic",
   "openai",
   "google",
-  "deepseek",
-  "groq",
-  "qwen",
   "openrouter",
-  "ollama",
-  "lmstudio",
-  "custom"
+  "ollama"
 ];
 
 export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
@@ -52,34 +47,6 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     keyLabel: "Gemini API key",
     defaultModel: "gemini-1.5-pro",
     models: ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.0-pro"]
-  },
-  deepseek: {
-    provider: "deepseek",
-    label: "DeepSeek",
-    icon: "bolt",
-    helpUrl: "https://platform.deepseek.com/api_keys",
-    keyLabel: "DeepSeek API key",
-    defaultModel: "deepseek-chat",
-    models: ["deepseek-chat", "deepseek-reasoner"]
-  },
-  groq: {
-    provider: "groq",
-    label: "Groq",
-    icon: "speed",
-    helpUrl: "https://console.groq.com/keys",
-    keyLabel: "Groq API key",
-    defaultModel: "llama-3.3-70b-versatile",
-    models: ["llama-3.3-70b-versatile", "mixtral-8x7b-32768"]
-  },
-  qwen: {
-    provider: "qwen",
-    label: "Qwen Code",
-    icon: "code",
-    helpUrl: "https://github.com/QwenLM/Qwen",
-    keyLabel: "Qwen API key",
-    defaultModel: "qwen-plus",
-    models: ["qwen-plus", "qwen-max"],
-    requiresApiKey: true
   },
   openrouter: {
     provider: "openrouter",
@@ -112,27 +79,6 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     models: ["llama3.2", "llama3.1", "mistral", "mixtral", "phi3"],
     requiresApiKey: false,
     defaultBaseUrl: "http://localhost:11434/v1"
-  },
-  lmstudio: {
-    provider: "lmstudio",
-    label: "LM Studio (Local)",
-    icon: "studio",
-    helpUrl: "https://lmstudio.ai",
-    keyLabel: "Not required",
-    defaultModel: "local-model",
-    models: ["local-model"],
-    requiresApiKey: false,
-    defaultBaseUrl: "http://localhost:1234/v1"
-  },
-  custom: {
-    provider: "custom",
-    label: "Custom",
-    icon: "api",
-    helpUrl: "https://platform.openai.com/docs/api-reference",
-    keyLabel: "Custom provider API key",
-    defaultModel: "gpt-4o-mini",
-    models: ["gpt-4o-mini"],
-    requiresApiKey: true
   }
 };
 

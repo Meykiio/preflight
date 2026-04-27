@@ -40,7 +40,8 @@ export const SettingsPage = (): JSX.Element => {
 
   const handleSaveProvider = async (
     provider: AIProvider,
-    apiKey: string
+    apiKey: string,
+    baseUrl?: string
   ): Promise<void> => {
     const existing = providers.find((item) => item.provider === provider);
     const config = PROVIDER_CATALOG[provider];
@@ -50,7 +51,8 @@ export const SettingsPage = (): JSX.Element => {
       provider,
       apiKey,
       isDefault: existing?.isDefault ?? connectedCount === 0,
-      model: existing?.model ?? config.defaultModel
+      model: existing?.model ?? config.defaultModel,
+      baseUrl
     });
 
     if (result) {

@@ -1,6 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
 import type { AIProviderConfig } from "@/types";
+import { encryptString, decryptString } from "@/lib/security";
 
 export interface AIProviderSummary {
   id?: string;
@@ -9,6 +10,7 @@ export interface AIProviderSummary {
   isDefault: boolean;
   hasKey: boolean;
   maskedKey: string;
+  baseUrl?: string;
   createdAt?: number;
 }
 
@@ -38,15 +40,21 @@ export const useAIProviders = () => {
     async (): Promise<AIProviderSummary[]> => {
       const configs = await db.aiProviders.toArray();
 
-      return configs.map((config) => ({
-        id: config.id,
-        provider: config.provider,
-        model: config.model,
-        isDefault: config.isDefault,
-        hasKey: Boolean(config.apiKey.trim()),
-        maskedKey: maskApiKey(config.apiKey),
-        createdAt: config.createdAt
-      }));
+      return Promise.all(
+        configs.map(async (config) => {
+          const decryptedKey = await decryptString(config.apiKey);
+          return {
+            id: config.id,
+            provider: config.provider,
+            model: config.model,
+            isDefault: config.isDefault,
+            hasKey: Boolean(decryptedKey.trim()),
+            maskedKey: maskApiKey(decryptedKey),
+            baseUrl: config.baseUrl,
+            createdAt: config.createdAt
+          };
+        })
+      );
     },
     []
   );
@@ -61,10 +69,17 @@ export const useAIProviders = () => {
   ): Promise<AIProviderConfig | null> => {
     try {
       const existing = input.id ? await db.aiProviders.get(input.id) : null;
+      
+      // Encrypt the API key if provided, otherwise preserve existing
+      let apiKeyToStore = existing?.apiKey || "";
+      if (input.apiKey.trim()) {
+        apiKeyToStore = await encryptString(input.apiKey.trim());
+      }
+      
       const provider: AIProviderConfig = {
         id: input.id ?? crypto.randomUUID(),
         provider: input.provider,
-        apiKey: input.apiKey.trim() || existing?.apiKey || "",
+        apiKey: apiKeyToStore,
         model: input.model,
         isDefault: input.isDefault ?? false,
         baseUrl: input.baseUrl ?? existing?.baseUrl,

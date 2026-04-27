@@ -18,13 +18,8 @@ export type AIProvider =
   | "anthropic"
   | "openai"
   | "google"
-  | "deepseek"
-  | "groq"
-  | "qwen"
   | "openrouter"
-  | "ollama"
-  | "lmstudio"
-  | "custom";
+  | "ollama";
 
 export type AgentType =
   | "research"

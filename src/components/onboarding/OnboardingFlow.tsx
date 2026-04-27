@@ -65,7 +65,8 @@ export const OnboardingFlow = ({
         provider: selectedProvider,
         apiKey,
         isDefault: true,
-        model: PROVIDER_CATALOG[selectedProvider].defaultModel
+        model: PROVIDER_CATALOG[selectedProvider].defaultModel,
+        baseUrl: PROVIDER_CATALOG[selectedProvider].defaultBaseUrl
       });
       toast.success(`${PROVIDER_CATALOG[selectedProvider].label} verified.`);
       setStep(3);
