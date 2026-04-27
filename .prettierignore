@@ -1,0 +1,6 @@
+dist
+node_modules
+.git
+.kiro
+pnpm-lock.yaml
+*.md

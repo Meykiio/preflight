@@ -27,6 +27,21 @@ const SettingsPage = lazy(() =>
   }))
 );
 const DocumentationPage = lazy(() => import("@/pages/DocumentationPage"));
+const NotFoundPage = lazy(() =>
+  import("@/pages/NotFoundPage").then((module) => ({
+    default: module.NotFoundPage
+  }))
+);
+const PrivacyPage = lazy(() =>
+  import("@/pages/PrivacyPage").then((module) => ({
+    default: module.PrivacyPage
+  }))
+);
+const TermsPage = lazy(() =>
+  import("@/pages/TermsPage").then((module) => ({
+    default: module.TermsPage
+  }))
+);
 
 const RouteFallback = (): JSX.Element => (
   <div className="flex min-h-[60vh] items-center justify-center">
@@ -84,6 +99,9 @@ const App = (): JSX.Element => {
             <Route path="/project/:projectId" element={<ProjectWorkspacePage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/docs" element={<DocumentationPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </Suspense>
