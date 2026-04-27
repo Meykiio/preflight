@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import db from "@/lib/db";
 import { generateId } from "@/lib/utils";
+import { encryptString, decryptString } from "@/lib/security";
 import type { AIProviderConfig } from "@/types";
 
 interface AIProviderSnapshot {
@@ -39,14 +40,19 @@ export const useAIStore = create<AIStoreState>((set, get) => ({
   isGenerating: false,
   generationError: null,
   loadProviders: async () => {
-    const providers = (await db.aiProviders.toArray()).map((provider) => ({
-      id: provider.id,
-      provider: provider.provider,
-      model: provider.model,
-      isDefault: provider.isDefault,
-      hasKey: Boolean(provider.apiKey.trim()),
-      createdAt: provider.createdAt
+    const providers = await Promise.all((await db.aiProviders.toArray()).map(async (provider) => {
+      // We don't decrypt here for the snapshot to keep it fast
+      // but we need to know if it actually has a key
+      return {
+        id: provider.id,
+        provider: provider.provider,
+        model: provider.model,
+        isDefault: provider.isDefault,
+        hasKey: Boolean(provider.apiKey && provider.apiKey.trim()),
+        createdAt: provider.createdAt
+      };
     }));
+    
     const defaultProvider =
       providers.find((provider) => provider.isDefault) ?? null;
 
@@ -55,10 +61,14 @@ export const useAIStore = create<AIStoreState>((set, get) => ({
   saveProvider: async (input) => {
     const existing = get().providers;
     const storedProvider = input.id ? await db.aiProviders.get(input.id) : null;
+    
+    // Encrypt the API key before saving
+    const encryptedKey = input.apiKey ? await encryptString(input.apiKey.trim()) : (storedProvider?.apiKey || "");
+
     const nextProvider: AIProviderConfig = {
       id: input.id ?? generateId(),
       provider: input.provider,
-      apiKey: input.apiKey?.trim() || storedProvider?.apiKey || "",
+      apiKey: encryptedKey,
       model: input.model,
       isDefault: input.isDefault ?? false,
       baseUrl: storedProvider?.baseUrl,
@@ -72,7 +82,7 @@ export const useAIStore = create<AIStoreState>((set, get) => ({
         // Clear existing defaults safely
         const allProviders = await db.aiProviders.toArray();
         for (const p of allProviders) {
-          if (p.isDefault) {
+          if (p.isDefault && p.id !== nextProvider.id) {
             await db.aiProviders.update(p.id, { isDefault: false });
           }
         }

@@ -7,52 +7,56 @@ import {
   estimateTokenCount,
   shouldSaveCheckpoint
 } from "@/services/ai/checkpoint";
+import { decryptString } from "@/lib/security";
 import type { AICompleteParams, AIProvider } from "@/services/ai/types";
 import type { AgentType, AIProviderConfig } from "@/types";
 
-export const createProviderFromConfig = (
+export const createProviderFromConfig = async (
   config: AIProviderConfig
 ): Promise<AIProvider> => {
+  // Decrypt the API key before use
+  const decryptedKey = await decryptString(config.apiKey);
+
   switch (config.provider) {
     case "anthropic":
       return import("@/services/ai/providers/anthropicProvider").then((module) =>
-        module.createAnthropicProvider(config.apiKey, config.model)
+        module.createAnthropicProvider(decryptedKey, config.model)
       );
     case "openai":
       return import("@/services/ai/providers/openaiProvider").then((module) =>
-        module.createOpenAIProvider(config.apiKey, config.model)
+        module.createOpenAIProvider(decryptedKey, config.model)
       );
     case "google":
       return import("@/services/ai/providers/googleProvider").then((module) =>
-        module.createGoogleProvider(config.apiKey, config.model)
+        module.createGoogleProvider(decryptedKey, config.model)
       );
     case "deepseek":
       return import("@/services/ai/providers/deepseekProvider").then((module) =>
-        module.createDeepSeekProvider(config.apiKey, config.model)
+        module.createDeepSeekProvider(decryptedKey, config.model)
       );
     case "groq":
       return import("@/services/ai/providers/groqProvider").then((module) =>
-        module.createGroqProvider(config.apiKey, config.model)
+        module.createGroqProvider(decryptedKey, config.model)
       );
     case "qwen":
       return import("@/services/ai/providers/qwenProvider").then((module) =>
-        module.createQwenProvider(config.apiKey, config.model)
+        module.createQwenProvider(decryptedKey, config.model)
       );
     case "openrouter":
       return import("@/services/ai/providers/openrouterProvider").then((module) =>
-        module.createOpenRouterProvider(config.apiKey, config.model, config.baseUrl)
+        module.createOpenRouterProvider(decryptedKey, config.model, config.baseUrl)
       );
     case "ollama":
       return import("@/services/ai/providers/ollamaProvider").then((module) =>
-        module.createOllamaProvider(config.apiKey, config.model, config.baseUrl)
+        module.createOllamaProvider(decryptedKey, config.model, config.baseUrl)
       );
     case "lmstudio":
       return import("@/services/ai/providers/lmStudioProvider").then((module) =>
-        module.createLMStudioProvider(config.apiKey, config.model, config.baseUrl)
+        module.createLMStudioProvider(decryptedKey, config.model, config.baseUrl)
       );
     case "custom":
       return import("@/services/ai/providers/customProvider").then((module) =>
-        module.createCustomProvider(config.apiKey, config.model, config.baseUrl)
+        module.createCustomProvider(decryptedKey, config.model, config.baseUrl)
       );
     default:
       throw new AIServiceError(

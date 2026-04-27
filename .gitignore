@@ -41,8 +41,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Docs & AI context (User request: hide from GitHub)
-docs/
+# Docs & AI context (Allow consolidated docs and skills)
+docs/*
+!docs/PROJECT_OS.md
+!docs/preflight-interactive-SKILL.md
+!docs/preflight-interactive.skill
 GEMINI.md
 GITHUB_META.md
 
