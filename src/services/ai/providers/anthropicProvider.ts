@@ -1,6 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { toAIServiceError } from "@/services/ai/errors";
-import { emitTextChunks } from "@/services/ai/providers/chunkText";
 import type { AICompleteParams, AIProvider } from "@/services/ai/types";
 
 const getTextContent = (
@@ -48,27 +47,29 @@ export const createAnthropicProvider = (
       params: AICompleteParams,
       onChunk: (chunk: string) => void
     ): Promise<void> => {
-      const text = await client.messages
-        .create({
+      try {
+        const stream = await client.messages.create({
           model: params.model || model,
           system: params.system,
           temperature: params.temperature,
           max_tokens: params.maxTokens ?? 2048,
+          stream: true,
           messages: params.messages
             .filter((message) => message.role !== "system")
             .map((message) => ({
               role: message.role === "assistant" ? "assistant" : "user",
               content: message.content
             }))
-        })
-        .then((response) =>
-          getTextContent(response.content as Array<{ type: string; text?: string }>)
-        )
-        .catch((error: unknown) => {
-          throw toAIServiceError(error, "Anthropic streaming failed.");
         });
 
-      await emitTextChunks(text, onChunk);
+        for await (const chunk of stream) {
+          if (chunk.type === "content_block_delta" && chunk.delta?.type === "text_delta") {
+            onChunk(chunk.delta.text);
+          }
+        }
+      } catch (error) {
+        throw toAIServiceError(error, "Anthropic streaming failed.");
+      }
     },
     validateKey: async (): Promise<boolean> => {
       try {

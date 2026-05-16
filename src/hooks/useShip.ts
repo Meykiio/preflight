@@ -1,5 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { Credential, CredentialCategory, ProjectVersion } from "@/types";
 
 export const useShip = (projectId: string | undefined) => {
@@ -68,7 +69,7 @@ export const useShip = (projectId: string | undefined) => {
       await db.projectVersions.add(version);
       return version;
     } catch (error) {
-      console.error("Failed to add project version.", error);
+      logger.error("Failed to add project version.", error);
       return null;
     }
   };
@@ -78,7 +79,7 @@ export const useShip = (projectId: string | undefined) => {
     try {
       await db.projectVersions.delete(versionId);
     } catch (error) {
-      console.error("Failed to delete project version.", error);
+      logger.error("Failed to delete project version.", error);
     }
   };
 
@@ -88,7 +89,7 @@ export const useShip = (projectId: string | undefined) => {
       const version = await db.projectVersions.get(versionId);
       return version?.zipData ?? null;
     } catch (error) {
-      console.error("Failed to get version ZIP.", error);
+      logger.error("Failed to get version ZIP.", error);
       return null;
     }
   };
@@ -104,7 +105,7 @@ export const useShip = (projectId: string | undefined) => {
         liveUrl
       });
     } catch (error) {
-      console.error("Failed to update live URL.", error);
+      logger.error("Failed to update live URL.", error);
     }
   };
 
@@ -134,7 +135,7 @@ export const useShip = (projectId: string | undefined) => {
       await db.credentials.add(credential);
       return credential;
     } catch (error) {
-      console.error("Failed to add credential.", error);
+      logger.error("Failed to add credential.", error);
       return null;
     }
   };
@@ -159,7 +160,7 @@ export const useShip = (projectId: string | undefined) => {
       await db.credentials.put(updated);
       return updated;
     } catch (error) {
-      console.error("Failed to update credential.", error);
+      logger.error("Failed to update credential.", error);
       return null;
     }
   };
@@ -169,7 +170,7 @@ export const useShip = (projectId: string | undefined) => {
     try {
       await db.credentials.delete(credentialId);
     } catch (error) {
-      console.error("Failed to delete credential.", error);
+      logger.error("Failed to delete credential.", error);
     }
   };
 
@@ -207,7 +208,7 @@ export const useShip = (projectId: string | undefined) => {
       link.click();
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error("Failed to export credentials.", error);
+      logger.error("Failed to export credentials.", error);
     }
   };
 

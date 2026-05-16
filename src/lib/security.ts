@@ -3,6 +3,8 @@
  * Handles encryption/decryption of sensitive data like API keys.
  */
 
+import { logger } from "@/lib/logger";
+
 const STORAGE_KEY_NAME = "preflight_storage_encryption_key";
 
 /**
@@ -62,7 +64,7 @@ export const encryptString = async (text: string): Promise<string> => {
     
     return btoa(String.fromCharCode(...combined));
   } catch (error) {
-    console.error("Encryption failed:", error);
+    logger.error("Encryption failed:", error);
     return text; // Fallback to plaintext on error (should not happen normally)
   }
 };

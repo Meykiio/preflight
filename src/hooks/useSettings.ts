@@ -1,5 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { AppSettings } from "@/types";
 
 export const useSettings = () => {
@@ -26,7 +27,7 @@ export const useSettings = () => {
       await db.appSettings.put(nextSettings);
       return nextSettings;
     } catch (error) {
-      console.error("Failed to update settings.", error);
+      logger.error("Failed to update settings.", error);
       return null;
     }
   };

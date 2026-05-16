@@ -32,10 +32,6 @@ export const CommandPalette = (): JSX.Element | null => {
     setCommandPaletteOpen(false);
   });
 
-  if (!isOpen) {
-    return null;
-  }
-
   const closePalette = (): void => {
     setQuery("");
     setCommandPaletteOpen(false);
@@ -58,11 +54,20 @@ export const CommandPalette = (): JSX.Element | null => {
       stages
     });
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <>
       <div
+        role="button"
+        tabIndex={0}
         className="fixed inset-0 z-50 bg-surface-dim/80 backdrop-blur-sm"
         onClick={closePalette}
+        onKeyDown={(event) => {
+          if (event.key === "Escape" || event.key === "Enter") closePalette();
+        }}
       >
         <div className="flex min-h-screen items-start justify-center px-4 pt-24">
           <div

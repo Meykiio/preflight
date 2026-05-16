@@ -19,7 +19,8 @@ export type AIProvider =
   | "openai"
   | "google"
   | "openrouter"
-  | "ollama";
+  | "ollama"
+  | "groq";
 
 export type AgentType =
   | "research"

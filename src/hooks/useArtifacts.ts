@@ -1,6 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
 import { estimateTokens } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 import type { ArtifactType, GeneratedArtifact } from "@/types";
 
 interface CreateArtifactInput {
@@ -57,7 +58,7 @@ export const useArtifacts = (projectId: string | undefined) => {
       await db.artifacts.add(artifact);
       return artifact;
     } catch (error) {
-      console.error("Failed to create artifact.", error);
+      logger.error("Failed to create artifact.", error);
       return null;
     }
   };
@@ -66,7 +67,7 @@ export const useArtifacts = (projectId: string | undefined) => {
     try {
       await db.artifacts.delete(artifactId);
     } catch (error) {
-      console.error("Failed to delete artifact.", error);
+      logger.error("Failed to delete artifact.", error);
     }
   };
 

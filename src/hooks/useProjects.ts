@@ -1,5 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { Platform, Project, ProjectStatus } from "@/types";
 
 interface CreateProjectInput {
@@ -46,7 +47,7 @@ export const useProjects = () => {
       await db.projects.add(project);
       return project;
     } catch (error) {
-      console.error("Failed to create project.", error);
+      logger.error("Failed to create project.", error);
       return null;
     }
   };
@@ -61,7 +62,7 @@ export const useProjects = () => {
         updatedAt: Date.now()
       });
     } catch (error) {
-      console.error("Failed to update project.", error);
+      logger.error("Failed to update project.", error);
     }
   };
 
@@ -79,7 +80,7 @@ export const useProjects = () => {
         }
       );
     } catch (error) {
-      console.error("Failed to delete project.", error);
+      logger.error("Failed to delete project.", error);
     }
   };
 

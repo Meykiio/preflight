@@ -86,9 +86,9 @@ export const OnboardingTutorialStep = ({
 
         {/* Progress Dots */}
         <div className="mt-8 flex justify-center gap-2">
-          {FEATURES.map((_, index) => (
+          {FEATURES.map((feature, index) => (
             <button
-              key={index}
+              key={feature.title}
               type="button"
               onClick={() => setCurrentFeature(index)}
               className={`h-2 rounded-full transition-all ${

@@ -1,4 +1,5 @@
 import { generateWithAgent } from "@/services/ai";
+import { logger } from "@/lib/logger";
 import type { Brief } from "@/types";
 
 export interface TechStackRecommendation {
@@ -123,14 +124,14 @@ export const generateTechStackRecommendation = async (
     // Parse JSON from response
     const jsonMatch = response.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.error("Failed to parse tech stack recommendation as JSON");
+      logger.error("Failed to parse tech stack recommendation as JSON");
       return null;
     }
 
     const recommendation = JSON.parse(jsonMatch[0]) as TechStackRecommendation;
     return recommendation;
   } catch (error) {
-    console.error("Failed to generate tech stack recommendation:", error);
+    logger.error("Failed to generate tech stack recommendation:", error);
     return null;
   }
 };

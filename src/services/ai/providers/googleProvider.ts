@@ -62,8 +62,10 @@ export const createGoogleProvider = (
     },
     validateKey: async (): Promise<boolean> => {
       try {
-        const generativeModel = getModel({ model } as any);
-        await generativeModel.generateContent("Reply with OK.");
+        const generativeModel = getModel({ model } as AICompleteParams);
+        await generativeModel.generateContent({
+          contents: [{ role: "user", parts: [{ text: "Reply with OK." }] }]
+        });
         return true;
       } catch (error) {
         throw toAIServiceError(error, "Google key validation failed.");

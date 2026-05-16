@@ -40,7 +40,8 @@ export const NewProjectModal = ({ isOpen, onOpenChange }: NewProjectModalProps):
   // Focus name input when modal opens
   useEffect(() => {
     if (isOpen && nameRef.current) {
-      setTimeout(() => nameRef.current?.focus(), 100);
+      const timer = setTimeout(() => nameRef.current?.focus(), 100);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 

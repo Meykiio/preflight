@@ -1,4 +1,5 @@
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import { AIServiceError } from "@/services/ai/errors";
 import { executeWithRetry, sleep } from "@/services/ai/retry";
 import {
@@ -37,6 +38,10 @@ export const createProviderFromConfig = async (
     case "ollama":
       return import("@/services/ai/providers/ollamaProvider").then((module) =>
         module.createOllamaProvider(decryptedKey, config.model, config.baseUrl)
+      );
+    case "groq":
+      return import("@/services/ai/providers/groqProvider").then((module) =>
+        module.createGroqProvider(decryptedKey, config.model)
       );
     default:
       throw new AIServiceError(
@@ -144,7 +149,7 @@ export const generateWithAgent = async (
       generateWithRetry,
       undefined,
       (attempt, error, delay) => {
-        console.warn(`Generation retry ${attempt}/5 after ${Math.round(delay)}ms:`, error);
+        logger.warn(`Generation retry ${attempt}/5 after ${Math.round(delay)}ms`, error instanceof Error ? { error: error.message } : { error: String(error) });
       }
     );
 

@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { Brief, CoreFeature } from "@/types";
 
 interface UpdateBriefInput {
@@ -80,7 +81,7 @@ export const useBrief = (projectId: string | undefined) => {
       await db.briefs.put(nextBrief);
       return nextBrief;
     } catch (error) {
-      console.error("Failed to update brief.", error);
+      logger.error("Failed to update brief.", error);
       return null;
     }
   };

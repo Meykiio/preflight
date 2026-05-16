@@ -17,7 +17,8 @@ export const PROVIDER_ORDER: AIProvider[] = [
   "openai",
   "google",
   "openrouter",
-  "ollama"
+  "ollama",
+  "groq"
 ];
 
 export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
@@ -45,8 +46,8 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     icon: "auto_awesome",
     helpUrl: "https://aistudio.google.com/app/apikey",
     keyLabel: "Gemini API key",
-    defaultModel: "gemini-1.5-pro",
-    models: ["gemini-1.5-pro", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-2.0-pro"]
+    defaultModel: "gemini-2.0-flash",
+    models: ["gemini-2.0-flash", "gemini-2.0-pro", "gemini-1.5-pro", "gemini-1.5-flash"]
   },
   openrouter: {
     provider: "openrouter",
@@ -79,6 +80,22 @@ export const PROVIDER_CATALOG: Record<AIProvider, ProviderCatalogEntry> = {
     models: ["llama3.2", "llama3.1", "mistral", "mixtral", "phi3"],
     requiresApiKey: false,
     defaultBaseUrl: "http://localhost:11434/v1"
+  },
+  groq: {
+    provider: "groq",
+    label: "Groq",
+    icon: "speed",
+    helpUrl: "https://console.groq.com/keys",
+    keyLabel: "Groq API key",
+    defaultModel: "llama-3.3-70b-versatile",
+    models: [
+      "llama-3.3-70b-versatile",
+      "llama-3.1-8b-instant",
+      "mixtral-8x7b-32768",
+      "gemma2-9b-it"
+    ],
+    requiresApiKey: true,
+    defaultBaseUrl: "https://api.groq.com/openai/v1"
   }
 };
 

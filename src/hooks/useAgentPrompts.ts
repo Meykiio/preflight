@@ -1,6 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { DEFAULT_AGENT_PROMPTS } from "@/lib/db";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { AgentSystemPrompt } from "@/types";
 
 export const useAgentPrompts = () => {
@@ -31,7 +32,7 @@ export const useAgentPrompts = () => {
       await db.agentSystemPrompts.put(nextPrompt);
       return nextPrompt;
     } catch (error) {
-      console.error("Failed to update agent prompt.", error);
+      logger.error("Failed to update agent prompt.", error);
       return null;
     }
   };
@@ -64,7 +65,7 @@ export const useAgentPrompts = () => {
       await db.agentSystemPrompts.put(nextPrompt);
       return nextPrompt;
     } catch (error) {
-      console.error("Failed to reset agent prompt.", error);
+      logger.error("Failed to reset agent prompt.", error);
       return null;
     }
   };

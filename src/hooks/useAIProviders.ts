@@ -1,5 +1,6 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import db from "@/lib/db";
+import { logger } from "@/lib/logger";
 import type { AIProviderConfig } from "@/types";
 import { encryptString, decryptString } from "@/lib/security";
 
@@ -135,7 +136,7 @@ export const useAIProviders = () => {
 
       return provider;
     } catch (error) {
-      console.error("Failed to save AI provider.", error);
+      logger.error("Failed to save AI provider.", error);
       return null;
     }
   };
@@ -161,7 +162,7 @@ export const useAIProviders = () => {
         }
       }
     } catch (error) {
-      console.error("Failed to delete AI provider.", error);
+      logger.error("Failed to delete AI provider.", error);
     }
   };
 
@@ -190,7 +191,7 @@ export const useAIProviders = () => {
         }
       });
     } catch (error) {
-      console.error("Failed to set default AI provider.", error);
+      logger.error("Failed to set default AI provider.", error);
     }
   };
 

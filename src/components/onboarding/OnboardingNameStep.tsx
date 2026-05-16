@@ -21,10 +21,11 @@ export const OnboardingNameStep = ({
       </div>
 
       <div className="mt-10">
-        <label className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+        <label htmlFor="onboarding-name" className="mb-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
           What should we call you?
         </label>
         <input
+          id="onboarding-name"
           data-autofocus
           type="text"
           value={name}

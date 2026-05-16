@@ -1,4 +1,5 @@
 import { estimateTokens } from "@/lib/utils";
+import { logger } from "@/lib/logger";
 
 /**
  * Checkpoint configuration for generation progress
@@ -38,7 +39,7 @@ export const saveCheckpoint = (checkpoint: GenerationCheckpoint): void => {
       JSON.stringify(checkpoint)
     );
   } catch (error) {
-    console.warn('Failed to save generation checkpoint:', error);
+    logger.warn('Failed to save generation checkpoint', error instanceof Error ? { error: error.message } : { error: String(error) });
   }
 };
 
@@ -61,7 +62,7 @@ export const loadCheckpoint = (): GenerationCheckpoint | null => {
     
     return checkpoint;
   } catch (error) {
-    console.warn('Failed to load generation checkpoint:', error);
+    logger.warn('Failed to load generation checkpoint', error instanceof Error ? { error: error.message } : { error: String(error) });
     return null;
   }
 };
@@ -73,7 +74,7 @@ export const clearCheckpoint = (): void => {
   try {
     localStorage.removeItem(DEFAULT_CHECKPOINT_CONFIG.storageKey);
   } catch (error) {
-    console.warn('Failed to clear generation checkpoint:', error);
+    logger.warn('Failed to clear generation checkpoint', error instanceof Error ? { error: error.message } : { error: String(error) });
   }
 };
 
