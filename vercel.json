@@ -14,13 +14,5 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ],
-  "caches": [
-    {
-      "path": [
-        "node_modules",
-        ".pnpm-store"
-      ]
-    }
   ]
 }
