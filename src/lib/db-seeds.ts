@@ -867,46 +867,889 @@ export const DEFAULT_PLATFORM_LAUNCHERS = [
   "chatgpt"
 ];
 
-export const MOCK_PROJECTS = [
+const now = Date.now();
+const day = 1000 * 60 * 60 * 24;
+const hour = 1000 * 60 * 60;
+
+export const SEED_PROJECT_ID = "project-preflight";
+
+export const SEED_BRIEF = {
+  id: "brief-preflight",
+  projectId: SEED_PROJECT_ID,
+  problem:
+    "AI coding tools (Lovable, Bolt, Cursor, Claude Code) are powerful but chaotic. Users lose track of their plan, AI starts hallucinating, and projects become impossible to finish. There is no structured workflow to go from a raw idea to a production-ready build package that AI can actually follow.",
+  targetUser:
+    "Vibe coders — developers who use AI coding assistants as their primary development tool. They range from solo founders building MVPs to indie hackers shipping side projects. They value speed and iteration but struggle with project organization and prompt quality.",
+  coreFeatures: [
+    {
+      id: "feat-brief",
+      text: "Structured Brief — capture problem, target users, and core features in a guided form",
+      order: 1
+    },
+    {
+      id: "feat-research",
+      text: "AI Research Prompt Generator — create deep research prompts for Perplexity, Gemini, ChatGPT",
+      order: 2
+    },
+    {
+      id: "feat-design",
+      text: "Design Prompt Generator — generate XML-structured design specs for Stitch, v0, Figma AI",
+      order: 3
+    },
+    {
+      id: "feat-prd",
+      text: "PRD Generator — produce complete product requirements with TypeScript types and data models",
+      order: 4
+    },
+    {
+      id: "feat-system",
+      text: "System Instructions Generator — create .cursorrules, CLAUDE.md, and rules.md files",
+      order: 5
+    },
+    {
+      id: "feat-build",
+      text: "Sequential Build Workflow — 5-stage prompts from Foundation to Deployment",
+      order: 6
+    },
+    {
+      id: "feat-vault",
+      text: "Project Vault — store research results, design exports, and files as context for generations",
+      order: 7
+    },
+    {
+      id: "feat-ship",
+      text: "Ship Dashboard — manage credentials, versions, and live URLs for deployed projects",
+      order: 8
+    }
+  ],
+  inspirations: [
+    "Linear (project management clarity)",
+    "Notion (flexible documentation)",
+    "Vercel (deployment simplicity)",
+    "Cursor (AI-native development)"
+  ],
+  notes:
+    "This is a meta-project: we are building Preflight using Preflight. The seed data should showcase every workspace stage with realistic content so new users immediately understand the workflow. The brief should feel like a real product spec, not placeholder text.",
+  updatedAt: now - hour * 2
+};
+
+export const SEED_ARTIFACTS = [
   {
-    id: "project-nexus-api",
-    name: "Nexus API Gateway",
-    description: "High-performance edge computing platform for distributed microservices with automated security audits.",
-    status: "building",
-    targetPlatforms: ["bolt", "cursor"],
-    techStack: ["Go", "Redis", "Terraform", "Cloudflare Workers"],
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7, // 7 days ago
-    updatedAt: Date.now() - 1000 * 60 * 60 * 2
+    id: "artifact-research-preflight",
+    projectId: SEED_PROJECT_ID,
+    type: "research_prompt" as const,
+    platform: "perplexity",
+    content: `# Deep Research Request: Preflight — Project OS for Vibe Coders
+
+Act as a Senior Product Manager and Software Architect. Prioritize data-backed insights, cite common industry benchmarks, and challenge assumptions where you see potential failure points.
+
+## CONTEXT
+Preflight is a browser-based application that structures the workflow of "vibe coding" — using AI coding assistants (Lovable, Bolt, Cursor, Claude Code, Replit) to build applications. It guides users through a sequential process from raw idea to production-ready build package by generating optimized prompts for research, design, PRDs, system instructions, and multi-stage builds.
+
+Target users are solo developers and indie hackers who use AI coding tools as their primary development method. They value speed but struggle with project organization.
+
+Tech stack: React 18, TypeScript, Vite 6, Tailwind CSS 3.4, Zustand 5, Dexie.js (IndexedDB).
+
+## RESEARCH AREAS
+
+### 1. Market & Audience
+- What is the TAM/SAM/SOM for AI-assisted development tools in 2024-2027?
+- What are the top friction points for developers using Lovable, Bolt, and Cursor?
+- What communities do vibe coders inhabit? (specific subreddits, Discords, Twitter circles)
+- What topics generate the most engagement in these communities?
+
+### 2. Competitive Landscape
+- Who are the direct competitors? (list specific tools with pricing, features, differentiators)
+- What gap analysis reveals whitespace opportunities for a "Project OS" layer?
+- What would make Preflight go viral in the AI coding community?
+
+### 3. Technology Stack
+- Is React 18 + TypeScript + Vite the optimal stack for a local-first browser app?
+- What state management approach best fits this use case? (Zustand vs Jotai vs signals)
+- What are the best practices for IndexedDB + Dexie.js in production apps?
+- What AI/LLM integration patterns apply for prompt generation?
+
+### 4. Design & UX
+- What are best-in-class reference apps for developer tool interfaces?
+- What cognitive load reduction patterns apply to power-user developer tools?
+- What dark mode expectations exist for long coding sessions?
+
+### 5. Prompt Engineering
+- What are best practices for generating prompts for Lovable vs Bolt vs Cursor?
+- What are common failure modes when AI coding agents receive poorly structured prompts?
+- What is the optimal .cursorrules/CLAUDE.md structure for a React + TypeScript project?
+
+## OUTPUT FORMAT
+Provide research in this structure:
+1. Executive Summary (150-200 words)
+2. Market & Audience (with specific data)
+3. Competitive Landscape (with specific companies)
+4. Technology Recommendations (with specific versions)
+5. Design & UX Guidance (with reference apps)
+6. Prompt Engineering Best Practices
+7. Key Risks & Blind Spots
+8. Recommended Next Steps`,
+    contextNodes: ["feat-research", "feat-build"],
+    agentSystemPromptId: "research-default",
+    version: 1,
+    charCount: 2847,
+    tokenEstimate: 712,
+    createdAt: now - day * 2
   },
   {
-    id: "project-lumina-ui",
-    name: "Lumina Design System",
-    description: "Enterprise-grade component library with accessibility at its core and automatic documentation generation.",
-    status: "designing",
-    targetPlatforms: ["v0", "lovable"],
-    techStack: ["React", "Tailwind CSS", "Storybook", "Framer Motion"],
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 3, // 3 days ago
-    updatedAt: Date.now() - 1000 * 60 * 60 * 5
+    id: "artifact-design-preflight",
+    projectId: SEED_PROJECT_ID,
+    type: "design_prompt" as const,
+    platform: "stitch",
+    content: `<role>
+ACT as a senior UI/UX architect specializing in developer tools and dark-mode interfaces. Your mission is to design a complete, production-ready interface for Preflight — a Project OS for vibe coders.
+</role>
+
+<context>
+Preflight is a browser-based tool that structures AI coding workflows. Users write a brief, generate research/design/PRD prompts, and follow a sequential build process. The primary user is a solo developer working in dark mode for extended sessions.
+</context>
+
+<global_layout>
+- Navigation: Left sidebar (collapsible, 60px collapsed / 240px expanded)
+- Header: Minimal — project name, breadcrumb, platform launcher buttons
+- Main content: Full-width workspace area with stage tabs
+- No footer — maximize vertical space for content
+</global_layout>
+
+<design_language>
+**Color System:**
+- Primary: #C5C0FF (soft lavender)
+- Secondary: #6EDAB4 (mint green)
+- Tertiary: #FF6B8A (coral — for errors/warnings)
+- Surface hierarchy: #0E0E10 (lowest) → #1A1A1F → #242428 → #2E2E33 (highest)
+- Text: #E8E6F0 (primary) → #A8A6B8 (secondary) → #6B6980 (disabled)
+
+**Typography:**
+- Headings: Inter, 600 weight (semibold, not bold)
+- Body: Inter, 400 weight
+- Code/Labels: JetBrains Mono, 10-12px, uppercase tracking
+- H1: 32px/40px, H2: 24px/32px, H3: 18px/24px
+
+**Spacing:** 4px base grid (4, 8, 12, 16, 24, 32, 48, 64)
+**Border Radius:** 8px (cards), 12px (panels), 16px (modals), 9999px (pills)
+**Icons:** Material Symbols Outlined, 20px default
+**Motion:** 200ms ease-out for transitions, 300ms for page transitions
+</design_language>
+
+<pages>
+<page name="Project Hub" route="/">
+- **Layout:** Grid of project cards (3 columns desktop, 2 tablet, 1 mobile)
+- **Key sections:** Hero greeting, project grid, "New Project" CTA
+- **Empty state:** Illustration + "No projects yet" + "Create your first project" CTA
+</page>
+
+<page name="Workspace" route="/project/:projectId">
+- **Layout:** Sidebar navigation + tabbed content area
+- **Tabs:** Brief → Research → Design → PRD → System → Build → Ship → Vault
+- **Key sections:** Stage content panel, output panel, action buttons
+</page>
+
+<page name="Settings" route="/settings">
+- **Layout:** Single column, sectioned cards
+- **Key sections:** AI Providers, Platform Launchers, Agent Prompts, Appearance, Storage
+</page>
+</pages>
+
+<components>
+<component name="ProjectCard">
+- **Purpose:** Display project overview in the hub grid
+- **Variants:** Default (border-outline-variant/10), Hover (border-primary/30, bg-surface-container-high)
+- **Visual Anatomy:** 280x200px, padding 20px, border-radius 16px
+- **Content:** Project name (H3), description (body-sm, line-clamp-2), status pill, tech stack tags, last updated timestamp
+</component>
+
+<component name="StageTab">
+- **Purpose:** Navigate between workspace stages
+- **Variants:** Default (text-on-surface-variant), Active (text-primary, border-b-2 border-primary), Complete (text-secondary)
+- **Visual Anatomy:** 48px height, padding 0 16px, font-mono text-xs uppercase tracking
+</component>
+
+<component name="OutputPanel">
+- **Purpose:** Display generated content (prompts, PRDs, etc.)
+- **Visual Anatomy:** Full-width panel, bg-surface-container, border-radius 12px, padding 24px
+- **Features:** Copy button, download button, word/character count, markdown rendering
+</component>
+</components>
+
+<responsive_breakpoints>
+<breakpoint name="mobile" max-width="640px">
+- Sidebar becomes bottom tab bar
+- Project grid: single column
+- Output panel: full-width, scrollable
+- Reduced information density, larger touch targets (44x44px minimum)
+</breakpoint>
+
+<breakpoint name="desktop" min-width="1024px">
+- Full sidebar navigation (persistent)
+- Project grid: 3 columns
+- Output panel alongside content area (split view)
+- Maximum content width: 1600px, centered
+</breakpoint>
+</responsive_breakpoints>`,
+    contextNodes: ["feat-design", "feat-brief"],
+    agentSystemPromptId: "design-default",
+    version: 1,
+    charCount: 3124,
+    tokenEstimate: 781,
+    createdAt: now - day
   },
   {
-    id: "project-vibe-scribe",
-    name: "VibeScribe AI",
-    description: "Intelligent content orchestration platform that transforms raw audio into structured multi-format assets.",
-    status: "shipped",
-    targetPlatforms: ["claude-code", "replit"],
-    techStack: ["Python", "FastAPI", "PostgreSQL", "OpenAI API"],
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 14, // 14 days ago
-    updatedAt: Date.now() - 1000 * 60 * 30
+    id: "artifact-prd-preflight",
+    projectId: SEED_PROJECT_ID,
+    type: "prd" as const,
+    platform: "cursor",
+    content: `# Preflight — Product Requirements Document
+
+## 1. Product Overview
+
+### 1.1 What It Is
+Preflight is a browser-based Project OS that structures the workflow of AI-assisted development. It guides users from a raw idea through research, design, PRD generation, system instructions, and a sequential build workflow — producing optimized prompts that AI coding tools (Lovable, Bolt, Cursor, Claude Code) can actually follow.
+
+### 1.2 Tagline
+Your launchpad. Every build.
+
+### 1.3 Core Value Proposition
+- **Structured workflow** — never lose track of your plan again
+- **AI-optimized prompts** — generate prompts that coding agents execute correctly
+- **Local-first privacy** — all data and API keys stay in your browser, encrypted
+
+### 1.4 What This Is Not (V1)
+- Not a code editor or IDE
+- Not a project management tool (no task tracking, no Gantt charts)
+- Not a collaboration platform (single-user only)
+- Not an AI coding tool itself (it generates prompts for other tools)
+
+## 2. Target Users
+
+### Primary: Solo Vibe Coder
+- **Who:** Independent developer building MVPs and side projects
+- **Technical level:** Intermediate to advanced (comfortable with code, uses AI tools daily)
+- **Primary tool today:** Lovable, Bolt.new, or Cursor
+- **Pain point:** Loses track of the plan, AI hallucinates, project becomes unfinishable
+- **Goal:** Ship a working product in days, not weeks
+- **Fear:** Wasting time on a project that goes nowhere
+
+### Secondary: Indie Hacker
+- **Who:** Solo founder iterating on product ideas
+- **Technical level:** Varies (from no-code to full-stack)
+- **Primary tool today:** Mix of no-code tools and AI coding assistants
+- **Pain point:** Can't maintain consistency across multiple AI tool sessions
+- **Goal:** Validate ideas quickly with production-quality output
+- **Fear:** Building something nobody wants
+
+## 3. Core Features
+
+### 3.1 Structured Brief
+- **Purpose:** Capture project goals in a guided, structured form
+- **User story:** As a user, I want to write down my idea so the AI understands what to build
+- **Acceptance criteria:** Form validates required fields, saves to IndexedDB, displays completion score
+
+### 3.2 AI Research Prompt Generator
+- **Purpose:** Generate deep research prompts for Perplexity, Gemini, ChatGPT
+- **User story:** As a user, I want research prompts so I can gather market data before building
+- **Acceptance criteria:** Generates platform-specific prompts, copies to clipboard, saves to Vault
+
+### 3.3 Design Prompt Generator
+- **Purpose:** Create XML-structured design specs for Stitch, v0, Figma AI
+- **User story:** As a user, I want design prompts so AI can generate my UI correctly
+- **Acceptance criteria:** Generates complete design system specs, includes all pages and components
+
+### 3.4 PRD Generator
+- **Purpose:** Produce complete product requirements with TypeScript types
+- **User story:** As a user, I want a PRD so the AI knows exactly what to build
+- **Acceptance criteria:** Includes all 8 sections, valid TypeScript interfaces, 1500-3000 words
+
+### 3.5 Sequential Build Workflow
+- **Purpose:** 5-stage prompts from Foundation to Deployment
+- **User story:** As a user, I want build prompts so I can construct my app step by step
+- **Acceptance criteria:** Each stage is independent, stages are numbered and ordered, exportable
+
+### 3.6 Project Vault
+- **Purpose:** Store research results, design exports, and files as context
+- **User story:** As a user, I want to store files so I can reference them in future generations
+- **Acceptance criteria:** Upload/download files, mark as active context, categorize by type
+
+## 4. Technical Architecture
+
+### 4.1 Stack
+| Layer | Technology | Why |
+|---|---|---|
+| Framework | React 18 + TypeScript | Type safety, ecosystem, Vite compatibility |
+| Build | Vite 6 | Fast HMR, small bundle, ESM native |
+| Styling | Tailwind CSS 3.4 | Utility-first, design tokens, dark mode |
+| State | Zustand 5 | Minimal API, no boilerplate, TypeScript |
+| Database | Dexie.js 4 | IndexedDB wrapper, reactive queries, local-first |
+| Routing | React Router 6 | Standard, lazy-loading support |
+
+### 4.2 Data Model
+\`\`\`typescript
+interface Project {
+  id: string;
+  name: string;
+  description: string;
+  status: "ideation" | "researching" | "designing" | "building" | "shipped";
+  targetPlatforms: string[];
+  techStack: string[];
+  createdAt: number;
+  updatedAt: number;
+}
+
+interface Brief {
+  id: string;
+  projectId: string;
+  problem: string;
+  targetUser: string;
+  coreFeatures: { id: string; text: string; order: number }[];
+  inspirations: string[];
+  notes: string;
+  updatedAt: number;
+}
+
+interface GeneratedArtifact {
+  id: string;
+  projectId: string;
+  type: "research_prompt" | "design_prompt" | "prd" | "system_instructions" | "rules_file" | "build_prompt";
+  platform: string;
+  content: string;
+  contextNodes: string[];
+  agentSystemPromptId: string;
+  version: number;
+  charCount: number;
+  tokenEstimate: number;
+  createdAt: number;
+}
+\`\`\`
+
+## 5. Design Requirements
+
+### 5.1 Design System
+- **Aesthetic:** Dark-mode developer tool, minimal chrome, content-focused
+- **Primary color:** #C5C0FF (soft lavender)
+- **Secondary color:** #6EDAB4 (mint green)
+- **Font:** Inter (UI) + JetBrains Mono (labels/code)
+- **No light mode** — optimized for long coding sessions
+
+### 5.2 Critical UX Requirements
+1. Zero-loading states for local data (IndexedDB is instant)
+2. Auto-save on every input change (no "Save" button needed)
+3. One-click copy for all generated content
+4. Keyboard shortcuts for power users (⌘K command palette)
+5. Completion indicators for each workspace stage
+
+## 6. Success Metrics (V1)
+| Metric | Target | Timeframe |
+|---|---|---|
+| Projects created per user | 3+ | First week |
+| Brief completion rate | 80%+ | Ongoing |
+| Artifact generation rate | 60%+ of projects | Ongoing |
+| Time from idea to first build prompt | < 10 minutes | Per session |
+
+## 7. Out of Scope — V1
+1. **Team collaboration** — deferred until single-user workflow is proven
+2. **Cloud sync** — local-first is the differentiator; cloud is optional later
+3. **AI model fine-tuning** — prompt generation is sufficient for V1
+4. **Code execution/testing** — Preflight generates prompts, not code
+5. **Mobile app** — web-first, responsive design is sufficient
+
+## 8. Open Questions
+1. **Should we support light mode?** — Recommendation: No. Dark-only simplifies design and matches developer expectations. Resolve by: user feedback after launch.
+2. **What is the maximum project count?** — Recommendation: Unlimited (IndexedDB scales well). Monitor storage usage.
+3. **Should we add AI chat integration?** — Recommendation: Defer to V2. Focus on prompt generation first.`,
+    contextNodes: ["feat-prd", "feat-brief"],
+    agentSystemPromptId: "prd-default",
+    version: 1,
+    charCount: 4892,
+    tokenEstimate: 1223,
+    createdAt: now - hour * 12
   },
   {
-    id: "project-eco-track",
-    name: "EcoTrack Pro",
-    description: "Sustainable supply chain monitoring with real-time carbon footprint calculations and ESG reporting.",
-    status: "researching",
-    targetPlatforms: ["cursor"],
-    techStack: ["Next.js", "Supabase", "Prisma", "D3.js"],
-    createdAt: Date.now() - 1000 * 60 * 60 * 24, // 1 day ago
-    updatedAt: Date.now() - 1000 * 60 * 15
+    id: "artifact-system-preflight",
+    projectId: SEED_PROJECT_ID,
+    type: "system_instructions" as const,
+    platform: "cursor",
+    content: `# Preflight — System Instructions
+
+## IDENTITY & PROJECT CONTEXT
+You are an AI coding agent working on Preflight, a Project OS for vibe coders. The project is built with React 18, TypeScript (strict), Vite 6, Tailwind CSS 3.4, Zustand 5, and Dexie.js.
+
+## WORKFLOW PROTOCOL
+MANDATORY ORDER:
+1. READ — DOCS.md, types/index.ts, relevant files, test files
+2. PLAN — state task, list files to modify, identify risks
+3. IMPLEMENT — one change at a time, max 3-4 files per session
+4. TEST — run \`pnpm typecheck\`, \`pnpm test\`, \`pnpm build\`
+5. DOCUMENT — update DOCS.md, add JSDoc, update changelog
+
+## CODE QUALITY STANDARDS
+- TypeScript strict mode ON — no \`any\` types ever
+- File size: max 300 lines — split before adding more
+- Function size: max 40 lines — extract helpers
+- Naming: booleans \`isX/hasX/canX\`, handlers \`handleX\`, async \`fetchX/loadX\`
+- React: functional components only, custom hooks for data fetching
+- No business logic in JSX — extract to hooks or utilities
+- Imports: absolute via \`@/\` alias, ordered (react, third-party, local)
+
+## DATABASE RULES (Dexie.js)
+- Single db instance exported from \`src/lib/db.ts\`
+- Use \`useLiveQuery\` for reactive reads
+- All writes: async functions with try/catch
+- Increment version on schema changes
+- Use \`crypto.randomUUID()\` for IDs, \`Date.now()\` for timestamps
+
+## STATE MANAGEMENT (Zustand)
+- One store per domain: projectStore, uiStore, settingsStore, aiStore
+- Pure UI state goes in uiStore
+- Never duplicate state across stores
+- Async actions with error handling
+- Persist to Dexie on every write
+
+## STYLING RULES
+- Tailwind utilities only — no custom CSS except \`index.css\`
+- No inline styles for static values
+- No hardcoded hex values — use design tokens
+- No-border rule: use tonal shifts, not 1px borders
+- Dark mode only — no light mode support
+
+## ERROR HANDLING
+- Every async function returns \`{ data, error }\` pattern
+- User-facing errors must be human-readable
+- Never swallow errors silently — log AND surface to user
+- Use centralized logger (\`src/lib/logger.ts\`), not console
+
+## EXPLICITLY PROHIBITED
+- \`any\` type — use \`unknown\` or proper types
+- Files over 300 lines — split into modules
+- \`console.log\` in production code
+- Inline styles for static values
+- Business logic in components
+- Circular imports
+- Unapproved packages (check with user first)
+- Disabling TypeScript strict mode
+- Committing \`.env\` files
+- Modifying working features without tests`,
+    contextNodes: ["feat-system"],
+    agentSystemPromptId: "system-instructions-default",
+    version: 1,
+    charCount: 2156,
+    tokenEstimate: 539,
+    createdAt: now - hour * 8
+  },
+  {
+    id: "artifact-rules-preflight",
+    projectId: SEED_PROJECT_ID,
+    type: "rules_file" as const,
+    platform: "cursor",
+    content: `# Preflight — .cursorrules
+
+## PROJECT
+Preflight — Project OS for vibe coders
+Stack: React 18 + TypeScript + Vite 6 + Tailwind 3.4 + Zustand 5 + Dexie.js 4
+Platform: Cursor
+Version: 0.1.0
+
+Read this file completely before beginning any task.
+
+## ARCHITECTURE
+\`\`\`
+src/
+  components/     # Domain-specific UI (Hub, Workspace, Settings, shared)
+  pages/          # Route components (lazy-loaded)
+  hooks/          # Custom React hooks (data fetching, store interaction)
+  stores/         # Zustand stores (projectStore, uiStore, settingsStore, aiStore)
+  services/       # Business logic (AI providers, generation, validation)
+  lib/            # Utilities (db, logger, security, utils)
+  types/          # TypeScript interfaces and types
+\`\`\`
+
+## CODE STYLE
+- TypeScript strict ON — no \`any\`, explicit types, interfaces over type aliases
+- Max 300 lines per file — split before adding more
+- Max 40 lines per function — extract helpers
+- React: functional only, custom hooks for data, no business logic in JSX
+- Naming: \`isX/hasX\` for booleans, \`handleX\` for handlers, \`fetchX\` for async
+- Imports: \`@/\` alias, order: react → third-party → local
+
+## DATABASE (Dexie.js)
+- Single db instance from \`src/lib/db.ts\`
+- \`useLiveQuery\` for reads, async try/catch for writes
+- \`crypto.randomUUID()\` for IDs, \`Date.now()\` for timestamps
+- Increment version on schema changes
+
+## STATE (Zustand)
+- One store per domain, pure UI state in uiStore
+- Never duplicate state, persist to Dexie on write
+
+## STYLING
+- Tailwind utilities only, no custom CSS except \`index.css\`
+- No inline styles, no hardcoded hex values
+- Dark mode only — no light mode
+
+## ERROR HANDLING
+- Every async returns \`{ data, error }\`
+- Human-readable user errors, never swallow silently
+- Use \`src/lib/logger.ts\` not console
+
+## PROHIBITED
+- \`any\` type, files > 300 lines, \`console.log\` in production
+- Business logic in components, circular imports, unapproved packages
+- Disabling strict mode, committing \`.env\`, modifying working features without tests
+
+## WORKFLOW
+Before coding: read DOCS.md, read types/index.ts, read files to modify, state task, list files to change.`,
+    contextNodes: ["feat-system"],
+    agentSystemPromptId: "rules-file-default",
+    version: 1,
+    charCount: 1847,
+    tokenEstimate: 462,
+    createdAt: now - hour * 6
   }
 ];
 
+export const SEED_BUILD_STAGES = [
+  {
+    id: "stage-preflight-1",
+    projectId: SEED_PROJECT_ID,
+    stageNumber: 1,
+    name: "Foundation",
+    description:
+      "Initialize the project structure, configuration, type definitions, database schema, state stores, routing, and layout shell. This is the most consequential stage — all subsequent stages inherit the patterns established here.",
+    status: "complete" as const,
+    promptContent: `This is Stage 1 of 5 — the Foundation Stage for Preflight.
+
+## PROJECT CONTEXT
+**App:** Preflight — Project OS for vibe coders
+**Stack:** React 18.3 + TypeScript 5.8 (strict) + Vite 6 + Tailwind CSS 3.4 + Zustand 5 + Dexie.js 4
+**Platform:** Browser-based, local-first (IndexedDB)
+**Target platforms for generated output:** Lovable, Bolt, Cursor, Claude Code, Replit
+
+## FOLDER STRUCTURE
+\`\`\`
+src/
+  components/
+    hub/          # Project Hub page components
+    workspace/    # Workspace page components (per stage)
+    settings/     # Settings page components
+    shared/       # Reusable UI primitives
+    layout/       # App shell (Sidebar, Header, AppLayout)
+    onboarding/   # First-launch onboarding flow
+    splash/       # Loading splash screen
+  pages/          # Route components (lazy-loaded)
+  hooks/          # Custom hooks (useProjects, useBrief, useArtifacts, etc.)
+  stores/         # Zustand stores (projectStore, uiStore, settingsStore, aiStore)
+  services/
+    ai/           # AI provider abstractions and SDK integrations
+    generation/   # Prompt generation logic per workspace stage
+    validation/   # Consistency and config validation
+  lib/            # Utilities (db.ts, logger.ts, security.ts, utils.ts)
+  types/          # TypeScript interfaces (index.ts)
+\`\`\`
+
+## CONFIGURATION
+- **tsconfig.json:** strict mode, \`@/*\` path alias → \`./src/*\`
+- **vite.config.ts:** React plugin, path alias resolution
+- **tailwind.config.ts:** Design tokens (colors, typography, spacing, shadows)
+- **.env.example:** VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY (optional cloud mode)
+
+## DATABASE SCHEMA (Dexie.js)
+Tables: projects, briefs, artifacts, vaultFiles, buildStages, aiProviders, agentSystemPrompts, appSettings, projectVersions, credentials
+
+## STATE STORES
+- **projectStore:** selectedProjectId, active project data
+- **uiStore:** sidebarCollapsed, activeTab, commandPaletteOpen
+- **settingsStore:** theme, defaultProvider, streamingEnabled, userName
+- **aiStore:** provider configurations, API keys (encrypted)
+
+## ROUTING
+- \`/\` → ProjectHubPage (project list)
+- \`/project/:projectId\` → ProjectWorkspacePage (workspace with stage tabs)
+- \`/settings\` → SettingsPage
+- \`/docs\` → DocumentationPage
+
+## LAYOUT SHELL
+- Sidebar: collapsible, project navigation, stage tabs when in workspace
+- Header: project name, breadcrumb, platform launcher buttons
+- Main: content area with stage-specific panels
+
+## VERIFICATION
+After completing: \`pnpm dev\` passes, \`pnpm build\` passes, zero TypeScript errors, all routes render (even if empty), DOCS.md exists.`,
+    platform: "cursor",
+    createdAt: now - day * 3,
+    updatedAt: now - day * 2
+  },
+  {
+    id: "stage-preflight-2",
+    projectId: SEED_PROJECT_ID,
+    stageNumber: 2,
+    name: "Database & Auth",
+    description:
+      "Implement the complete Dexie.js schema with all tables, indexes, and relationships. Set up seed data, default agent prompts, and the initialization flow that runs on app mount.",
+    status: "complete" as const,
+    promptContent: `This is Stage 2 of 5 — the Database & Auth Stage for Preflight.
+
+## BEHAVIOR
+Your job is to implement the complete data layer. Do NOT build any application features. Read DOCS.md and src/types/index.ts completely before starting.
+
+## SCHEMA IMPLEMENTATION
+Create all 10 Dexie.js tables with proper indexes:
+- **projects:** id (pk), status (index), updatedAt (index)
+- **briefs:** id (pk), projectId (index)
+- **artifacts:** id (pk), projectId (index), type (index), createdAt (index)
+- **vaultFiles:** id (pk), projectId (index), category (index), isActiveContext (index)
+- **buildStages:** id (pk), projectId (index), stageNumber (index)
+- **aiProviders:** id (pk), provider (index), isDefault (index)
+- **agentSystemPrompts:** id (pk), agentType (index), isDefault (index)
+- **appSettings:** id (pk) — single document store
+- **projectVersions:** id (pk), projectId (index), createdAt (index)
+- **credentials:** id (pk), projectId (index), category (index)
+
+## SEED DATA
+- Default app settings (dark theme, platform launchers enabled)
+- 10 agent system prompts (research, design, prd, system-instructions, rules-file, build-foundation, build-database, build-feature, build-audit, build-deployment)
+- 4 mock projects for first-launch experience
+
+## INITIALIZATION FLOW
+- db.initializeDefaults() runs once on app mount
+- Idempotent: only seeds if tables are empty
+- Updates existing default prompts if content has changed
+
+## VERIFICATION
+Schema matches types exactly, seed data loads on first launch, useLiveQuery works for all tables.`,
+    platform: "cursor",
+    createdAt: now - day * 2,
+    updatedAt: now - day
+  },
+  {
+    id: "stage-preflight-3",
+    projectId: SEED_PROJECT_ID,
+    stageNumber: 3,
+    name: "Core Features",
+    description:
+      "Build the Project Hub (project list, create, import, delete), Workspace shell (stage tabs, content/output panels), and Settings page (AI providers, platform launchers, agent prompts).",
+    status: "in-progress" as const,
+    promptContent: `This is Stage 3 of 5 — the Core Features Stage for Preflight.
+
+## SCOPE
+Build the three main pages and their core interactions. Do NOT build the Ship page or Vault page yet — those come in Stage 4.
+
+## FILES TO CREATE/MODIFY
+- src/pages/ProjectHubPage.tsx — project list grid
+- src/pages/ProjectWorkspacePage.tsx — workspace with stage tabs
+- src/pages/SettingsPage.tsx — settings sections
+- src/components/hub/ProjectCard.tsx — project card component
+- src/components/hub/NewProjectModal.tsx — create project modal
+- src/components/workspace/StageTabs.tsx — stage navigation
+- src/components/settings/ProviderCard.tsx — AI provider card
+- src/hooks/useProjects.ts — project CRUD operations
+- src/hooks/useBrief.ts — brief read/write
+- src/hooks/useArtifacts.ts — artifact CRUD
+
+## COMPONENT STRUCTURE
+### ProjectHubPage
+- Grid of ProjectCard components (3 columns desktop)
+- "New Project" button opens modal
+- Each card shows: name, description, status pill, tech stack, last updated
+- Click card → navigate to workspace
+
+### ProjectWorkspacePage
+- Stage tabs: Brief → Research → Design → PRD → System → Build → Ship → Vault
+- Content panel: stage-specific form/output
+- Output panel: generated content with copy/download
+- Auto-save on every input change
+
+### SettingsPage
+- AI Providers section: connected providers, add/edit/remove
+- Platform Launchers: toggle buttons for Lovable, Bolt, Cursor, etc.
+- Agent Prompts: editable system prompts per agent type
+- Appearance: user name, theme (dark only)
+- Storage: export data, clear all data
+
+## DATA FLOW
+- Projects: read via useLiveQuery, write via useProjects hook
+- Briefs: read via useLiveQuery(projectId), write via useBrief hook
+- Artifacts: read via useLiveQuery(projectId), write via useArtifacts hook
+- All writes persist to Dexie immediately
+
+## VERIFICATION
+All three pages render, project CRUD works, brief auto-saves, settings persist across reloads, zero console errors.`,
+    platform: "cursor",
+    createdAt: now - day,
+    updatedAt: now - hour * 4
+  },
+  {
+    id: "stage-preflight-4",
+    projectId: SEED_PROJECT_ID,
+    stageNumber: 4,
+    name: "AI Integration & Generation",
+    description:
+      "Implement AI provider integrations (Anthropic, OpenAI, Google, Groq, OpenRouter, Ollama), prompt generation services for each workspace stage, and the generation UI with streaming output.",
+    status: "not-started" as const,
+    promptContent: `This is Stage 4 of 5 — the AI Integration & Generation Stage for Preflight.
+
+## SCOPE
+Implement all AI provider integrations and the generation flow for each workspace stage. This is the most complex stage.
+
+## AI PROVIDERS
+Implement provider abstraction with factory pattern:
+- **Anthropic:** @anthropic-ai/sdk, messages.create() with streaming
+- **OpenAI:** openai SDK, chat.completions.create() with streaming
+- **Google:** @google/generative-ai, generateContent() with streaming
+- **Groq:** openai-compatible, api.groq.com/openai/v1
+- **OpenRouter:** openai-compatible, openrouter.ai/api/v1
+- **Ollama:** openai-compatible, localhost:11434/v1
+
+All providers implement: complete(), streamComplete(), validateKey()
+
+## GENERATION SERVICES
+- **researchGeneration.ts:** Generate research prompts from brief
+- **designGeneration.ts:** Generate design prompts from brief + research
+- **prdGeneration.ts:** Generate PRD from brief + research + design
+- **systemInstructionsGeneration.ts:** Generate system instructions from PRD
+- **buildGeneration.ts:** Generate 5-stage build prompts from PRD
+
+Each service:
+1. Reads relevant artifacts from Vault
+2. Calls AI provider with system prompt + user content
+3. Streams output to UI
+4. Saves result as artifact
+
+## GENERATION UI
+- "Generate" button per stage
+- Streaming output panel with real-time chunk display
+- Copy, download, save to Vault buttons
+- Error handling with retry
+- Generation progress indicator
+
+## VERIFICATION
+All providers connect and validate keys, generation produces correct output, streaming works, errors are handled gracefully, artifacts save to database.`,
+    platform: "cursor",
+    createdAt: now - hour * 2,
+    updatedAt: now - hour * 2
+  },
+  {
+    id: "stage-preflight-5",
+    projectId: SEED_PROJECT_ID,
+    stageNumber: 5,
+    name: "Ship, Vault & Polish",
+    description:
+      "Build the Ship page (credentials management, version tracking, live URLs), Vault page (file upload, context management), command palette, onboarding flow, and final polish.",
+    status: "locked" as const,
+    promptContent: `This is Stage 5 of 5 — the Ship, Vault & Polish Stage for Preflight.
+
+## SCOPE
+Complete the remaining pages and add polish features. This is the final stage before audit and deployment.
+
+## SHIP PAGE
+- **Credentials:** Add/edit/delete credentials (API keys, database URLs, OAuth tokens)
+  - Categories: api_key, database, oauth, other
+  - Values stored encrypted in IndexedDB
+  - Copy to clipboard, export as JSON
+- **Versions:** Track project versions with name, description, ZIP export
+  - Create version snapshot
+  - Download ZIP of project files
+  - Set live URL for deployed versions
+- **Deployment status:** Show current deployment state
+
+## VAULT PAGE
+- **File upload:** Drag-and-drop file upload (research PDFs, design exports, etc.)
+  - Store as ArrayBuffer in IndexedDB
+  - Categories: research, design, export, other
+  - File size limit: 10MB per file
+- **Context management:** Mark files as active context for generations
+  - Toggle context status per file
+  - "Set all as context" bulk action
+  - Context files injected into generation prompts
+
+## COMMAND PALETTE
+- ⌘K to open
+- Navigate to any page or stage
+- Quick actions: new project, generate research, generate design, export build
+- Search projects by name
+- Keyboard navigation (arrow keys, Enter, Escape)
+
+## ONBOARDING FLOW
+- Step 1: Welcome — enter your name
+- Step 2: Connect AI — select provider, enter API key, verify
+- Step 3: Quick tour — feature carousel
+- Step 4: Complete — enter the app
+
+## POLISH
+- Loading states and skeleton screens
+- Error boundaries with recovery
+- Toast notifications for all actions
+- Keyboard shortcuts documentation
+- Responsive design for tablet and mobile
+- Accessibility: ARIA labels, keyboard navigation, focus management
+
+## VERIFICATION
+All pages complete, file upload works, command palette functional, onboarding flow smooth, responsive on all breakpoints, accessibility audit passes (WCAG AA).`,
+    platform: "cursor",
+    createdAt: now,
+    updatedAt: now
+  }
+];
+
+export const SEED_CREDENTIALS = [
+  {
+    id: "cred-preflight-1",
+    projectId: SEED_PROJECT_ID,
+    name: "Vercel Token",
+    value: "vc_abc123def456...",
+    category: "api_key" as const,
+    notes: "Used for deploying Preflight to Vercel. Found in Vercel account settings → Tokens.",
+    createdAt: now - day * 5,
+    updatedAt: now - day * 5
+  },
+  {
+    id: "cred-preflight-2",
+    projectId: SEED_PROJECT_ID,
+    name: "Supabase URL",
+    value: "https://your-project.supabase.co",
+    category: "database" as const,
+    notes: "Optional cloud backend. Set VITE_SUPABASE_URL in .env for cloud sync mode.",
+    createdAt: now - day * 5,
+    updatedAt: now - day * 5
+  },
+  {
+    id: "cred-preflight-3",
+    projectId: SEED_PROJECT_ID,
+    name: "Anthropic API Key",
+    value: "sk-ant-api03-...",
+    category: "api_key" as const,
+    notes: "Used for Claude-powered prompt generation. Configure in Settings → AI Providers.",
+    createdAt: now - day * 3,
+    updatedAt: now - day * 3
+  }
+];
+
+export const SEED_PROJECT_VERSIONS = [
+  {
+    id: "version-preflight-1",
+    projectId: SEED_PROJECT_ID,
+    version: "0.1.0",
+    name: "Alpha Launch",
+    description:
+      "Initial public release with Project Hub, Workspace (Brief through Build stages), Settings, and AI provider integrations. Local-first with Dexie.js, dark-mode only.",
+    zipSize: 245760,
+    liveUrl: "https://preflight.vercel.app",
+    createdAt: now - day * 2
+  }
+];
+
+export const MOCK_PROJECTS = [
+  {
+    id: SEED_PROJECT_ID,
+    name: "Preflight",
+    description:
+      "The open-source Project OS for vibe coders — from raw idea to production-ready build package. Structured workflow for AI-assisted development.",
+    status: "building",
+    targetPlatforms: ["cursor", "lovable", "bolt"],
+    techStack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Zustand", "Dexie.js"],
+    createdAt: now - day * 7,
+    updatedAt: now - hour * 2
+  }
+];

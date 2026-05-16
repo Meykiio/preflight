@@ -1,6 +1,15 @@
 import type { AgentType, ProjectStatus } from "@/types";
 import { PreflightDatabase } from "@/lib/db-schema";
-import { DEFAULT_AGENT_PROMPTS, DEFAULT_PLATFORM_LAUNCHERS, MOCK_PROJECTS } from "@/lib/db-seeds";
+import {
+  DEFAULT_AGENT_PROMPTS,
+  DEFAULT_PLATFORM_LAUNCHERS,
+  MOCK_PROJECTS,
+  SEED_BRIEF,
+  SEED_ARTIFACTS,
+  SEED_BUILD_STAGES,
+  SEED_CREDENTIALS,
+  SEED_PROJECT_VERSIONS
+} from "@/lib/db-seeds";
 
 export async function initializeDatabaseDefaults(
   db: PreflightDatabase
@@ -28,6 +37,35 @@ export async function initializeDatabaseDefaults(
         status: p.status as ProjectStatus,
         targetPlatforms: p.targetPlatforms as any
       }))
+    );
+
+    await db.briefs.add({
+      ...SEED_BRIEF,
+      updatedAt: Date.now()
+    });
+
+    await db.artifacts.bulkAdd(
+      SEED_ARTIFACTS.map((a) => ({ ...a, createdAt: Date.now() }))
+    );
+
+    await db.buildStages.bulkAdd(
+      SEED_BUILD_STAGES.map((s) => ({
+        ...s,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      }))
+    );
+
+    await db.credentials.bulkAdd(
+      SEED_CREDENTIALS.map((c) => ({
+        ...c,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      }))
+    );
+
+    await db.projectVersions.bulkAdd(
+      SEED_PROJECT_VERSIONS.map((v) => ({ ...v, createdAt: Date.now() }))
     );
   }
 

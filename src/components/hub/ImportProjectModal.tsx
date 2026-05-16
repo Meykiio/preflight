@@ -62,20 +62,24 @@ export const ImportProjectModal = ({ isOpen, onOpenChange }: ImportProjectModalP
   const [ideaFileName, setIdeaFileName] = useState("");
   const [ideaFileContent, setIdeaFileContent] = useState("");
 
+  const resetForm = useCallback((): void => {
+    setActiveTab("backup");
+    setIsImporting(false);
+    setIsGenerating(false);
+    setIdeaFileName("");
+    setIdeaFileContent("");
+    if (backupInputRef.current) backupInputRef.current.value = "";
+    if (ideaNameRef.current) ideaNameRef.current.value = "";
+    if (ideaTextRef.current) ideaTextRef.current.value = "";
+    if (ideaFileRef.current) ideaFileRef.current.value = "";
+  }, []);
+
   // Reset form when modal closes
   useEffect(() => {
     if (!isOpen) {
-      setActiveTab("backup");
-      setIsImporting(false);
-      setIsGenerating(false);
-      setIdeaFileName("");
-      setIdeaFileContent("");
-      if (backupInputRef.current) backupInputRef.current.value = "";
-      if (ideaNameRef.current) ideaNameRef.current.value = "";
-      if (ideaTextRef.current) ideaTextRef.current.value = "";
-      if (ideaFileRef.current) ideaFileRef.current.value = "";
+      resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
 
   const dialogRef = useDialogAccessibility<HTMLDivElement>(isOpen, () => {
     onOpenChange(false);
@@ -234,8 +238,13 @@ export const ImportProjectModal = ({ isOpen, onOpenChange }: ImportProjectModalP
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       className="fixed inset-0 z-50 flex items-center justify-center bg-surface-dim/80 px-4 backdrop-blur-sm"
       onClick={() => onOpenChange(false)}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" || event.key === "Enter") onOpenChange(false);
+      }}
     >
       <div
         ref={dialogRef}
@@ -330,10 +339,11 @@ export const ImportProjectModal = ({ isOpen, onOpenChange }: ImportProjectModalP
             /* From Idea Tab */
             <div className="space-y-4">
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-on-surface-variant">
+                <label htmlFor="idea-project-name" className="mb-2 block text-xs uppercase tracking-[0.2em] text-on-surface-variant">
                   Project name (optional)
                 </label>
                 <input
+                  id="idea-project-name"
                   ref={ideaNameRef}
                   type="text"
                   placeholder="e.g., PrintFlow, TaskMaster"
@@ -345,10 +355,11 @@ export const ImportProjectModal = ({ isOpen, onOpenChange }: ImportProjectModalP
               </div>
 
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-on-surface-variant">
+                <label htmlFor="idea-text" className="mb-2 block text-xs uppercase tracking-[0.2em] text-on-surface-variant">
                   Paste your idea or upload file
                 </label>
                 <textarea
+                  id="idea-text"
                   ref={ideaTextRef}
                   rows={6}
                   placeholder="Describe your app idea, features, target users, or paste any notes..."

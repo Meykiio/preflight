@@ -45,7 +45,7 @@ export const AppLayout = (): JSX.Element => {
     const timer = setTimeout(scrollToTop, 50);
 
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, [location]);
 
   useEffect(() => {
     const projectId = projectMatch?.params.projectId ?? null;

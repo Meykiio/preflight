@@ -50,34 +50,25 @@ const OutputPanelComponent = ({
   const contentLines = displayContent.split("\n");
   const isLongContent = contentLines.length > 6;
 
+  // Track when streaming finishes and auto-scroll during streaming
+  useEffect(() => {
+    if (isStreaming) {
+      hasFinishedStreaming.current = false;
+      setIsExpanded(false);
+      if (contentRef.current) {
+        contentRef.current.scrollTop = contentRef.current.scrollHeight;
+      }
+    } else if (streamingContent && !hasFinishedStreaming.current) {
+      hasFinishedStreaming.current = true;
+    }
+  }, [isStreaming, streamingContent]);
+
   // Initialize edited content when content changes
   useEffect(() => {
     if (content && !isEditing) {
       setEditedContent(content);
     }
   }, [content, isEditing]);
-
-  // Track when streaming finishes
-  useEffect(() => {
-    if (!isStreaming && streamingContent && !hasFinishedStreaming.current) {
-      hasFinishedStreaming.current = true;
-    }
-  }, [isStreaming, streamingContent]);
-
-  // Reset expand state when new streaming starts
-  useEffect(() => {
-    if (isStreaming) {
-      hasFinishedStreaming.current = false;
-      setIsExpanded(false);
-    }
-  }, [isStreaming]);
-
-  // Auto-scroll to bottom during streaming
-  useEffect(() => {
-    if (isStreaming && contentRef.current) {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight;
-    }
-  }, [isStreaming, streamingContent]);
 
   // Determine if we should show expanded view
   const showExpanded = isExpanded;
